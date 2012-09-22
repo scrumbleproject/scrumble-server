@@ -24,6 +24,7 @@ public class ApplicationConfig extends Application {
     private Set<Class<?>> getRestResourceClasses() {
         Set<Class<?>> resources = new java.util.HashSet<Class<?>>();
         resources.add(com.scrumble.server.services.MembersResource.class);
+        resources.add(com.scrumble.server.services.UserStoriesResource.class);
         return resources;
     }
     
