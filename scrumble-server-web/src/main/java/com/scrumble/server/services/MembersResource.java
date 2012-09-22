@@ -70,8 +70,7 @@ public class MembersResource {
     @Path("all")
     @Produces("application/json")
     public List<Member1> findAll() {
-        List<Member1> results = memberBean.findAll();
-        return results;
+        return memberBean.findAll();
     }
     
     /**
@@ -98,6 +97,20 @@ public class MembersResource {
     @Produces("application/json")
     public void addMember(Member1 member) {
         memberBean.create(member);
+    }
+    
+    /**
+     * PUT method for updating an instance of Member1 object
+     * @param member JSON representation for the Member1 object
+     * @return an HTTP response with content of the created resource.
+     */
+    @PUT
+    @Path("{id}")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public void updateMember(@PathParam("id") String id) {
+        Member1 member = memberBean.find(Integer.parseInt(id));
+        memberBean.edit(member);
     }
     
 }

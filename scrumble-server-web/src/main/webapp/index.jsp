@@ -42,14 +42,7 @@
                             $("#result").html("Member cr&eacute;&eacute;e avec succ&egrave;s");
                         }
                     });
-                    /*$.post('http://localhost:8080/scrumble-server-web/scrumble/members/add', 
-                            JSON.stringify($('#addmember').serializeObject()), 
-                            function(data) {
-                                $('#result').html(data).append("<br/>CA MARCHE");
-                            },
-                            "json"
-                    );
-                    */
+                    
                     return false;
                 });
             });
