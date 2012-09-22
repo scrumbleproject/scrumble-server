@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Sam 22 Septembre 2012 à 12:38
+-- Généré le : Sam 22 Septembre 2012 à 12:48
 -- Version du serveur: 5.5.8
 -- Version de PHP: 5.3.5
 
@@ -18,6 +18,9 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Base de données: `scrumble_bdd`
 --
+DROP DATABASE `scrumble_bdd`;
+CREATE DATABASE `scrumble_bdd` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `scrumble_bdd`;
 
 -- --------------------------------------------------------
 
@@ -25,6 +28,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Structure de la table `member`
 --
 
+DROP TABLE IF EXISTS `member`;
 CREATE TABLE IF NOT EXISTS `member` (
   `id_member` int(11) NOT NULL AUTO_INCREMENT,
   `firstname` varchar(45) DEFAULT NULL,
@@ -60,6 +64,7 @@ INSERT INTO `member` (`id_member`, `firstname`, `lastname`, `login`, `password`,
 -- Structure de la table `memberproject`
 --
 
+DROP TABLE IF EXISTS `memberproject`;
 CREATE TABLE IF NOT EXISTS `memberproject` (
   `id_project` int(11) NOT NULL,
   `id_member` int(11) NOT NULL,
@@ -79,6 +84,7 @@ CREATE TABLE IF NOT EXISTS `memberproject` (
 -- Structure de la table `planningpoker`
 --
 
+DROP TABLE IF EXISTS `planningpoker`;
 CREATE TABLE IF NOT EXISTS `planningpoker` (
   `id_planningpoker` int(11) NOT NULL AUTO_INCREMENT,
   `value` varchar(20) DEFAULT NULL,
@@ -110,6 +116,7 @@ INSERT INTO `planningpoker` (`id_planningpoker`, `value`) VALUES
 -- Structure de la table `project`
 --
 
+DROP TABLE IF EXISTS `project`;
 CREATE TABLE IF NOT EXISTS `project` (
   `id_project` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(150) DEFAULT NULL,
@@ -130,6 +137,7 @@ INSERT INTO `project` (`id_project`, `title`, `description`) VALUES
 -- Structure de la table `role`
 --
 
+DROP TABLE IF EXISTS `role`;
 CREATE TABLE IF NOT EXISTS `role` (
   `id_role` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(75) DEFAULT NULL,
@@ -154,6 +162,7 @@ INSERT INTO `role` (`id_role`, `title`, `description`) VALUES
 -- Structure de la table `task`
 --
 
+DROP TABLE IF EXISTS `task`;
 CREATE TABLE IF NOT EXISTS `task` (
   `id_task` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(45) DEFAULT NULL,
@@ -174,6 +183,7 @@ CREATE TABLE IF NOT EXISTS `task` (
 -- Structure de la table `userstory`
 --
 
+DROP TABLE IF EXISTS `userstory`;
 CREATE TABLE IF NOT EXISTS `userstory` (
   `id_userstory` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) DEFAULT NULL,
