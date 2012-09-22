@@ -100,7 +100,7 @@ TestSupport.prototype = {
         if (patterns.length == 3) {
             var servletNames = patterns[1].split(',');
             var servletUrl = patterns[2].split(',');
-            var resourceUri = 'resources/';
+            var resourceUri = 'scrumble/';
             for(var i in servletNames) {
                 var name = servletNames[i];
                 if ('ServletAdaptor' == name) {

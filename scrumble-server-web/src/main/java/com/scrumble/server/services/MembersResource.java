@@ -16,6 +16,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
 
 /**
@@ -84,4 +85,19 @@ public class MembersResource {
     public Member1 getMember(@PathParam("id") String id) {
         return memberBean.find(Integer.parseInt(id));
     }
+    
+    
+    /**
+     * POST method for creating an instance of Member1 object
+     * @param member JSON representation for the Member1 object
+     * @return an HTTP response with content of the created resource.
+     */
+    @POST
+    @Path("add")
+    @Consumes("application/json")
+    public void addMember(Member1 member) {
+        System.out.println("ADD MEMBER : "+member);
+        memberBean.create(member);
+    }
+    
 }
