@@ -11,29 +11,28 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.POST;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
 
 /**
  * REST Web Service
  *
  * @author cyril
  */
-@Path("/members")
+@Path("members")
 @Stateless
 public class MembersResource {
 
     @Context
     private UriInfo context;
-
-    @EJB
-    private Member1FacadeLocal ejbMember;
     
+    @EJB
+    private Member1FacadeLocal memberBean;  
+
     /**
      * Creates a new instance of MembersResource
      */
@@ -52,24 +51,13 @@ public class MembersResource {
     }
 
     /**
-     * POST method for creating an instance of MemberResource
-     * @param content representation for the new resource
-     * @return an HTTP response with content of the created resource
+     * PUT method for updating or creating an instance of MembersResource
+     * @param content representation for the resource
+     * @return an HTTP response with content of the updated or created resource.
      */
-    @POST
+    @PUT
     @Consumes("application/json")
-    @Produces("application/json")
-    public Response postJson(String content) {
-        //TODO
-        return Response.created(context.getAbsolutePath()).build();
-    }
-
-    /**
-     * Sub-resource locator method for {id}
-     */
-    @Path("{id}")
-    public MemberResource getMemberResource(@PathParam("id") String id) {
-        return MemberResource.getInstance(id);
+    public void putJson(String content) {
     }
     
     
@@ -78,11 +66,22 @@ public class MembersResource {
      * @return a JSON representation of the list of all members.
      */
     @GET
-    @Path("findall")
+    @Path("all")
     @Produces("application/json")
     public List<Member1> findAll() {
-        List<Member1> results = ejbMember.findAll();
+        List<Member1> results = memberBean.findAll();
         return results;
     }
     
+    /**
+     * Retrieves representation of a single com.scrumble.server.entities.Member1 object
+     * @param id the id of the Member1 object to retrieve
+     * @return a JSON representation of the related Member1 object.
+     */
+    @GET
+    @Path("{id}")
+    @Produces("application/json")
+    public Member1 getMember(@PathParam("id") String id) {
+        return memberBean.find(Integer.parseInt(id));
+    }
 }
