@@ -12,9 +12,45 @@
         
         <script type="text/javascript">
             
+            $.fn.serializeObject = function()
+            {
+                var o = {};
+                var a = this.serializeArray();
+                $.each(a, function() {
+                    if (o[this.name] !== undefined) {
+                        if (!o[this.name].push) {
+                            o[this.name] = [o[this.name]];
+                        }
+                        o[this.name].push(this.value || '');
+                    } else {
+                        o[this.name] = this.value || '';
+                    }
+                });
+                
+                return o;
+            };
+            
             $(document).ready( function(){
                 $('#addmember').submit(function() {
-                    return JSON.stringify($('#addmember').serializeObject());
+                    $.ajax({
+                        url:"http://localhost:8080/scrumble-server-web/scrumble/members/add",
+                        type:"POST",
+                        data: JSON.stringify($('#addmember').serializeObject()),
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function() {
+                            $("#result").html("Member cr&eacute;&eacute;e avec succ&egrave;s");
+                        }
+                    });
+                    /*$.post('http://localhost:8080/scrumble-server-web/scrumble/members/add', 
+                            JSON.stringify($('#addmember').serializeObject()), 
+                            function(data) {
+                                $('#result').html(data).append("<br/>CA MARCHE");
+                            },
+                            "json"
+                    );
+                    */
+                    return false;
                 });
             });
             
@@ -24,12 +60,15 @@
     <body>
         <h1>TEST Web Services !</h1>
         
-        
-        <form id="addmember"  action="http://localhost:8080/scrumble-server-web/scrumble/members/add" method="post">
+        <div id="result"></div>
+        <form id="addmember"  action="" method="post">
             <input type="text" name="firstname" placeholder="firstname" /><br />
             <input type="text" name="lastname" placeholder="lastname" /><br />
             <input type="text" name="login" placeholder="login" /><br />
             <input type="text" name="email" placeholder="email" /><br />
+            <input type="password" name="password" placeholder="password" /><br />
+            <!--<input type="hidden" name="idMember"/><br />
+            <input type="hidden" name="idRole"/><br />-->
             <input type="submit" value="ADD"/>
         </form>
         

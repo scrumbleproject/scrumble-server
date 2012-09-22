@@ -95,6 +95,7 @@ public class MembersResource {
     @POST
     @Path("add")
     @Consumes("application/json")
+    @Produces("application/json")
     public void addMember(Member1 member) {
         System.out.println("ADD MEMBER : "+member);
         memberBean.create(member);
