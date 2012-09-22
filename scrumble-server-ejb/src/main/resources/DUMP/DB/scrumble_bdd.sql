@@ -1,54 +1,31 @@
-CREATE DATABASE  IF NOT EXISTS `scrumble_bdd` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `scrumble_bdd`;
--- MySQL dump 10.13  Distrib 5.5.16, for Win32 (x86)
+-- phpMyAdmin SQL Dump
+-- version 3.3.9
+-- http://www.phpmyadmin.net
 --
--- Host: localhost    Database: scrumble_bdd
--- ------------------------------------------------------
--- Server version	5.5.8-log
+-- Serveur: localhost
+-- Généré le : Sam 22 Septembre 2012 à 12:38
+-- Version du serveur: 5.5.8
+-- Version de PHP: 5.3.5
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `project`
+-- Base de données: `scrumble_bdd`
 --
 
-DROP TABLE IF EXISTS `project`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `project` (
-  `id_project` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(150) DEFAULT NULL,
-  `description` text,
-  PRIMARY KEY (`id_project`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `project`
+-- Structure de la table `member`
 --
 
-LOCK TABLES `project` WRITE;
-/*!40000 ALTER TABLE `project` DISABLE KEYS */;
-/*!40000 ALTER TABLE `project` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `member`
---
-
-DROP TABLE IF EXISTS `member`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `member` (
+CREATE TABLE IF NOT EXISTS `member` (
   `id_member` int(11) NOT NULL AUTO_INCREMENT,
   `firstname` varchar(45) DEFAULT NULL,
   `lastname` varchar(75) DEFAULT NULL,
@@ -58,104 +35,146 @@ CREATE TABLE `member` (
   `id_role` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_member`),
   UNIQUE KEY `login_UNIQUE` (`login`),
-  KEY `fk_id_role_idx` (`id_role`),
-  CONSTRAINT `fk_id_role` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  KEY `fk_id_role_idx` (`id_role`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
--- Dumping data for table `member`
+-- Contenu de la table `member`
 --
 
-LOCK TABLES `member` WRITE;
-/*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES (1,'Cyril','EPINAT','cyril','cyril',NULL,NULL),(2,'Arnaud','DE LA CRUZ','arnaud','arnaud',NULL,NULL),(3,'Soukeyna','GAYE','soukeyna','soukeyna',NULL,NULL),(4,'Romain','THIVILLON','romain','romain',NULL,NULL),(5,'Jérémy','BARASCUT','jeremy','jeremy',NULL,NULL);
-/*!40000 ALTER TABLE `member` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `member` (`id_member`, `firstname`, `lastname`, `login`, `password`, `email`, `id_role`) VALUES
+(1, 'Cyril', 'EPINAT', 'cyril', 'cyril', 'epicyr@gmail.com', 1),
+(2, 'Arnaud', 'DE LA CRUZ', 'arnaud', 'arnaud', 'arnaud.delacruz@gmail.com', 1),
+(3, 'Soukeyna', 'GAYE', 'soukeyna', 'soukeyna', 'soukeynag@gmail.com', 1),
+(4, 'Romain', 'THIVILLON', 'romain', 'romain', 'romain.thivillon@gmail.com', 1),
+(5, 'Jérémy', 'BARASCUT', 'jeremy', 'jeremy', 'jeremy.barascut@gmail.com', 1),
+(6, 'Guest', 'Scrumble', 'guest', 'guest', 'guestscrumble@gmailcom', 5),
+(7, 'Product', 'Owner', 'prodowner', 'product', 'productowner@gmailcom', 4),
+(8, 'Scrum', 'Master', 'scrummaster', 'master', 'scrummaster@gmailcom', 3),
+(9, 'Developer', 'Scrum', 'scrumdev', 'developer', 'scrumdeveloper@gmail.com', 2),
+(10, 'Admin', 'Scrum', 'adminscrum', 'admin', 'adminscrum@gmail.com', 1);
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `task`
+-- Structure de la table `memberproject`
 --
 
-DROP TABLE IF EXISTS `task`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `task` (
+CREATE TABLE IF NOT EXISTS `memberproject` (
+  `id_project` int(11) NOT NULL,
+  `id_member` int(11) NOT NULL,
+  PRIMARY KEY (`id_project`,`id_member`),
+  KEY `fk_project_has_member_member1_idx` (`id_member`),
+  KEY `fk_project_has_member_project1_idx` (`id_project`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `memberproject`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `planningpoker`
+--
+
+CREATE TABLE IF NOT EXISTS `planningpoker` (
+  `id_planningpoker` int(11) NOT NULL AUTO_INCREMENT,
+  `value` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id_planningpoker`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
+
+--
+-- Contenu de la table `planningpoker`
+--
+
+INSERT INTO `planningpoker` (`id_planningpoker`, `value`) VALUES
+(1, '0'),
+(2, '0.5'),
+(3, '1'),
+(4, '2'),
+(5, '3'),
+(6, '5'),
+(7, '8'),
+(8, '13'),
+(9, '20'),
+(10, '40'),
+(11, '100'),
+(12, '?'),
+(13, 'Cup of coffee');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `project`
+--
+
+CREATE TABLE IF NOT EXISTS `project` (
+  `id_project` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(150) DEFAULT NULL,
+  `description` text,
+  PRIMARY KEY (`id_project`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Contenu de la table `project`
+--
+
+INSERT INTO `project` (`id_project`, `title`, `description`) VALUES
+(1, 'Project1', 'Projet Scrumble Test');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `role`
+--
+
+CREATE TABLE IF NOT EXISTS `role` (
+  `id_role` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(75) DEFAULT NULL,
+  `description` text,
+  PRIMARY KEY (`id_role`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Contenu de la table `role`
+--
+
+INSERT INTO `role` (`id_role`, `title`, `description`) VALUES
+(1, 'Admin', 'Administrateur'),
+(2, 'Developer', 'Développeur'),
+(3, 'Scrum Master', 'Scrum Master'),
+(4, 'Product Owner', 'Product Owwner '),
+(5, 'Client', 'Client');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `task`
+--
+
+CREATE TABLE IF NOT EXISTS `task` (
   `id_task` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(45) DEFAULT NULL,
   `estimation` varchar(20) DEFAULT NULL,
   `id_userstory` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_task`),
-  KEY `fk_id_userstory_idx` (`id_userstory`),
-  CONSTRAINT `fk_id_userstory` FOREIGN KEY (`id_userstory`) REFERENCES `userstory` (`id_userstory`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  KEY `fk_id_userstory_idx` (`id_userstory`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
--- Dumping data for table `task`
+-- Contenu de la table `task`
 --
 
-LOCK TABLES `task` WRITE;
-/*!40000 ALTER TABLE `task` DISABLE KEYS */;
-/*!40000 ALTER TABLE `task` ENABLE KEYS */;
-UNLOCK TABLES;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `role`
+-- Structure de la table `userstory`
 --
 
-DROP TABLE IF EXISTS `role`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `role` (
-  `id_role` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(75) DEFAULT NULL,
-  `description` text,
-  PRIMARY KEY (`id_role`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `role`
---
-
-LOCK TABLES `role` WRITE;
-/*!40000 ALTER TABLE `role` DISABLE KEYS */;
-/*!40000 ALTER TABLE `role` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `planningpoker`
---
-
-DROP TABLE IF EXISTS `planningpoker`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `planningpoker` (
-  `id_planningpoker` int(11) NOT NULL AUTO_INCREMENT,
-  `value` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`id_planningpoker`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `planningpoker`
---
-
-LOCK TABLES `planningpoker` WRITE;
-/*!40000 ALTER TABLE `planningpoker` DISABLE KEYS */;
-INSERT INTO `planningpoker` VALUES (1,'0'),(2,'0.5'),(3,'1'),(4,'2'),(5,'3'),(6,'5'),(7,'8'),(8,'13'),(9,'20'),(10,'40'),(11,'100'),(12,'?'),(13,'Cup of coffee');
-/*!40000 ALTER TABLE `planningpoker` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `userstory`
---
-
-DROP TABLE IF EXISTS `userstory`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `userstory` (
+CREATE TABLE IF NOT EXISTS `userstory` (
   `id_userstory` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) DEFAULT NULL,
   `importance` varchar(20) DEFAULT NULL,
@@ -165,54 +184,45 @@ CREATE TABLE `userstory` (
   `id_project` int(11) DEFAULT NULL,
   `category` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_userstory`),
-  KEY `fk_id_project_idx` (`id_project`),
-  CONSTRAINT `fk_id_project` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  KEY `fk_id_project_idx` (`id_project`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
--- Dumping data for table `userstory`
+-- Contenu de la table `userstory`
 --
 
-LOCK TABLES `userstory` WRITE;
-/*!40000 ALTER TABLE `userstory` DISABLE KEYS */;
-/*!40000 ALTER TABLE `userstory` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `userstory` (`id_userstory`, `title`, `importance`, `estimation`, `demonstration`, `note`, `id_project`, `category`) VALUES
+(1, 'Se connecter à l''application', '100', '0.5', '-Renseigner son Login\r\n-Renseigner son mot de passe\r\n-Valider\r\n-Accéder à la page d''accueil de l''application\r\n', NULL, 1, 'Base de données'),
+(2, 'Créer un nouveau projet', '90', '1', '- Cliquer sur "New project"\r\n- choisir une méthode ou des modules\r\n- Renseigner les données du formulaire de création\r\n- Valider et revenir à la page d''accueil\r\n- Accéder au projet créé', NULL, 1, 'Web'),
+(3, 'Ajouter des membres à un projet', '90', '5', '- Accéder à un projet donné\r\n- Cliquer sur Members\r\n- Visualiser la liste de tous les membres (avec leurs compétences)\r\n- cocher les membres à ajouter au projet et valider\r\n- Revenir sur le projet et visualiser les membres sélectionnés.', NULL, 1, 'Base de données'),
+(4, 'Visualiser le Dashboard d''un projet', '50', NULL, '-Accéder à l''application et sélectionner un projet donné\r\n-Cliquer su le menu "Dashbord" et visualiser le tableau de bord du projet', NULL, 1, 'Web'),
+(5, 'Gérer les user stories du projet', NULL, NULL, '-Accéder à l''application et sélectionner un projet\r\n-Cliquer sur le menu "Story"\r\n-Cliquer sur "New Story" pour ajouter une story ou sélectionner une story existante pour la modifier ou la supprimer \r\n- Sauvegarder et visualiser les modifications', NULL, 1, 'Base de données');
 
 --
--- Table structure for table `memberproject`
+-- Contraintes pour les tables exportées
 --
 
-DROP TABLE IF EXISTS `memberproject`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `memberproject` (
-  `id_project` int(11) NOT NULL,
-  `id_member` int(11) NOT NULL,
-  PRIMARY KEY (`id_project`,`id_member`),
-  KEY `fk_project_has_member_member1_idx` (`id_member`),
-  KEY `fk_project_has_member_project1_idx` (`id_project`),
-  CONSTRAINT `fk_project_has_member_project1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_project_has_member_member1` FOREIGN KEY (`id_member`) REFERENCES `member` (`id_member`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+--
+-- Contraintes pour la table `member`
+--
+ALTER TABLE `member`
+  ADD CONSTRAINT `fk_id_role` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Dumping data for table `memberproject`
+-- Contraintes pour la table `memberproject`
 --
+ALTER TABLE `memberproject`
+  ADD CONSTRAINT `fk_project_has_member_member1` FOREIGN KEY (`id_member`) REFERENCES `member` (`id_member`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_project_has_member_project1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-LOCK TABLES `memberproject` WRITE;
-/*!40000 ALTER TABLE `memberproject` DISABLE KEYS */;
-/*!40000 ALTER TABLE `memberproject` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+--
+-- Contraintes pour la table `task`
+--
+ALTER TABLE `task`
+  ADD CONSTRAINT `fk_id_userstory` FOREIGN KEY (`id_userstory`) REFERENCES `userstory` (`id_userstory`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2012-09-22 11:36:02
+--
+-- Contraintes pour la table `userstory`
+--
+ALTER TABLE `userstory`
+  ADD CONSTRAINT `fk_id_project` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE NO ACTION ON UPDATE NO ACTION;
