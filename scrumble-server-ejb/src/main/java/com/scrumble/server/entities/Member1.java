@@ -66,12 +66,11 @@ public class Member1 implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "login")
     private String login;
-    /*@Basic(optional = false)
+    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "password")
     private String password;
-    * */
 
     public Member1() {
     }
@@ -83,7 +82,7 @@ public class Member1 implements Serializable {
     public Member1(Integer idMember, String login, String password) {
         this.idMember = idMember;
         this.login = login;
-        //this.password = password;
+        this.password = password;
     }
 
     public Integer getIdMember() {
@@ -118,14 +117,13 @@ public class Member1 implements Serializable {
         this.login = login;
     }
 
-    /*public String getPassword() {
+    public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
-    * */
 
     @Override
     public int hashCode() {
