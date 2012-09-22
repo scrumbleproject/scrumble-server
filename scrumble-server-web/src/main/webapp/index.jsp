@@ -31,7 +31,7 @@
             };
             
             $(document).ready( function(){
-                $('#addmember').submit(function() {
+                $('#addMember').submit(function() {
                     $.ajax({
                         url:"http://localhost:8080/scrumble-server-web/scrumble/members/add",
                         type:"POST",
@@ -45,6 +45,37 @@
                     
                     return false;
                 });
+                
+                $('#addMemberUpdate').submit(function() {
+                    $.ajax({
+                        url:"http://localhost:8080/scrumble-server-web/scrumble/members/"+$("#idMember").val(),
+                        type:"PUT",
+                        data: JSON.stringify($('#addMemberUpdate').serializeObject()),
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function() {
+                            $("#result").html("Member modifi&eacute; avec succ&egrave;s");
+                        }
+                    });
+                    
+                    return false;
+                });
+                
+                //load a member for TEST
+                $.getJSON("http://localhost:8080/scrumble-server-web/scrumble/members/1",
+                    function(reponse) {
+                        // assigner les valeurs
+                        $("#idMember").val(reponse.idMember);
+                        //$("#idRole").val(reponse.idRole);
+                        $("#firstname").val(reponse.firstname);
+                        $("#lastname").val(reponse.lastname);
+                        $("#login").val(reponse.login);
+                        $("#email").val(reponse.email);
+                        $("#password").val(reponse.password);
+                        
+                    }
+                );
+                
             });
             
         </script>
@@ -54,15 +85,25 @@
         <h1>TEST Web Services !</h1>
         
         <div id="result"></div>
-        <form id="addmember"  action="" method="post">
+        <form id="addMember"  action="" method="post">
             <input type="text" name="firstname" placeholder="firstname" /><br />
             <input type="text" name="lastname" placeholder="lastname" /><br />
             <input type="text" name="login" placeholder="login" /><br />
             <input type="text" name="email" placeholder="email" /><br />
             <input type="password" name="password" placeholder="password" /><br />
-            <!--<input type="hidden" name="idMember"/><br />
-            <input type="hidden" name="idRole"/><br />-->
+            <!--<input type="hidden" name="idMember"/>
+            <input type="hidden" name="idRole"/>-->
             <input type="submit" value="ADD"/>
+        </form>
+        <form id="addMemberUpdate"  action="" method="post">
+            <input type="text" id="firstname" name="firstname" placeholder="firstname" /><br />
+            <input type="text" id="lastname" name="lastname" placeholder="lastname" /><br />
+            <input type="text" id="login" name="login" placeholder="login" /><br />
+            <input type="text" id="email" name="email" placeholder="email" /><br />
+            <input type="password" id="password" name="password" placeholder="password" /><br />
+            <input type="hidden" id="idMember" name="idMember"/>
+            <!--<input type="hidden" id="idRole" name="idRole"/>-->
+            <input type="submit" value="Modifier"/>
         </form>
         
         

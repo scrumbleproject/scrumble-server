@@ -109,7 +109,9 @@ public class MembersResource {
     @Consumes("application/json")
     @Produces("application/json")
     public void updateMember(@PathParam("id") String id) {
+        System.out.println("PUT");
         Member1 member = memberBean.find(Integer.parseInt(id));
+        if (member==null)System.out.println("member is NULL !!!!");
         memberBean.edit(member);
     }
     
