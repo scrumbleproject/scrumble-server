@@ -102,10 +102,8 @@ public class TaskResource {
     @Path("{id}")
     @Consumes("application/json")
     @Produces("application/json")
-    public void updateTask(@PathParam("id") String id) {
+    public void updateMember(Task task) {
         System.out.println("PUT");
-        Task task = taskBean.find(Integer.parseInt(id));
-        if (task==null)System.out.println("task is NULL !!!!");
         taskBean.edit(task);
     }
 }
