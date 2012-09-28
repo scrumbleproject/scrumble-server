@@ -13,11 +13,13 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 /**
  * REST Web Service
@@ -96,6 +98,7 @@ public class MembersResource {
     @Consumes("application/json")
     @Produces("application/json")
     public void addMember(Member1 member) {
+        System.out.println("ADD "+member);
         memberBean.create(member);
     }
     
@@ -105,14 +108,25 @@ public class MembersResource {
      * @return an HTTP response with content of the created resource.
      */
     @PUT
-    @Path("{id}")
     @Consumes("application/json")
     @Produces("application/json")
-    public void updateMember(@PathParam("id") String id) {
+    public void updateMember(Member1 member) {
         System.out.println("PUT");
-        Member1 member = memberBean.find(Integer.parseInt(id));
-        if (member==null)System.out.println("member is NULL !!!!");
         memberBean.edit(member);
+    }
+    
+    
+    /**
+     * Removes a single com.scrumble.server.entities.Member1 object
+     * @param id the id of the Member1 object to remove
+     * @return nothing.
+     */
+    @DELETE
+    @Path("{id}")
+    @Produces("application/json")
+    public void removeMember(@PathParam("id") String id) {
+        if(memberBean.find(Integer.parseInt(id))!=null)
+            memberBean.remove(memberBean.find(Integer.parseInt(id)));
     }
     
 }
