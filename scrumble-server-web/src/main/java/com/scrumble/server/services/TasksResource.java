@@ -12,6 +12,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -49,7 +50,7 @@ public class TasksResource {
 
     /**
      * Retrieves representation of a single com.scrumble.server.entities.Task object
-     * @param id the id of the Member1 object to retrieve
+     * @param id the id of the Task object to retrieve
      * @return a JSON representation of the related Member1 object.
      */
     @GET
@@ -60,7 +61,7 @@ public class TasksResource {
     }
 
     /**
-     * POST method for creating an instance of TasksResource object
+     * POST method for creating an instance of Task object
      * @param task JSON representation for the Task object
      * @return an HTTP response with content of the created resource.
      */
@@ -73,16 +74,28 @@ public class TasksResource {
     }
     
     /**
-     * PUT method for updating an instance of TasksResource object
+     * PUT method for updating an instance of Task object
      * @param task JSON representation for the Task object
      * @return an HTTP response with content of the created resource.
      */
     @PUT
-    @Path("{id}")
     @Consumes("application/json")
     @Produces("application/json")
     public void updateTask(Task task) {
         System.out.println("PUT");
         taskBean.edit(task);
+    }
+    
+    /**
+     * Removes a single com.scrumble.server.entities.Task object
+     * @param id the id of the Task object to remove
+     * @return nothing.
+     */
+    @DELETE
+    @Path("{id}")
+    @Produces("application/json")
+    public void removeUserStory(@PathParam("id") String id) {
+        if(taskBean.find(Integer.parseInt(id))!=null)
+            taskBean.remove(taskBean.find(Integer.parseInt(id)));
     }
 }

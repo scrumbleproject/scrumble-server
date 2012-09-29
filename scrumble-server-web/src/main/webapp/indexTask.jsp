@@ -6,10 +6,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page TEST</title>
-        
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-   
-        
         <script type="text/javascript">
             
             $.fn.serializeObject = function()
@@ -43,14 +40,15 @@
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         success: function() {
-                            $("#result").append("Task cr&eacute;&eacute;e avec succ&egrave;s");
+                            $("#result").append("Task cr&eacute;&eacute; avec succ&egrave;s");
                         }
                     });
                     
                     return false;
                 });
                 
-                $('#addTaskUpdate').submit(function() {
+                
+                /*$('#addTaskUpdate').submit(function() {
                     
                     $("#result").html(JSON.stringify($('#addTaskUpdate').serializeObject()));
                     
@@ -61,56 +59,47 @@
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         success: function(data) {
-                            $("#result").append("Task modifi&eacute;e avec succ&egrave;s<br/>");
+                            $("#result").append("Task modifi&eacute; avec succ&egrave;s<br/>");
                         }
                     });
                     
                     return false;
                 });
                 
-                //load a task for EDIT (PUT)
-                $.getJSON("http://localhost:8080/scrumble-server-web/scrumble/tasks/1",
+                
+                //load a member for EDIT (PUT)
+                $.getJSON("http://localhost:8080/scrumble-server-web/scrumble/tasks/15",
                     function(reponse) {
                         // assigner les valeurs
                         $("#idTask").val(reponse.idTask);
-                        //$("#idRole").val(reponse.idRole);
                         $("#title").val(reponse.title);
-                        //$("#lastname").val(reponse.lastname);
                         $("#estimation").val(reponse.estimation);
-                        $("#idUserStory").val(reponse.idUserStory);
-                        //$("#password").val(reponse.password);
-                        
                     }
-                );
+                );*/
                     
-                  
-                $('#TaskDelete').submit(function() {
+                
+                $('#taskDelete').submit(function() {
                     
-                    $("#result").html(JSON.stringify($('#TaskDelete').serializeObject()));
+                    $("#result").html(JSON.stringify($('#taskDelete').serializeObject()));
                     
                     $.ajax({
-                        url:"http://localhost:8080/scrumble-server-web/scrumble/tasks/"+$('#TaskDelete > #idTask').val(),
+                        url:"http://localhost:8080/scrumble-server-web/scrumble/tasks/"+$('#taskDelete > #idTask').val(),
                         type:"DELETE",
                         success: function(data) {
-                            $("#result").append("Task supprim&eacute;e avec succ&egrave;s<br/>");
+                            $("#result").append("Task supprim&eacute; avec succ&egrave;s<br/>");
                         }
                     });
                     
                     return false;
                 });
                 
-                //load a task for DELETE
-                $.getJSON("http://localhost:8080/scrumble-server-web/scrumble/tasks/11",
+                //load a member for DELETE
+                $.getJSON("http://localhost:8080/scrumble-server-web/scrumble/tasks/15",
                     function(reponse) {
                         // assigner les valeurs
-                        $("#TaskDelete > #idTAsk").val(reponse.idTask);
-                        //$("#idRole").val(reponse.idRole);
-                        $("#TaskDelete > #title").val(reponse.title);
-                        $("#TaskDelete > #estimation").val(reponse.estimation);
-                        $("#TaskDelete > #idUserStory").val(reponse.idUserStory);
-                        //$("#memberDelete > #email").val(reponse.email);
-                        //$("#memberDelete > #password").val(reponse.password);
-                        
+                        $("#idTask").val(reponse.idTask);
+                        $("#title").val(reponse.title);
+                        $("#estimation").val(reponse.estimation);
                     }
                 );
                     
@@ -118,47 +107,34 @@
             });
             
         </script>
-        
     </head>
     <body>
-        <h1>TEST Web Services !</h1>
+        <h1>TEST Task !</h1>
         
         <div id="result"></div>
+        <br/>TEST ajout :<br/>
         <form id="addTask"  action="" method="post">
             <input type="text" name="title" placeholder="title" /><br />
             <input type="text" name="estimation" placeholder="estimation" /><br />
-            <input type="text" name="idUserStory" placeholder="idUserStory" /><br />
-            <!--<input type="text" name="email" placeholder="email" /><br />
-            <input type="password" name="password" placeholder="password" /><br />-->
-            <!--<input type="hidden" name="idMember" value=""/>
-            <input type="hidden" name="idRole" value=""/>-->
-            <input type="submit" value="ADD"/>
+            <input type="submit" value="Ajouter"/>
         </form>
+        
+        <br/>TEST modification :<br/>
         <form id="addTaskUpdate"  action="" method="post">
-            <input type="text" id="idTask" name="title" placeholder="idTask" /><br />
-            <input type="text" id="title" name="title" placeholder="title" /><br />
+            
+            <!--<input type="text" id="title" name="title" placeholder="title" /><br />
             <input type="text" id="estimation" name="estimation" placeholder="estimation" /><br />
-            <input type="text" id="idUserStory" name="idUserStory" placeholder="idUserStory" /><br />
-            <!--<input type="text" id="email" name="email" placeholder="email" /><br />
-            <input type="password" id="password" name="password" placeholder="password" /><br />
-            <input type="hidden" id="idTask" name="idTask"/>
-            <!--<input type="hidden" id="idRole" name="idRole"/>-->
+            <input type="hidden" id="idTask" name="idTask"/>-->
             <input type="submit" value="Modifier"/>
         </form>
-        <form id="TaskDelete"  action="" method="post">
-            <input type="text" id="idTask" name="title" placeholder="idTask" /><br />
+        
+        <br/>TEST suppression : <br/>
+        <form id="taskDelete"  action="" method="post">
             <input type="text" id="title" name="title" placeholder="title" /><br />
             <input type="text" id="estimation" name="estimation" placeholder="estimation" /><br />
-            <!--<input type="text" id="login" name="login" placeholder="login" /><br />
-            <input type="text" id="email" name="email" placeholder="email" /><br />
-            <input type="password" id="password" name="password" placeholder="password" /><br />
             <input type="hidden" id="idTask" name="idTask"/>
-            <!--<input type="hidden" id="idRole" name="idRole"/>-->
-            <input type="submit" value="Delete"/>
+            <input type="submit" value="Supprimer"/>
         </form>
-        
-        
-        
         
     </body>
 </html>
