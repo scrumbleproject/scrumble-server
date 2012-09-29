@@ -32,36 +32,36 @@
             
             $(document).ready( function(){
                 
-                $('#addMember').submit(function() {
+                $('#addTask').submit(function() {
                     
-                    $("#result").html(JSON.stringify($('#addMember').serializeObject()));
+                    $("#result").html(JSON.stringify($('#addTask').serializeObject()));
                     
                     $.ajax({
-                        url:"http://192.168.0.13:8080/scrumble-server-web/scrumble/members/add",
+                        url:"http://localhost:8080/scrumble-server-web/scrumble/tasks/add",
                         type:"POST",
-                        data: JSON.stringify($('#addMember').serializeObject()),
+                        data: JSON.stringify($('#addTask').serializeObject()),
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         success: function() {
-                            $("#result").append("Member cr&eacute;&eacute;e avec succ&egrave;s");
+                            $("#result").append("Task cr&eacute;&eacute;e avec succ&egrave;s");
                         }
                     });
                     
                     return false;
                 });
                 
-                $('#addMemberUpdate').submit(function() {
+                $('#addTaskUpdate').submit(function() {
                     
-                    $("#result").html(JSON.stringify($('#addMemberUpdate').serializeObject()));
+                    $("#result").html(JSON.stringify($('#addTaskUpdate').serializeObject()));
                     
                     $.ajax({
-                        url:"http://192.168.0.13:8080/scrumble-server-web/scrumble/members/",
+                        url:"http://localhost:8080/scrumble-server-web/scrumble/tasks/",
                         type:"PUT",
-                        data: JSON.stringify($('#addMemberUpdate').serializeObject()),
+                        data: JSON.stringify($('#addTaskUpdate').serializeObject()),
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         success: function(data) {
-                            $("#result").append("Member modifi&eacute; avec succ&egrave;s<br/>");
+                            $("#result").append("Task modifi&eacute;e avec succ&egrave;s<br/>");
                         }
                     });
                     
@@ -69,30 +69,30 @@
                 });
                 
                 //load a member for EDIT (PUT)
-                $.getJSON("http://192.168.0.13:8080/scrumble-server-web/scrumble/members/1",
+                $.getJSON("http://localhost:8080/scrumble-server-web/scrumble/tasks/1",
                     function(reponse) {
                         // assigner les valeurs
-                        $("#idMember").val(reponse.idMember);
+                        $("#idTask").val(reponse.idTask);
                         //$("#idRole").val(reponse.idRole);
-                        $("#firstname").val(reponse.firstname);
-                        $("#lastname").val(reponse.lastname);
-                        $("#login").val(reponse.login);
-                        $("#email").val(reponse.email);
-                        $("#password").val(reponse.password);
+                        $("#title").val(reponse.title);
+                        //$("#lastname").val(reponse.lastname);
+                        $("#estimation").val(reponse.estimation);
+                        $("#idUserStory").val(reponse.idUserStory);
+                        //$("#password").val(reponse.password);
                         
                     }
                 );
                     
                   
-                $('#memberDelete').submit(function() {
+                $('#TaskDelete').submit(function() {
                     
-                    $("#result").html(JSON.stringify($('#memberDelete').serializeObject()));
+                    $("#result").html(JSON.stringify($('#TaskDelete').serializeObject()));
                     
                     $.ajax({
-                        url:"http://192.168.0.13:8080/scrumble-server-web/scrumble/members/"+$('#memberDelete > #idMember').val(),
+                        url:"http://localhost:8080/scrumble-server-web/scrumble/tasks/"+$('#TaskDelete > #idTask').val(),
                         type:"DELETE",
                         success: function(data) {
-                            $("#result").append("Member supprim&eacute; avec succ&egrave;s<br/>");
+                            $("#result").append("Task supprim&eacute;e avec succ&egrave;s<br/>");
                         }
                     });
                     
@@ -100,16 +100,16 @@
                 });
                 
                 //load a member for DELETE
-                $.getJSON("http://192.168.0.13:8080/scrumble-server-web/scrumble/members/11",
+                $.getJSON("http://localhost:8080/scrumble-server-web/scrumble/tasks/11",
                     function(reponse) {
                         // assigner les valeurs
-                        $("#memberDelete > #idMember").val(reponse.idMember);
+                        $("#TaskDelete > #idTAsk").val(reponse.idTask);
                         //$("#idRole").val(reponse.idRole);
-                        $("#memberDelete > #firstname").val(reponse.firstname);
-                        $("#memberDelete > #lastname").val(reponse.lastname);
-                        $("#memberDelete > #login").val(reponse.login);
-                        $("#memberDelete > #email").val(reponse.email);
-                        $("#memberDelete > #password").val(reponse.password);
+                        $("#TaskDelete > #title").val(reponse.title);
+                        $("#TaskDelete > #estimation").val(reponse.estimation);
+                        $("#TaskDelete > #idUserStory").val(reponse.idUserStory);
+                        //$("#memberDelete > #email").val(reponse.email);
+                        //$("#memberDelete > #password").val(reponse.password);
                         
                     }
                 );
@@ -124,36 +124,40 @@
         <h1>TEST Web Services !</h1>
         
         <div id="result"></div>
-        <form id="addMember"  action="" method="post">
-            <input type="text" name="firstname" placeholder="firstname" /><br />
-            <input type="text" name="lastname" placeholder="lastname" /><br />
-            <input type="text" name="login" placeholder="login" /><br />
-            <input type="text" name="email" placeholder="email" /><br />
-            <input type="password" name="password" placeholder="password" /><br />
+        <form id="addTask"  action="" method="post">
+            <input type="text" name="title" placeholder="title" /><br />
+            <input type="text" name="estimation" placeholder="estimation" /><br />
+            <input type="text" name="idUserStory" placeholder="idUserStory" /><br />
+            <!--<input type="text" name="email" placeholder="email" /><br />
+            <input type="password" name="password" placeholder="password" /><br />-->
             <!--<input type="hidden" name="idMember" value=""/>
             <input type="hidden" name="idRole" value=""/>-->
             <input type="submit" value="ADD"/>
         </form>
-        <form id="addMemberUpdate"  action="" method="post">
-            <input type="text" id="firstname" name="firstname" placeholder="firstname" /><br />
-            <input type="text" id="lastname" name="lastname" placeholder="lastname" /><br />
-            <input type="text" id="login" name="login" placeholder="login" /><br />
-            <input type="text" id="email" name="email" placeholder="email" /><br />
+        <form id="addTaskUpdate"  action="" method="post">
+            <input type="text" id="idTask" name="title" placeholder="idTask" /><br />
+            <input type="text" id="title" name="title" placeholder="title" /><br />
+            <input type="text" id="estimation" name="estimation" placeholder="estimation" /><br />
+            <input type="text" id="idUserStory" name="idUserStory" placeholder="idUserStory" /><br />
+            <!--<input type="text" id="email" name="email" placeholder="email" /><br />
             <input type="password" id="password" name="password" placeholder="password" /><br />
-            <input type="hidden" id="idMember" name="idMember"/>
+            <input type="hidden" id="idTask" name="idTask"/>
             <!--<input type="hidden" id="idRole" name="idRole"/>-->
             <input type="submit" value="Modifier"/>
         </form>
-        <form id="memberDelete"  action="" method="post">
-            <input type="text" id="firstname" name="firstname" placeholder="firstname" /><br />
-            <input type="text" id="lastname" name="lastname" placeholder="lastname" /><br />
-            <input type="text" id="login" name="login" placeholder="login" /><br />
+        <form id="TaskDelete"  action="" method="post">
+            <input type="text" id="idTask" name="title" placeholder="idTask" /><br />
+            <input type="text" id="title" name="title" placeholder="title" /><br />
+            <input type="text" id="estimation" name="estimation" placeholder="estimation" /><br />
+            <!--<input type="text" id="login" name="login" placeholder="login" /><br />
             <input type="text" id="email" name="email" placeholder="email" /><br />
             <input type="password" id="password" name="password" placeholder="password" /><br />
-            <input type="hidden" id="idMember" name="idMember"/>
+            <input type="hidden" id="idTask" name="idTask"/>
             <!--<input type="hidden" id="idRole" name="idRole"/>-->
             <input type="submit" value="Delete"/>
         </form>
+        
+        
         
         
     </body>
