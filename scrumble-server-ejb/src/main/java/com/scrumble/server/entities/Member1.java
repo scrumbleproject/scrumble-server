@@ -39,9 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Member1.findByLogin", query = "SELECT m FROM Member1 m WHERE m.login = :login"),
     //@NamedQuery(name = "Member1.findByPassword", query = "SELECT m FROM Member1 m WHERE m.password = :password")
     @NamedQuery(name = "Member1.quickSearchSimple", query = "SELECT m FROM Member1 m WHERE m.firstname like :pattern or m.lastname like :pattern or m.login like :pattern or m.email like :pattern"),
-    @NamedQuery(name = "Member1.quickSearchExact", query = "SELECT m FROM Member1 m WHERE m.firstname = :pattern or m.lastname = :pattern or m.login = :pattern or m.email = :pattern"),
-
-})
+    @NamedQuery(name = "Member1.quickSearchExact", query = "SELECT m FROM Member1 m WHERE m.firstname = :pattern or m.lastname = :pattern or m.login = :pattern or m.email = :pattern")})
 public class Member1 implements Serializable {
     @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 75)

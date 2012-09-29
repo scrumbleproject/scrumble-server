@@ -29,4 +29,13 @@ public interface UserstoryFacadeLocal {
 
     int count();
     
+    /** custom methods **/
+    
+    /**
+     * QUICK SEARCH : search members within all Userstory object attributes
+     * @param pattern a String to compare with any attributes content
+     * @return a list with all matching Userstory object 
+     */
+    public List<Userstory> quickSearch(String pattern);
+    
 }

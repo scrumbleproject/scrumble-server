@@ -58,6 +58,19 @@ public class UserStoriesResource {
      * @return a JSON representation of the related Userstory object.
      */
     @GET
+    @Path("search/{pattern}")
+    @Produces("application/json")
+    public List<Userstory> searchUserStoriesQuick(@PathParam("pattern") String pattern) {
+        return userStoryBean.quickSearch(pattern);
+    }
+    
+    
+    /**
+     * Retrieves representation of a single com.scrumble.server.entities.Userstory object
+     * @param id the id of the Userstory object to retrieve
+     * @return a JSON representation of the related Userstory object.
+     */
+    @GET
     @Path("{id}")
     @Produces("application/json")
     public Userstory getUserStory(@PathParam("id") String id) {

@@ -5,10 +5,15 @@
 package com.scrumble.server.sessionbeans;
 
 import com.scrumble.server.entities.Project;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -27,6 +32,24 @@ public class ProjectFacade extends AbstractFacade<Project> implements ProjectFac
 
     public ProjectFacade() {
         super(Project.class);
+    }
+    
+    public List<Project> quickSearch(String pattern){
+        List<Project> results;
+        
+        //run named queries
+        TypedQuery<Project> queryExact = getEntityManager().createNamedQuery("Project.quickSearchExact", Project.class);
+        TypedQuery<Project> querySimple = getEntityManager().createNamedQuery("Project.quickSearchSimple", Project.class);
+        
+        //concatenate results
+        results = queryExact.setParameter("pattern", pattern).getResultList();
+        results.addAll(querySimple.setParameter("pattern", "%"+pattern+"%").getResultList());
+        
+        //supprimer les doublons
+        Set set = new HashSet();
+        set.addAll(results);
+        
+        return new ArrayList<Project>(set);
     }
     
 }

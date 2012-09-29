@@ -34,7 +34,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Project.findAll", query = "SELECT p FROM Project p"),
     @NamedQuery(name = "Project.findByIdProject", query = "SELECT p FROM Project p WHERE p.idProject = :idProject"),
-    @NamedQuery(name = "Project.findByTitle", query = "SELECT p FROM Project p WHERE p.title = :title")})
+    @NamedQuery(name = "Project.findByTitle", query = "SELECT p FROM Project p WHERE p.title = :title"),
+    @NamedQuery(name = "Project.quickSearchSimple", query = "SELECT p FROM Project p WHERE p.title like :pattern or p.description like :pattern"),
+    @NamedQuery(name = "Project.quickSearchExact", query = "SELECT p FROM Project p WHERE p.title = :pattern or p.description = :pattern")})
 public class Project implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

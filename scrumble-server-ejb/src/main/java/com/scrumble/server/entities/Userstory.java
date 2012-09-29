@@ -36,7 +36,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Userstory.findByTitle", query = "SELECT u FROM Userstory u WHERE u.title = :title"),
     @NamedQuery(name = "Userstory.findByImportance", query = "SELECT u FROM Userstory u WHERE u.importance = :importance"),
     @NamedQuery(name = "Userstory.findByEstimation", query = "SELECT u FROM Userstory u WHERE u.estimation = :estimation"),
-    @NamedQuery(name = "Userstory.findByCategory", query = "SELECT u FROM Userstory u WHERE u.category = :category")})
+    @NamedQuery(name = "Userstory.findByCategory", query = "SELECT u FROM Userstory u WHERE u.category = :category"),
+    @NamedQuery(name = "Userstory.quickSearchSimple", query = "SELECT u FROM Userstory u WHERE u.title like :pattern or u.demonstration like :pattern or u.note like :pattern or u.category like :pattern"),
+    @NamedQuery(name = "Userstory.quickSearchExact", query = "SELECT u FROM Userstory u WHERE u.title = :pattern or u.demonstration = :pattern or u.note = :pattern or u.category = :pattern")})
 public class Userstory implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

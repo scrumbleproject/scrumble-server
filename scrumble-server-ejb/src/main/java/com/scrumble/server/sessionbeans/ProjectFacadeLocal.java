@@ -29,4 +29,13 @@ public interface ProjectFacadeLocal {
 
     int count();
     
+    /** custom methods **/
+    
+    /**
+     * QUICK SEARCH : search members within all Project object attributes
+     * @param pattern a String to compare with any attributes content
+     * @return a list with all matching Project object 
+     */
+    public List<Project> quickSearch(String pattern);
+    
 }
