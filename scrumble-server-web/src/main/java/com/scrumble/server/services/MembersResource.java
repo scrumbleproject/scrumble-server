@@ -41,27 +41,6 @@ public class MembersResource {
      */
     public MembersResource() {
     }
-
-    /**
-     * Retrieves representation of an instance of com.scrumble.server.services.MembersResource
-     * @return an instance of java.lang.String
-     */
-    @GET
-    @Produces("application/json")
-    public String getJson() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * PUT method for updating or creating an instance of MembersResource
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
-    @PUT
-    @Consumes("application/json")
-    public void putJson(String content) {
-    }
     
     
     /**
@@ -73,6 +52,18 @@ public class MembersResource {
     @Produces("application/json")
     public List<Member1> findAll() {
         return memberBean.findAll();
+    }
+    
+    /**
+     * Retrieves representation of a single com.scrumble.server.entities.Member1 object
+     * @param id the id of the Member1 object to retrieve
+     * @return a JSON representation of the related Member1 object.
+     */
+    @GET
+    @Path("search/{pattern}")
+    @Produces("application/json")
+    public List<Member1> searchMembersQuick(@PathParam("pattern") String pattern) {
+        return memberBean.quickSearch(pattern);
     }
     
     /**
