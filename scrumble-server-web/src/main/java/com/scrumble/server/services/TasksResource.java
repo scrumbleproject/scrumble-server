@@ -21,7 +21,7 @@ import javax.ws.rs.core.UriInfo;
  */
 @Path("tasks")
 @Stateless
-public class TaskResource {
+public class TasksResource {
     
 
     @Context
@@ -30,11 +30,11 @@ public class TaskResource {
     @EJB
     private TaskFacadeLocal taskBean;
     /**
-     * Creates a new instance of TaskResource
+     * Creates a new instance of TasksResource
      */
     
     
-    public TaskResource() {
+    public TasksResource() {
     }
 
     
@@ -60,7 +60,7 @@ public class TaskResource {
     }
 
     /**
-     * POST method for creating an instance of TaskResource object
+     * POST method for creating an instance of TasksResource object
      * @param task JSON representation for the Task object
      * @return an HTTP response with content of the created resource.
      */
@@ -73,7 +73,7 @@ public class TaskResource {
     }
     
     /**
-     * PUT method for updating an instance of TaskResource object
+     * PUT method for updating an instance of TasksResource object
      * @param task JSON representation for the Task object
      * @return an HTTP response with content of the created resource.
      */

@@ -68,7 +68,7 @@
                     return false;
                 });
                 
-                //load a member for EDIT (PUT)
+                //load a task for EDIT (PUT)
                 $.getJSON("http://localhost:8080/scrumble-server-web/scrumble/tasks/1",
                     function(reponse) {
                         // assigner les valeurs
@@ -99,7 +99,7 @@
                     return false;
                 });
                 
-                //load a member for DELETE
+                //load a task for DELETE
                 $.getJSON("http://localhost:8080/scrumble-server-web/scrumble/tasks/11",
                     function(reponse) {
                         // assigner les valeurs
