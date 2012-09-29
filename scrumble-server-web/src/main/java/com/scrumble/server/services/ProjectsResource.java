@@ -74,22 +74,22 @@ public class ProjectsResource {
     @GET
     @Path("{id}")
     @Produces("application/json")
-    public Project getUserStory(@PathParam("id") String id) {
+    public Project getProject(@PathParam("id") String id) {
         return projectBean.find(Integer.parseInt(id));
     }
     
     
     /**
      * POST method for creating an instance of Project object
-     * @param userstory JSON representation for the Project object
+     * @param project JSON representation for the Project object
      * @return an HTTP response with content of the created resource.
      */
     @POST
     @Path("add")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response addUserStory(Project userstory) {
-        projectBean.create(userstory);
+    public Response addProject(Project project) {
+        projectBean.create(project);
         
         Response reponse=Response.status(200).build();
         return reponse;
@@ -98,14 +98,14 @@ public class ProjectsResource {
     
     /**
      * PUT method for updating an instance of Project object
-     * @param member JSON representation for the Project object
+     * @param project JSON representation for the Project object
      * @return an HTTP response with content of the created resource.
      */
     @PUT
     @Consumes("application/json")
     @Produces("application/json")
-    public void updateMember(Project userstory) {
-        projectBean.edit(userstory);
+    public void updateProject(Project project) {
+        projectBean.edit(project);
     }
     
     
@@ -117,7 +117,7 @@ public class ProjectsResource {
     @DELETE
     @Path("{id}")
     @Produces("application/json")
-    public Response removeUserStory(@PathParam("id") String id) {
+    public Response removeProject(@PathParam("id") String id) {
         if(projectBean.find(Integer.parseInt(id))!=null)
             projectBean.remove(projectBean.find(Integer.parseInt(id)));
         

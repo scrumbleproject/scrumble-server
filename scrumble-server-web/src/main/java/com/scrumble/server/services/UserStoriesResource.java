@@ -97,13 +97,13 @@ public class UserStoriesResource {
     
     /**
      * PUT method for updating an instance of Userstory object
-     * @param member JSON representation for the Userstory object
+     * @param userstory JSON representation for the Userstory object
      * @return an HTTP response with content of the created resource.
      */
     @PUT
     @Consumes("application/json")
     @Produces("application/json")
-    public void updateMember(Userstory userstory) {
+    public void updateUserStory(Userstory userstory) {
         userStoryBean.edit(userstory);
     }
     
