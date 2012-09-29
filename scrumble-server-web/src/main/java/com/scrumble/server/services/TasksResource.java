@@ -47,6 +47,18 @@ public class TasksResource {
         return taskBean.findAll();
     }
     
+    /**
+     * Retrieves representation of a single com.scrumble.server.entities.Task object
+     * @param id the id of the Task object to retrieve
+     * @return a JSON representation of the related Task object.
+     */
+    @GET
+    @Path("search/{pattern}")
+    @Produces("application/json")
+    public List<Task> searchTasksQuick(@PathParam("pattern") String pattern) {
+        System.out.println("LOGS");
+        return taskBean.quickSearch(pattern);
+    }
 
     /**
      * Retrieves representation of a single com.scrumble.server.entities.Task object

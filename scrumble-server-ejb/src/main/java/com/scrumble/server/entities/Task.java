@@ -30,8 +30,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Task.findAll", query = "SELECT t FROM Task t"),
     @NamedQuery(name = "Task.findByIdTask", query = "SELECT t FROM Task t WHERE t.idTask = :idTask"),
     @NamedQuery(name = "Task.findByTitle", query = "SELECT t FROM Task t WHERE t.title = :title"),
-    @NamedQuery(name = "Task.findByEstimation", query = "SELECT t FROM Task t WHERE t.estimation = :estimation")/*,
-    @NamedQuery(name = "Task.findByMotsCles", query = "SELECT t FROM Task t WHERE t.estimation = %:estimation%")*/})
+    @NamedQuery(name = "Task.findByEstimation", query = "SELECT t FROM Task t WHERE t.estimation = :estimation"),
+    /*,@NamedQuery(name = "Task.findByMotsCles", query = "SELECT t FROM Task t WHERE t.estimation = %:estimation%")*/
+    @NamedQuery(name = "Task.quickSearchSimple", query = "SELECT t FROM Task t WHERE t.title like :pattern or t.estimation like :pattern"),
+    @NamedQuery(name = "Task.quickSearchExact", query = "SELECT t FROM Task t WHERE t.title = :pattern or t.estimation = :pattern")})
 
 public class Task implements Serializable {
     private static final long serialVersionUID = 1L;

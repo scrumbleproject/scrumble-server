@@ -5,10 +5,15 @@
 package com.scrumble.server.sessionbeans;
 
 import com.scrumble.server.entities.Task;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -28,5 +33,23 @@ public class TaskFacade extends AbstractFacade<Task> implements TaskFacadeLocal 
     public TaskFacade() {
         super(Task.class);
     }
-    
+  
+    @Override
+     public List<Task> quickSearch(String pattern){
+        List<Task> results;
+        
+        //run named queries
+        TypedQuery<Task> queryExact = getEntityManager().createNamedQuery("Task.quickSearchExact", Task.class);
+        TypedQuery<Task> querySimple = getEntityManager().createNamedQuery("Task.quickSearchSimple", Task.class);
+        
+        //concatenate results
+        results = queryExact.setParameter("pattern", pattern).getResultList();
+        results.addAll(querySimple.setParameter("pattern", "%"+pattern+"%").getResultList());
+        
+        //supprimer les doublons
+        Set set = new HashSet();
+        set.addAll(results);
+        
+        return new ArrayList<Task>(set);
+    }
 }

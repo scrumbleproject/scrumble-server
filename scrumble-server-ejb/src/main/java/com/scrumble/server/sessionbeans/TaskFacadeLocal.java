@@ -28,5 +28,7 @@ public interface TaskFacadeLocal {
     List<Task> findRange(int[] range);
 
     int count();
+
+    public List<Task> quickSearch(String pattern);
     
 }
