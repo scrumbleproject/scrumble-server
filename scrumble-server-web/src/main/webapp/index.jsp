@@ -37,7 +37,7 @@
                     $("#result").html(JSON.stringify($('#addMember').serializeObject()));
                     
                     $.ajax({
-                        url:"http://localhost:8080/scrumble-server-web/scrumble/members/add",
+                        url:"http://192.168.0.13:8080/scrumble-server-web/scrumble/members/add",
                         type:"POST",
                         data: JSON.stringify($('#addMember').serializeObject()),
                         dataType: "json",
@@ -55,7 +55,7 @@
                     $("#result").html(JSON.stringify($('#addMemberUpdate').serializeObject()));
                     
                     $.ajax({
-                        url:"http://localhost:8080/scrumble-server-web/scrumble/members/",
+                        url:"http://192.168.0.13:8080/scrumble-server-web/scrumble/members/",
                         type:"PUT",
                         data: JSON.stringify($('#addMemberUpdate').serializeObject()),
                         dataType: "json",
@@ -69,7 +69,7 @@
                 });
                 
                 //load a member for EDIT (PUT)
-                $.getJSON("http://localhost:8080/scrumble-server-web/scrumble/members/1",
+                $.getJSON("http://192.168.0.13:8080/scrumble-server-web/scrumble/members/1",
                     function(reponse) {
                         // assigner les valeurs
                         $("#idMember").val(reponse.idMember);
@@ -89,7 +89,7 @@
                     $("#result").html(JSON.stringify($('#memberDelete').serializeObject()));
                     
                     $.ajax({
-                        url:"http://localhost:8080/scrumble-server-web/scrumble/members/"+$('#memberDelete > #idMember').val(),
+                        url:"http://192.168.0.13:8080/scrumble-server-web/scrumble/members/"+$('#memberDelete > #idMember').val(),
                         type:"DELETE",
                         success: function(data) {
                             $("#result").append("Member supprim&eacute; avec succ&egrave;s<br/>");
@@ -100,7 +100,7 @@
                 });
                 
                 //load a member for DELETE
-                $.getJSON("http://localhost:8080/scrumble-server-web/scrumble/members/11",
+                $.getJSON("http://192.168.0.13:8080/scrumble-server-web/scrumble/members/11",
                     function(reponse) {
                         // assigner les valeurs
                         $("#memberDelete > #idMember").val(reponse.idMember);

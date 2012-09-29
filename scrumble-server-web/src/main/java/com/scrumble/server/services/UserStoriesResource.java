@@ -51,33 +51,19 @@ public class UserStoriesResource {
         return userStoryBean.findAll();
     }
     
+    
     /**
      * Retrieves representation of a single com.scrumble.server.entities.Userstory object
      * @param id the id of the Userstory object to retrieve
      * @return a JSON representation of the related Userstory object.
      */
     @GET
-    @Path("get/{id}")
+    @Path("{id}")
     @Produces("application/json")
     public Userstory getUserStory(@PathParam("id") String id) {
         return userStoryBean.find(Integer.parseInt(id));
     }
     
-    /**
-     * Removes a single com.scrumble.server.entities.Userstory object
-     * @param id the id of the Userstory object to remove
-     * @return nothing.
-     */
-    @DELETE
-    @Path("remove/{id}")
-    @Produces("application/json")
-    public Response removeUserStory(@PathParam("id") String id) {
-        if(userStoryBean.find(Integer.parseInt(id))!=null)
-            userStoryBean.remove(userStoryBean.find(Integer.parseInt(id)));
-        
-        Response reponse=Response.status(200).build();
-        return reponse;
-    }
     
     /**
      * POST method for creating an instance of Userstory object
@@ -90,6 +76,36 @@ public class UserStoriesResource {
     @Produces("application/json")
     public Response addUserStory(Userstory userstory) {
         userStoryBean.create(userstory);
+        
+        Response reponse=Response.status(200).build();
+        return reponse;
+    }
+    
+    
+    /**
+     * PUT method for updating an instance of Userstory object
+     * @param member JSON representation for the Userstory object
+     * @return an HTTP response with content of the created resource.
+     */
+    @PUT
+    @Consumes("application/json")
+    @Produces("application/json")
+    public void updateMember(Userstory userstory) {
+        userStoryBean.edit(userstory);
+    }
+    
+    
+    /**
+     * Removes a single com.scrumble.server.entities.Userstory object
+     * @param id the id of the Userstory object to remove
+     * @return nothing.
+     */
+    @DELETE
+    @Path("{id}")
+    @Produces("application/json")
+    public Response removeUserStory(@PathParam("id") String id) {
+        if(userStoryBean.find(Integer.parseInt(id))!=null)
+            userStoryBean.remove(userStoryBean.find(Integer.parseInt(id)));
         
         Response reponse=Response.status(200).build();
         return reponse;
