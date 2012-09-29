@@ -19,7 +19,7 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author Soukeyna
  */
-@Path("task")
+@Path("tasks")
 @Stateless
 public class TaskResource {
     
@@ -37,27 +37,6 @@ public class TaskResource {
     public TaskResource() {
     }
 
-    /**
-     * Retrieves representation of an instance of com.scrumble.server.services.TaskResource
-     * @return an instance of java.lang.String
-     */
-    @GET
-    @Produces("application/json")
-    
-    public String getJson() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * PUT method for updating or creating an instance of TaskResource
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
-    @PUT
-    @Consumes("application/json")
-    public void putJson(String content) {
-    }
     
     
     @GET
@@ -102,7 +81,7 @@ public class TaskResource {
     @Path("{id}")
     @Consumes("application/json")
     @Produces("application/json")
-    public void updateMember(Task task) {
+    public void updateTask(Task task) {
         System.out.println("PUT");
         taskBean.edit(task);
     }
