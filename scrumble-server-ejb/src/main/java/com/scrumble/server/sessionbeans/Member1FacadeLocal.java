@@ -15,6 +15,8 @@ import javax.ejb.Local;
 @Local
 public interface Member1FacadeLocal {
 
+    /** netbeans generated methods **/
+    
     void create(Member1 member1);
 
     void edit(Member1 member1);
@@ -28,5 +30,14 @@ public interface Member1FacadeLocal {
     List<Member1> findRange(int[] range);
 
     int count();
+    
+    /** custom methods **/
+    
+    /**
+     * QUICK SEARCH : search members within all Member1 object attributes
+     * @param pattern a String to compare with any attributes content
+     * @return a list with all matching Member1 object 
+     */
+    public List<Member1> quickSearch(String pattern);
     
 }
