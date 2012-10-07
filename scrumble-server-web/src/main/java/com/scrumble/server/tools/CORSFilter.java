@@ -24,9 +24,20 @@ public class CORSFilter implements Filter {
 		ServletRequest request, ServletResponse response, 
 		FilterChain chain) throws IOException, ServletException {
 
+                //doc sur les Access-Control.... (https://developer.mozilla.org/en-US/docs/HTTP_access_control#Access-Control-Allow-Credentials)
 		((HttpServletResponse)response).addHeader(
 			"Access-Control-Allow-Origin", "*"
 		);
+                ((HttpServletResponse)response).addHeader(
+			"Access-Control-Allow-Headers", "Content-Type, Accept"
+		);
+                ((HttpServletResponse)response).addHeader(
+			"Access-Control-Allow-Methods", "GET, POST, DELETE, PUT"
+		);
+                /*((HttpServletResponse)response).addHeader(
+			"Access-Control-Allow-Credentials", "true"
+		);*/
+
 		chain.doFilter(request, response);
 	}
 }
