@@ -34,7 +34,7 @@
                     $("#result").html(JSON.stringify($('#addUserStory').serializeObject()));
                     
                     $.ajax({
-                        url:"http://192.168.0.13:8080/scrumble-server-web/scrumble/userstories/add",
+                        url:"http://localhost:8080/scrumble-server-web/scrumble/userstories/add",
                         type:"POST",
                         data: JSON.stringify($('#addUserStory').serializeObject()),
                         dataType: "json",
@@ -47,13 +47,13 @@
                     return false;
                 });
                 
-                /*
+                
                 $('#addUserStoryUpdate').submit(function() {
                     
                     $("#result").html(JSON.stringify($('#addUserStoryUpdate').serializeObject()));
                     
                     $.ajax({
-                        url:"http://192.168.0.13:8080/scrumble-server-web/scrumble/userstories/",
+                        url:"http://localhost:8080/scrumble-server-web/scrumble/userstories/",
                         type:"PUT",
                         data: JSON.stringify($('#addUserStoryUpdate').serializeObject()),
                         dataType: "json",
@@ -68,7 +68,7 @@
                 
                 
                 //load a member for EDIT (PUT)
-                $.getJSON("http://192.168.0.13:8080/scrumble-server-web/scrumble/userstories/1",
+                $.getJSON("http://localhost:8080/scrumble-server-web/scrumble/userstories/1",
                     function(reponse) {
                         // assigner les valeurs
                         $("#idUserstory").val(reponse.idUserstory);
@@ -80,15 +80,15 @@
                         $("#note").val(reponse.note);
                         $("#category").val(reponse.category);
                     }
-                );*/
+                );
                     
-                
+                /*
                 $('#userstoryDelete').submit(function() {
                     
                     $("#result").html(JSON.stringify($('#userstoryDelete').serializeObject()));
                     
                     $.ajax({
-                        url:"http://192.168.0.13:8080/scrumble-server-web/scrumble/userstories/"+$('#userstoryDelete > #idUserstory').val(),
+                        url:"http://localhost:8080/scrumble-server-web/scrumble/userstories/"+$('#userstoryDelete > #idUserstory').val(),
                         type:"DELETE",
                         success: function(data) {
                             $("#result").append("UserStory supprim&eacute; avec succ&egrave;s<br/>");
@@ -99,7 +99,7 @@
                 });
                 
                 //load a member for DELETE
-                $.getJSON("http://192.168.0.13:8080/scrumble-server-web/scrumble/userstories/10",
+                $.getJSON("http://localhost:8080/scrumble-server-web/scrumble/userstories/1",
                     function(reponse) {
                         // assigner les valeurs
                         $("#idUserstory").val(reponse.idUserstory);
@@ -110,7 +110,7 @@
                         $("#note").val(reponse.note);
                         $("#category").val(reponse.category);
                     }
-                );
+                );*/
                     
                 
             });
@@ -145,7 +145,7 @@
         </form>
         
         <br/>TEST suppression : OK !<br/>
-        <form id="userstoryDelete"  action="" method="post">
+        <!--<form id="userstoryDelete"  action="" method="post">
             <input type="text" id="title" name="title" placeholder="title" /><br />
             <input type="text" id="importance" name="importance" placeholder="importance" /><br />
             <input type="text" id="estimation" name="estimation" placeholder="estimation" /><br />
@@ -154,7 +154,7 @@
             <input type="text" id="category" name="category" placeholder="category" /><br />
             <input type="hidden" id="idUserstory" name="idUserstory"/>
             <input type="submit" value="Supprimer"/>
-        </form>        
+        </form>        -->
         
     </body>
 </html>
