@@ -40,6 +40,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Userstory.quickSearchSimple", query = "SELECT u FROM Userstory u WHERE u.title like :pattern or u.demonstration like :pattern or u.note like :pattern or u.category like :pattern"),
     @NamedQuery(name = "Userstory.quickSearchExact", query = "SELECT u FROM Userstory u WHERE u.title = :pattern or u.demonstration = :pattern or u.note = :pattern or u.category = :pattern")})
 public class Userstory implements Serializable {
+    @Column(name = "importance")
+    private Integer importance;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,9 +51,6 @@ public class Userstory implements Serializable {
     @Size(max = 100)
     @Column(name = "title")
     private String title;
-    @Size(max = 20)
-    @Column(name = "importance")
-    private String importance;
     @Size(max = 20)
     @Column(name = "estimation")
     private String estimation;
@@ -93,14 +92,6 @@ public class Userstory implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getImportance() {
-        return importance;
-    }
-
-    public void setImportance(String importance) {
-        this.importance = importance;
     }
 
     public String getEstimation() {
@@ -175,6 +166,14 @@ public class Userstory implements Serializable {
     @Override
     public String toString() {
         return "com.scrumble.server.entities.Userstory[ idUserstory=" + idUserstory + " ]";
+    }
+
+    public Integer getImportance() {
+        return importance;
+    }
+
+    public void setImportance(Integer importance) {
+        this.importance = importance;
     }
     
 }
