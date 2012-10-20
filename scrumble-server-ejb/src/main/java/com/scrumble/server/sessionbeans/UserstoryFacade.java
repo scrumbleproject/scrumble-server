@@ -57,7 +57,7 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
     {
         System.out.println("updateImportance");
         //get all objects (ordered by importance DESC)
-        List<Userstory> list = this.findAll();
+        List<Userstory> list = this.findAllOrderByImportance();
         
         //get index in the result list of suitable userstory object
         int index = -1;
@@ -166,6 +166,7 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
         
         //set the new importance
         userstory.setImportance(decrementedImportance);
+        this.edit(userstory);
    }
    
    private void incrementImportance(Userstory userstory){
@@ -185,7 +186,7 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
         
         //set the new importance
         userstory.setImportance(incrementedImportance);
-        
+        this.edit(userstory);
    }
 
     public List<Userstory> findAllOrderByImportance() {
