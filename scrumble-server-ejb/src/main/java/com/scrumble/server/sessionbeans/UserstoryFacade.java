@@ -53,7 +53,6 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
         return new ArrayList<Userstory>(set);
     }
     
-    
     public void updateImportance(Integer id, int position)
     {
         System.out.println("updateImportance");
@@ -188,5 +187,9 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
         userstory.setImportance(incrementedImportance);
         
    }
-    
+
+    public List<Userstory> findAllOrderByImportance() {
+        return this.em.createNamedQuery("Userstory.findAllOrderByImportance").getResultList();
+    }
+   
 }
