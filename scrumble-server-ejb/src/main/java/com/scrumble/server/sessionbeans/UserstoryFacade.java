@@ -192,5 +192,5 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
     public List<Userstory> findAllOrderByImportance() {
         return this.em.createNamedQuery("Userstory.findAllOrderByImportance").getResultList();
     }
-   
+    
 }

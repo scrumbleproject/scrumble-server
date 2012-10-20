@@ -44,6 +44,7 @@ public interface UserstoryFacadeLocal {
      * @return a list of all Userstory objects ordered by importance
      */
     public List<Userstory> findAllOrderByImportance();
+
     
     /**
      * 
@@ -51,4 +52,5 @@ public interface UserstoryFacadeLocal {
      * @param position 
      */
     public void updateImportance(Integer id, int position);
+
 }
