@@ -4,6 +4,7 @@
  */
 package com.scrumble.server.sessionbeans;
 
+import com.scrumble.server.entities.Member1;
 import com.scrumble.server.entities.Project;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -50,6 +51,11 @@ public class ProjectFacade extends AbstractFacade<Project> implements ProjectFac
         set.addAll(results);
         
         return new ArrayList<Project>(set);
+    }
+    
+    public List<Member1> findAllProjectMembers(Integer idProject){
+        Project project = em.find(Project.class, idProject);  
+        return new ArrayList<Member1>(project.getMember1Collection());
     }
     
 }

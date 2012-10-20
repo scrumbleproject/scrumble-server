@@ -38,4 +38,6 @@ public interface UserstoryFacadeLocal {
      */
     public List<Userstory> quickSearch(String pattern);
     
+    public void updateImportance(Integer id, int position);
+    
 }

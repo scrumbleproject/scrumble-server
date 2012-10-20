@@ -4,6 +4,7 @@
  */
 package com.scrumble.server.sessionbeans;
 
+import com.scrumble.server.entities.Member1;
 import com.scrumble.server.entities.Project;
 import java.util.List;
 import javax.ejb.Local;
@@ -37,5 +38,12 @@ public interface ProjectFacadeLocal {
      * @return a list with all matching Project object 
      */
     public List<Project> quickSearch(String pattern);
+    
+    /**
+     * Get the list of all Member1 objects of a specified Project object
+     * @param idProject the id of a specified Project object
+     * @return a list of all members of the project 
+     */
+    public List<Member1> findAllProjectMembers(Integer idProject);
     
 }
