@@ -48,7 +48,7 @@ public class UserStoriesResource {
     @Path("all")
     @Produces("application/json")
     public List<Userstory> findAll() {
-        return userStoryBean.findAll();
+        return userStoryBean.findAllOrderByImportance();
     }
     
     

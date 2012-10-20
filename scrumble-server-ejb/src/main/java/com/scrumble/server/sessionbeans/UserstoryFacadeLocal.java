@@ -38,4 +38,10 @@ public interface UserstoryFacadeLocal {
      */
     public List<Userstory> quickSearch(String pattern);
     
+    /**
+     * findAllOrderByImportance : list all Userstory objects ordered by importance
+     * @param 
+     * @return a list of all Userstory objects ordered by importance
+     */
+    public List<Userstory> findAllOrderByImportance();
 }
