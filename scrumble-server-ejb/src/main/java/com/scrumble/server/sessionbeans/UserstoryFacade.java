@@ -77,6 +77,13 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
     private void insertObjAtDestination(List<Userstory> list, int currentIndex, int destinationIndex)
     {
         System.out.println("insertObjAtDestination");
+        
+        //debug
+        System.out.println("debug afficher list");
+        for (Userstory us : list){
+            System.out.println("us.importance = "+us.getImportance());
+        }
+        
         Userstory userstory = list.get(currentIndex);
         
         if (currentIndex<destinationIndex){
@@ -89,6 +96,7 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
             { //dernier élément
                 System.out.println("dernier element");
                 int importanceMin = list.get(destinationIndex).getImportance();
+                System.out.println("importanceMin = "+importanceMin);
                 if (importanceMin <= 1){
                     incrementImportance(list.get(destinationIndex));
                 }
@@ -98,7 +106,9 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
             else {
                 
                 int importanceDestination = list.get(destinationIndex).getImportance();
+                System.out.println("importanceDestination = "+importanceDestination);
                 int importanceJusteEnDessous = list.get(destinationIndex+1).getImportance();
+                System.out.println("importanceJusteEnDessous = "+importanceJusteEnDessous);
                 //Si place libre :
                 if(importanceDestination - importanceJusteEnDessous > 1)
                 {
@@ -108,6 +118,8 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
                 else//place pas libre
                 {   System.out.println("place pas libre");
                     incrementImportance(list.get(destinationIndex));
+                    userstory.setImportance(list.get(destinationIndex).getImportance()-1);
+                    System.out.println("new importance = "+String.valueOf(list.get(destinationIndex).getImportance()-1));
                 }
             }
             
@@ -123,12 +135,15 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
             {   //premier élément
                 System.out.println("premier element");
                 int importanceMax = list.get(destinationIndex).getImportance();
+                System.out.println("importanceMax = "+importanceMax);
                 userstory.setImportance(importanceMax+10);
             }
             else 
             {
                 int importanceDestination = list.get(destinationIndex).getImportance();
+                System.out.println("importanceDestination = "+importanceDestination);
                 int importanceJusteAuDessus = list.get(destinationIndex-1).getImportance();
+                System.out.println("importanceJusteAuDessus = "+importanceJusteAuDessus);
                 //Si place libre :
                 if(importanceJusteAuDessus - importanceDestination > 1)
                 {
@@ -138,6 +153,7 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
                 else//place pas libre
                 {   System.out.println("place pas libre");
                     decrementImportance(list.get(destinationIndex));
+                    userstory.setImportance(list.get(destinationIndex).getImportance()+1);
                 }
             }
         }
@@ -153,7 +169,7 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
        
        //get the importance we want to set to the userstory
        int decrementedImportance = userstory.getImportance()-1;
-       
+       System.out.println("decrementedImportance = "+decrementedImportance);
        //check that there is not already another userstory with this importance
         TypedQuery<Userstory> query = getEntityManager().createNamedQuery("Userstory.findByImportance", Userstory.class);
         List<Userstory> results = query.setParameter("importance", decrementedImportance).getResultList();
@@ -173,7 +189,7 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
        
        //get the importance we want to set to the userstory
        int incrementedImportance = userstory.getImportance()+1;
-       
+       System.out.println("incrementedImportance = "+incrementedImportance);
        //check that there is not already another userstory with this importance
         TypedQuery<Userstory> query = getEntityManager().createNamedQuery("Userstory.findByImportance", Userstory.class);
         List<Userstory> results = query.setParameter("importance", incrementedImportance).getResultList();
