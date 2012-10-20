@@ -123,4 +123,21 @@ public class UserStoriesResource {
         Response reponse=Response.status(200).build();
         return reponse;
     }
+    
+    
+    /**
+     * POST method for creating an instance of Userstory object
+     * @param userstory JSON representation for the Userstory object
+     * @return an HTTP response with content of the created resource.
+     */
+    @POST
+    @Path("{id}/{position}")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response updatePriority(@PathParam("id") String id, @PathParam("position") String position) {
+        userStoryBean.updateImportance(Integer.parseInt(id), Integer.parseInt(position));
+        Response reponse=Response.status(200).build();
+        return reponse;
+    }
+    
 }

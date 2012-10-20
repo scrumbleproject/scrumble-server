@@ -4,6 +4,7 @@
  */
 package com.scrumble.server.services;
 
+import com.scrumble.server.entities.Member1;
 import com.scrumble.server.entities.Project;
 import com.scrumble.server.sessionbeans.ProjectFacadeLocal;
 import java.util.List;
@@ -124,4 +125,18 @@ public class ProjectsResource {
         Response reponse=Response.status(200).build();
         return reponse;
     }
+    
+    
+    /**
+     * Retrieves the list of a com.scrumble.server.entities.Members linked with the Project object
+     * @param id the id of the Project object to retrieve
+     * @return a JSON representation of the related Project object.
+     */
+    @GET
+    @Path("{id}/members")
+    @Produces("application/json")
+    public List<Member1> findAllProjectMembers(@PathParam("id") String id) {
+        return projectBean.findAllProjectMembers(Integer.parseInt(id));
+    }
+    
 }
