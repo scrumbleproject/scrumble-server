@@ -5,6 +5,7 @@
 package com.scrumble.server.sessionbeans;
 
 import com.scrumble.server.entities.Task;
+import com.scrumble.server.entities.Userstory;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -51,5 +52,11 @@ public class TaskFacade extends AbstractFacade<Task> implements TaskFacadeLocal 
         set.addAll(results);
         
         return new ArrayList<Task>(set);
+    }
+    
+    public List<Task> findAllTaskUserstories(Integer idUserstory)
+    {
+        TypedQuery<Task> query = getEntityManager().createNamedQuery("Task.findByIdUserstory", Task.class);
+        return query.setParameter("idUserstory", this.em.find(Userstory.class, idUserstory)).getResultList();
     }
 }

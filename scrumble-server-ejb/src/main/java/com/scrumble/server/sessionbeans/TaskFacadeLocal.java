@@ -31,4 +31,10 @@ public interface TaskFacadeLocal {
 
     public List<Task> quickSearch(String pattern);
     
+    /**
+     * Get the list of all Task objects of a specified Userstory object
+     * @param idUserstory the id of a specified Userstory object
+     * @return a list of all tasks of the project 
+     */
+    public List<Task> findAllTaskUserstories(Integer idUserstory);
 }
