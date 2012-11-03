@@ -46,4 +46,18 @@ public interface ProjectFacadeLocal {
      */
     public List<Member1> findAllProjectMembers(Integer idProject);
     
+    /**
+     * Add a new member to a specified Project object
+     * @param idProject the id of a specified Project object
+     * @param idMember the id of a specified Member object 
+     */
+    public void addMemberToProject(Integer idProject, Integer idMember);
+    
+    /**
+     * Remove a member from a specified Project object
+     * @param idProject the id of a specified Project object
+     * @param idMember the id of a specified Member object 
+     */
+    public void removeMemberFromProject(Integer idProject, Integer idMember);
+    
 }

@@ -133,10 +133,38 @@ public class ProjectsResource {
      * @return a JSON representation of the related Project object.
      */
     @GET
-    @Path("{id}/members")
+    @Path("{idProject}/members")
     @Produces("application/json")
-    public List<Member1> findAllProjectMembers(@PathParam("id") String id) {
-        return projectBean.findAllProjectMembers(Integer.parseInt(id));
+    public List<Member1> findAllProjectMembers(@PathParam("idProject") String idProject) {
+        return projectBean.findAllProjectMembers(Integer.parseInt(idProject));
+    }
+    
+    /**
+     * Retrieves the list of a com.scrumble.server.entities.Members linked with the Project object
+     * @param id the id of the Project object to retrieve
+     * @return a JSON representation of the related Project object.
+     */
+    @POST
+    @Path("{idProject}/members/{idMember}")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public void addMemberToProject(@PathParam("idProject") String idProject, 
+                                            @PathParam("idMember") String idMember) {
+        projectBean.addMemberToProject(Integer.parseInt(idProject), Integer.parseInt(idMember));
+    }
+    
+    /**
+     * Retrieves the list of a com.scrumble.server.entities.Members linked with the Project object
+     * @param id the id of the Project object to retrieve
+     * @return a JSON representation of the related Project object.
+     */
+    @DELETE
+    @Path("{idProject}/members/{idMember}")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public void removeMemberFromProject(@PathParam("idProject") String idProject, 
+                                            @PathParam("idMember") String idMember) {
+        projectBean.removeMemberFromProject(Integer.parseInt(idProject), Integer.parseInt(idMember));
     }
     
 }

@@ -58,4 +58,20 @@ public class ProjectFacade extends AbstractFacade<Project> implements ProjectFac
         return new ArrayList<Member1>(project.getMember1Collection());
     }
     
+    public void addMemberToProject(Integer idProject, Integer idMember){
+        Project project = em.find(Project.class, idProject); 
+        Member1 member1 = em.find(Member1.class, idMember);
+        if (!project.getMember1Collection().contains(member1)) {
+            project.getMember1Collection().add(member1);
+        }
+    }
+    
+    public void removeMemberFromProject(Integer idProject, Integer idMember){
+        Project project = em.find(Project.class, idProject); 
+        Member1 member1 = em.find(Member1.class, idMember);
+        if (project.getMember1Collection().contains(member1)) {
+            project.getMember1Collection().remove(member1);
+        }
+    }
+    
 }
