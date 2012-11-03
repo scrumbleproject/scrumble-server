@@ -144,6 +144,18 @@ public class ProjectsResource {
      * @param id the id of the Project object to retrieve
      * @return a JSON representation of the related Project object.
      */
+    @GET
+    @Path("{idProject}/members/no")
+    @Produces("application/json")
+    public List<Member1> findAllNotProjectMembers(@PathParam("idProject") String idProject) {
+        return projectBean.findAllNotProjectMembers(Integer.parseInt(idProject));
+    }
+    
+    /**
+     * Retrieves the list of a com.scrumble.server.entities.Members linked with the Project object
+     * @param id the id of the Project object to retrieve
+     * @return a JSON representation of the related Project object.
+     */
     @POST
     @Path("{idProject}/members/{idMember}")
     @Consumes("application/json")

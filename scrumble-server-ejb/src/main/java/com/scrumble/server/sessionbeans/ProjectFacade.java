@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -25,7 +26,10 @@ import javax.persistence.TypedQuery;
 public class ProjectFacade extends AbstractFacade<Project> implements ProjectFacadeLocal {
     @PersistenceContext(unitName = "com.scrumble.server_scrumble-server-ejb_ejb_1.0PU")
     private EntityManager em;
-
+    
+    @EJB 
+    private Member1FacadeLocal memberLocal;
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -56,6 +60,14 @@ public class ProjectFacade extends AbstractFacade<Project> implements ProjectFac
     public List<Member1> findAllProjectMembers(Integer idProject){
         Project project = em.find(Project.class, idProject);  
         return new ArrayList<Member1>(project.getMember1Collection());
+    }
+    
+    public List<Member1> findAllNotProjectMembers(Integer idProject){
+        Project project = em.find(Project.class, idProject);
+        //Member1Facade memberFacade = new Member1Facade();
+        List<Member1> members = memberLocal.findAll();
+        members.removeAll(project.getMember1Collection());
+        return members;
     }
     
     public void addMemberToProject(Integer idProject, Integer idMember){

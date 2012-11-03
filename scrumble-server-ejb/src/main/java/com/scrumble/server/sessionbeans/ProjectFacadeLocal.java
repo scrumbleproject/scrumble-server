@@ -47,6 +47,13 @@ public interface ProjectFacadeLocal {
     public List<Member1> findAllProjectMembers(Integer idProject);
     
     /**
+     * Get the list of all Member1 objects that are NOT linked with a specified Project object
+     * @param idProject the id of a specified Project object
+     * @return a list of members
+     */
+    public List<Member1> findAllNotProjectMembers(Integer idProject);    
+    
+    /**
      * Add a new member to a specified Project object
      * @param idProject the id of a specified Project object
      * @param idMember the id of a specified Member object 
