@@ -63,7 +63,7 @@ public class TasksResource {
     /**
      * Retrieves representation of a single com.scrumble.server.entities.Task object
      * @param id the id of the Task object to retrieve
-     * @return a JSON representation of the related Member1 object.
+     * @return a JSON representation of the related Task object.
      */
     @GET
     @Path("{id}")
@@ -109,5 +109,17 @@ public class TasksResource {
     public void removeUserStory(@PathParam("id") String id) {
         if(taskBean.find(Integer.parseInt(id))!=null)
             taskBean.remove(taskBean.find(Integer.parseInt(id)));
+    }
+    
+    /**
+     * Retrieves the list of a com.scrumble.server.entities.Tasks linked with the Userstory object
+     * @param id the id of the Userstory object to retrieve
+     * @return a JSON representation of the related Userstory object.
+     */
+    @GET
+    @Path("{id}/userstories")
+    @Produces("application/json")
+    public List<Task> findAllTaskUserstories(@PathParam("id") String id) {
+        return taskBean.findAllTaskUserstories(Integer.parseInt(id));
     }
 }
