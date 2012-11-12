@@ -1,7 +1,9 @@
 package com.scrumble.server.services;
 
 import com.scrumble.server.entities.Project;
+import com.scrumble.server.entities.Task;
 import com.scrumble.server.entities.Userstory;
+import com.scrumble.server.sessionbeans.TaskFacadeLocal;
 import com.scrumble.server.sessionbeans.UserstoryFacadeLocal;
 import java.util.List;
 import javax.ejb.EJB;
@@ -33,6 +35,9 @@ public class UserStoriesResource {
     
     @EJB
     private UserstoryFacadeLocal userStoryBean;
+    
+    @EJB
+    private TaskFacadeLocal taskBean;
 
     /**
      * Creates a new instance of UserStoriesResource
@@ -138,6 +143,98 @@ public class UserStoriesResource {
         userStoryBean.updateImportance(Integer.parseInt(id), Integer.parseInt(position));
         Response reponse=Response.status(200).build();
         return reponse;
+    }
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    /**
+     * Retrieves the list of a com.scrumble.server.entities.Tasks linked with the Userstory object
+     * @param idUserstory the id of the Userstory object to retrieve
+     * @return a JSON representation of the Task object
+     */
+    @GET
+    @Path("{idUserstory}/tasks/all")
+    @Produces("application/json")
+    public List<Task> findAllTaskUserstories(@PathParam("idUserstory") String idUserstory) {
+        return taskBean.findAllTaskUserstories(Integer.parseInt(idUserstory));
+    }
+    
+    
+    /**
+     * Retrieves representation of a single com.scrumble.server.entities.Task object
+     * @param id the id of the Task object to retrieve
+     * @return a JSON representation of the related Task object.
+     */
+    @GET
+    @Path("{idUserstory}/tasks/{idTask}")
+    @Produces("application/json")
+    public Task getTask(@PathParam("idUserstory") String idUserstory, @PathParam("idTask") String idTask) {
+        return taskBean.find(Integer.parseInt(idTask));
+    }
+    
+    
+    /**
+     * POST method for creating an instance of Task object
+     * @param task JSON representation for the Task object
+     * @return an HTTP response with content of the created resource.
+     */
+    @POST
+    @Path("{idUserstory}/tasks/add")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public void addTask(@PathParam("idUserstory") String idUserstory, Task task) {
+        task.setIdUserstory(userStoryBean.find(Integer.parseInt(idUserstory)));
+        taskBean.create(task);
+    }
+    
+    
+    /**
+     * PUT method for updating an instance of Task object
+     * @param task JSON representation for the Task object
+     * @return an HTTP response with content of the created resource.
+     */
+    @PUT
+    @Path("{idUserstory}/tasks")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public void updateTask(@PathParam("idUserstory") String idUserstory, Task task) {
+        task.setIdUserstory(userStoryBean.find(Integer.parseInt(idUserstory)));
+        taskBean.edit(task);
+    }
+    
+    
+    /**
+     * Removes a single com.scrumble.server.entities.Task object
+     * @param id the id of the Task object to remove
+     * @return nothing.
+     */
+    @DELETE
+    @Path("{idUserstory}/tasks/{idTask}")
+    @Produces("application/json")
+    public void removeTask(@PathParam("idUserstory") String idUserstory, @PathParam("idTask") String idTask) {
+        if(taskBean.find(Integer.parseInt(idTask))!=null)
+            taskBean.remove(taskBean.find(Integer.parseInt(idTask)));
+    }
+    
+
+    /**
+     * Retrieves representation of a single com.scrumble.server.entities.Task object
+     * @param id the id of the Task object to retrieve
+     * @return a JSON representation of the related Task object.
+     */
+    @GET
+    @Path("{idUserstory}/tasks/search/{pattern}")
+    @Produces("application/json")
+    public List<Task> searchTasksQuick(@PathParam("idUserstory") String idUserstory, @PathParam("pattern") String pattern) {
+        return taskBean.quickSearch(pattern);
     }
     
 }

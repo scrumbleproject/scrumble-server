@@ -106,7 +106,7 @@ public class TasksResource {
     @DELETE
     @Path("{id}")
     @Produces("application/json")
-    public void removeUserStory(@PathParam("id") String id) {
+    public void removeTask(@PathParam("id") String id) {
         if(taskBean.find(Integer.parseInt(id))!=null)
             taskBean.remove(taskBean.find(Integer.parseInt(id)));
     }
