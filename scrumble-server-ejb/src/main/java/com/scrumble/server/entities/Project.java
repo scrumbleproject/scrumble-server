@@ -38,6 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Project.quickSearchSimple", query = "SELECT p FROM Project p WHERE p.title like :pattern or p.description like :pattern"),
     @NamedQuery(name = "Project.quickSearchExact", query = "SELECT p FROM Project p WHERE p.title = :pattern or p.description = :pattern")})
 public class Project implements Serializable {
+    @OneToMany(mappedBy = "idProject")
+    private Collection<Sprint> sprintCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -131,6 +133,15 @@ public class Project implements Serializable {
     @Override
     public String toString() {
         return "com.scrumble.server.entities.Project[ idProject=" + idProject + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Sprint> getSprintCollection() {
+        return sprintCollection;
+    }
+
+    public void setSprintCollection(Collection<Sprint> sprintCollection) {
+        this.sprintCollection = sprintCollection;
     }
     
 }

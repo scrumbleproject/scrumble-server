@@ -2,6 +2,9 @@
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
   <persistence-unit name="com.scrumble.server_scrumble-server-ejb_ejb_1.0PU" transaction-type="JTA">
     <jta-data-source>jdbc/scrumble_jndi</jta-data-source>
+    <class>com.scrumble.server.entities.Userstorysprint</class>
+    <class>com.scrumble.server.entities.Tasksprint</class>
+    <class>com.scrumble.server.entities.Sprint</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>

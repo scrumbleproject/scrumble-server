@@ -7,6 +7,7 @@ package com.scrumble.server.entities;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,6 +42,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Userstory.quickSearchSimple", query = "SELECT u FROM Userstory u WHERE u.title like :pattern or u.demonstration like :pattern or u.note like :pattern or u.category like :pattern"),
     @NamedQuery(name = "Userstory.quickSearchExact", query = "SELECT u FROM Userstory u WHERE u.title = :pattern or u.demonstration = :pattern or u.note = :pattern or u.category = :pattern")})
 public class Userstory implements Serializable {
+    @Column(name = "estimation")
+    private Integer estimation;
+    @Size(max = 20)
+    @Column(name = "status")
+    private String status;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userstory")
+    private Collection<Userstorysprint> userstorysprintCollection;
     @Column(name = "importance")
     private Integer importance;
     private static final long serialVersionUID = 1L;
@@ -52,9 +60,6 @@ public class Userstory implements Serializable {
     @Size(max = 100)
     @Column(name = "title")
     private String title;
-    @Size(max = 20)
-    @Column(name = "estimation")
-    private String estimation;
     @Lob
     @Size(max = 65535)
     @Column(name = "demonstration")
@@ -93,14 +98,6 @@ public class Userstory implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getEstimation() {
-        return estimation;
-    }
-
-    public void setEstimation(String estimation) {
-        this.estimation = estimation;
     }
 
     public String getDemonstration() {
@@ -175,6 +172,31 @@ public class Userstory implements Serializable {
 
     public void setImportance(Integer importance) {
         this.importance = importance;
+    }
+
+    public Integer getEstimation() {
+        return estimation;
+    }
+
+    public void setEstimation(Integer estimation) {
+        this.estimation = estimation;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @XmlTransient
+    public Collection<Userstorysprint> getUserstorysprintCollection() {
+        return userstorysprintCollection;
+    }
+
+    public void setUserstorysprintCollection(Collection<Userstorysprint> userstorysprintCollection) {
+        this.userstorysprintCollection = userstorysprintCollection;
     }
     
 }

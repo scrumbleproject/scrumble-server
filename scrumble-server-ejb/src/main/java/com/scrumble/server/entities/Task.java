@@ -5,7 +5,9 @@
 package com.scrumble.server.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,9 +17,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,11 +36,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Task.findByTitle", query = "SELECT t FROM Task t WHERE t.title = :title"),
     @NamedQuery(name = "Task.findByEstimation", query = "SELECT t FROM Task t WHERE t.estimation = :estimation"),
     @NamedQuery(name = "Task.findByIdUserstory", query = "SELECT t FROM Task t WHERE t.idUserstory = :idUserstory"),
-    /*,@NamedQuery(name = "Task.findByMotsCles", query = "SELECT t FROM Task t WHERE t.estimation = %:estimation%")*/
-    @NamedQuery(name = "Task.quickSearchSimple", query = "SELECT t FROM Task t WHERE t.title like :pattern or t.estimation like :pattern"),
-    @NamedQuery(name = "Task.quickSearchExact", query = "SELECT t FROM Task t WHERE t.title = :pattern or t.estimation = :pattern")})
+    @NamedQuery(name = "Task.quickSearchSimple", query = "SELECT t FROM Task t WHERE t.title like :pattern"),
+    @NamedQuery(name = "Task.quickSearchExact", query = "SELECT t FROM Task t WHERE t.title = :pattern")})
 
 public class Task implements Serializable {
+    @Column(name = "estimation")
+    private Integer estimation;
+    @Size(max = 20)
+    @Column(name = "status")
+    private String status;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
+    private Collection<Tasksprint> tasksprintCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,9 +56,6 @@ public class Task implements Serializable {
     @Size(max = 45)
     @Column(name = "title")
     private String title;
-    @Size(max = 20)
-    @Column(name = "estimation")
-    private String estimation;
     @JoinColumn(name = "id_userstory", referencedColumnName = "id_userstory")
     @ManyToOne
     private Userstory idUserstory;
@@ -74,14 +81,6 @@ public class Task implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getEstimation() {
-        return estimation;
-    }
-
-    public void setEstimation(String estimation) {
-        this.estimation = estimation;
     }
 
     public Userstory getIdUserstory() {
@@ -115,6 +114,31 @@ public class Task implements Serializable {
     @Override
     public String toString() {
         return "com.scrumble.server.entities.Task[ idTask=" + idTask + " ]";
+    }
+
+    public Integer getEstimation() {
+        return estimation;
+    }
+
+    public void setEstimation(Integer estimation) {
+        this.estimation = estimation;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @XmlTransient
+    public Collection<Tasksprint> getTasksprintCollection() {
+        return tasksprintCollection;
+    }
+
+    public void setTasksprintCollection(Collection<Tasksprint> tasksprintCollection) {
+        this.tasksprintCollection = tasksprintCollection;
     }
     
 }
