@@ -83,6 +83,7 @@ public class Task implements Serializable {
         this.title = title;
     }
 
+    @XmlTransient
     public Userstory getIdUserstory() {
         return idUserstory;
     }

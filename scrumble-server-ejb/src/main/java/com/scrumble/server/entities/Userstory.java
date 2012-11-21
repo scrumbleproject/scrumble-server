@@ -124,7 +124,7 @@ public class Userstory implements Serializable {
         this.category = category;
     }
 
-    @XmlTransient
+    //@XmlTransient
     public Collection<Task> getTaskCollection() {
         return taskCollection;
     }
