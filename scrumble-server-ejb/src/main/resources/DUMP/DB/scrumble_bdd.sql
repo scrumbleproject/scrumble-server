@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 20, 2012 at 07:23 PM
+-- Generation Time: Nov 22, 2012 at 12:07 AM
 -- Server version: 5.5.28
 -- PHP Version: 5.3.10-1ubuntu3.4
 
@@ -78,7 +78,9 @@ CREATE TABLE IF NOT EXISTS `memberproject` (
 
 INSERT INTO `memberproject` (`id_project`, `id_member`) VALUES
 (1, 1),
-(1, 2);
+(1, 2),
+(1, 3),
+(1, 5);
 
 -- --------------------------------------------------------
 
@@ -175,7 +177,15 @@ CREATE TABLE IF NOT EXISTS `sprint` (
   `duree` int(3) DEFAULT NULL,
   PRIMARY KEY (`id_sprint`),
   KEY `fk_sprint_1_idx` (`id_project`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `sprint`
+--
+
+INSERT INTO `sprint` (`id_sprint`, `num_sprint`, `title`, `id_project`, `velocite`, `date_start`, `date_end`, `duree`) VALUES
+(1, 1, 'sprint 1', 1, 9, NULL, NULL, NULL),
+(2, 2, 'Sprint 2', 1, 11, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -191,7 +201,7 @@ CREATE TABLE IF NOT EXISTS `task` (
   `status` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id_task`),
   KEY `fk_id_userstory_idx` (`id_userstory`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
 
 --
 -- Dumping data for table `task`
@@ -208,7 +218,9 @@ INSERT INTO `task` (`id_task`, `title`, `estimation`, `id_userstory`, `status`) 
 (11, 'Afficher la liste des user stories du projet', 1, 5, NULL),
 (12, 'Créer le formulaire d''ajout d''une user story', 1, 5, NULL),
 (13, 'Lier la UserStory Page aux autres pages de l''', 1, 5, NULL),
-(14, 'Créer les fonctions pour modifier, supprimer ', 2, 5, NULL);
+(14, 'Créer les fonctions pour modifier, supprimer ', 2, 5, NULL),
+(24, 'design d''UI', 1, 1, NULL),
+(25, 'TEST', 0, 7, NULL);
 
 -- --------------------------------------------------------
 
@@ -244,7 +256,7 @@ CREATE TABLE IF NOT EXISTS `userstory` (
   `status` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id_userstory`),
   KEY `fk_id_project_idx` (`id_project`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `userstory`
@@ -273,6 +285,16 @@ CREATE TABLE IF NOT EXISTS `userstorysprint` (
   KEY `fk_userstorysprint_sprint_idx` (`id_sprint`),
   KEY `fk_userstorysprint_userstory_idx` (`id_userstory`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `userstorysprint`
+--
+
+INSERT INTO `userstorysprint` (`id_sprint`, `id_userstory`, `date_start`, `date_end`) VALUES
+(1, 1, NULL, NULL),
+(1, 2, NULL, NULL),
+(1, 3, NULL, NULL),
+(2, 5, NULL, NULL);
 
 --
 -- Constraints for dumped tables
@@ -307,8 +329,8 @@ ALTER TABLE `task`
 -- Constraints for table `tasksprint`
 --
 ALTER TABLE `tasksprint`
-  ADD CONSTRAINT `fk_tasksprint_task` FOREIGN KEY (`id_task`) REFERENCES `task` (`id_task`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_tasksprint_sprint` FOREIGN KEY (`id_sprint`) REFERENCES `sprint` (`id_sprint`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_tasksprint_sprint` FOREIGN KEY (`id_sprint`) REFERENCES `sprint` (`id_sprint`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_tasksprint_task` FOREIGN KEY (`id_task`) REFERENCES `task` (`id_task`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `userstory`
