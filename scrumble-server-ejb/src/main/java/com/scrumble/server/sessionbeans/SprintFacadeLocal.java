@@ -5,6 +5,7 @@
 package com.scrumble.server.sessionbeans;
 
 import com.scrumble.server.entities.Sprint;
+import com.scrumble.server.entities.Userstory;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -28,5 +29,13 @@ public interface SprintFacadeLocal {
     List<Sprint> findRange(int[] range);
 
     int count();
+    
+    /**
+     * Get the list of all Userstory objects of a specified Sprint object
+     * @param idSprint the id of a specified Sprint object
+     * @return a list of all userstories of the sprint 
+     */
+    public List<Userstory> findAllSprintUserstories(Integer idSprint) throws Exception;
+    
     
 }

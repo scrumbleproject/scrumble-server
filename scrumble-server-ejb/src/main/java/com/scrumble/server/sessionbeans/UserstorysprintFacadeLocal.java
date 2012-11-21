@@ -4,6 +4,7 @@
  */
 package com.scrumble.server.sessionbeans;
 
+import com.scrumble.server.entities.Userstory;
 import com.scrumble.server.entities.Userstorysprint;
 import java.util.List;
 import javax.ejb.Local;
@@ -28,5 +29,7 @@ public interface UserstorysprintFacadeLocal {
     List<Userstorysprint> findRange(int[] range);
 
     int count();
+    
+    public List<Userstory> findUserstoriesForSprint(Integer idSprint) throws Exception;
     
 }

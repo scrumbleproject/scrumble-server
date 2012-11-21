@@ -26,6 +26,7 @@ public class ApplicationConfig extends Application {
         resources.add(com.scrumble.server.services.UserStoriesResource.class);
         resources.add(com.scrumble.server.services.MembersResource.class);
         resources.add(com.scrumble.server.services.ProjectsResource.class);
+        resources.add(com.scrumble.server.services.SprintsResource.class);
         resources.add(com.scrumble.server.services.TasksResource.class);
         return resources;
     }
