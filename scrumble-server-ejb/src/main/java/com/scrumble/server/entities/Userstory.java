@@ -42,11 +42,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Userstory.quickSearchSimple", query = "SELECT u FROM Userstory u WHERE u.title like :pattern or u.demonstration like :pattern or u.note like :pattern or u.category like :pattern"),
     @NamedQuery(name = "Userstory.quickSearchExact", query = "SELECT u FROM Userstory u WHERE u.title = :pattern or u.demonstration = :pattern or u.note = :pattern or u.category = :pattern")})
 public class Userstory implements Serializable {
+    @JoinColumn(name = "id_process_status", referencedColumnName = "id_process_status")
+    @ManyToOne
+    private Processstatus idProcessStatus;
     @Column(name = "estimation")
     private Integer estimation;
     @Size(max = 20)
-    @Column(name = "status")
-    private String status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userstory")
     private Collection<Userstorysprint> userstorysprintCollection;
     @Column(name = "importance")
@@ -182,14 +183,6 @@ public class Userstory implements Serializable {
         this.estimation = estimation;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     @XmlTransient
     public Collection<Userstorysprint> getUserstorysprintCollection() {
         return userstorysprintCollection;
@@ -197,6 +190,14 @@ public class Userstory implements Serializable {
 
     public void setUserstorysprintCollection(Collection<Userstorysprint> userstorysprintCollection) {
         this.userstorysprintCollection = userstorysprintCollection;
+    }
+
+    public Processstatus getIdProcessStatus() {
+        return idProcessStatus;
+    }
+
+    public void setIdProcessStatus(Processstatus idProcessStatus) {
+        this.idProcessStatus = idProcessStatus;
     }
     
 }

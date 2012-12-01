@@ -38,11 +38,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Sprint.findByIdSprint", query = "SELECT s FROM Sprint s WHERE s.idSprint = :idSprint"),
     @NamedQuery(name = "Sprint.findByNumSprint", query = "SELECT s FROM Sprint s WHERE s.numSprint = :numSprint"),
     @NamedQuery(name = "Sprint.findByTitle", query = "SELECT s FROM Sprint s WHERE s.title = :title"),
-    @NamedQuery(name = "Sprint.findByVelocite", query = "SELECT s FROM Sprint s WHERE s.velocite = :velocite"),
+    @NamedQuery(name = "Sprint.findByVelocity", query = "SELECT s FROM Sprint s WHERE s.velocity = :velocity"),
     @NamedQuery(name = "Sprint.findByDateStart", query = "SELECT s FROM Sprint s WHERE s.dateStart = :dateStart"),
     @NamedQuery(name = "Sprint.findByDateEnd", query = "SELECT s FROM Sprint s WHERE s.dateEnd = :dateEnd"),
     @NamedQuery(name = "Sprint.findByDuree", query = "SELECT s FROM Sprint s WHERE s.duree = :duree")})
 public class Sprint implements Serializable {
+    @Column(name = "velocity")
+    private Integer velocity;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sprint")
+    private Collection<Sprinttaskassignation> sprinttaskassignationCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,8 +58,6 @@ public class Sprint implements Serializable {
     @Size(max = 45)
     @Column(name = "title")
     private String title;
-    @Column(name = "velocite")
-    private Integer velocite;
     @Column(name = "date_start")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateStart;
@@ -101,14 +103,6 @@ public class Sprint implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Integer getVelocite() {
-        return velocite;
-    }
-
-    public void setVelocite(Integer velocite) {
-        this.velocite = velocite;
     }
 
     public Date getDateStart() {
@@ -184,6 +178,23 @@ public class Sprint implements Serializable {
     @Override
     public String toString() {
         return "com.scrumble.server.entities.Sprint[ idSprint=" + idSprint + " ]";
+    }
+
+    public Integer getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(Integer velocity) {
+        this.velocity = velocity;
+    }
+
+    @XmlTransient
+    public Collection<Sprinttaskassignation> getSprinttaskassignationCollection() {
+        return sprinttaskassignationCollection;
+    }
+
+    public void setSprinttaskassignationCollection(Collection<Sprinttaskassignation> sprinttaskassignationCollection) {
+        this.sprinttaskassignationCollection = sprinttaskassignationCollection;
     }
     
 }

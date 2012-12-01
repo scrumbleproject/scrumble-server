@@ -40,11 +40,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Task.quickSearchExact", query = "SELECT t FROM Task t WHERE t.title = :pattern")})
 
 public class Task implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
+    private Collection<Sprinttaskassignation> sprinttaskassignationCollection;
+    @JoinColumn(name = "id_process_status", referencedColumnName = "id_process_status")
+    @ManyToOne
+    private Processstatus idProcessStatus;
     @Column(name = "estimation")
     private Integer estimation;
     @Size(max = 20)
-    @Column(name = "status")
-    private String status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
     private Collection<Tasksprint> tasksprintCollection;
     private static final long serialVersionUID = 1L;
@@ -125,14 +128,6 @@ public class Task implements Serializable {
         this.estimation = estimation;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     @XmlTransient
     public Collection<Tasksprint> getTasksprintCollection() {
         return tasksprintCollection;
@@ -140,6 +135,23 @@ public class Task implements Serializable {
 
     public void setTasksprintCollection(Collection<Tasksprint> tasksprintCollection) {
         this.tasksprintCollection = tasksprintCollection;
+    }
+
+    @XmlTransient
+    public Collection<Sprinttaskassignation> getSprinttaskassignationCollection() {
+        return sprinttaskassignationCollection;
+    }
+
+    public void setSprinttaskassignationCollection(Collection<Sprinttaskassignation> sprinttaskassignationCollection) {
+        this.sprinttaskassignationCollection = sprinttaskassignationCollection;
+    }
+
+    public Processstatus getIdProcessStatus() {
+        return idProcessStatus;
+    }
+
+    public void setIdProcessStatus(Processstatus idProcessStatus) {
+        this.idProcessStatus = idProcessStatus;
     }
     
 }

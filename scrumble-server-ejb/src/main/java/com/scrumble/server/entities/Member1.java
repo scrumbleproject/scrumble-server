@@ -7,6 +7,7 @@ package com.scrumble.server.entities;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -42,6 +44,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Member1.quickSearchSimple", query = "SELECT m FROM Member1 m WHERE m.firstname like :pattern or m.lastname like :pattern or m.login like :pattern or m.email like :pattern"),
     @NamedQuery(name = "Member1.quickSearchExact", query = "SELECT m FROM Member1 m WHERE m.firstname = :pattern or m.lastname = :pattern or m.login = :pattern or m.email = :pattern")})
 public class Member1 implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member1")
+    private Collection<Sprinttaskassignation> sprinttaskassignationCollection;
     @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 75)
     @Column(name = "email")
@@ -175,6 +179,15 @@ public class Member1 implements Serializable {
 
     public void setIdRole(Role idRole) {
         this.idRole = idRole;
+    }
+
+    @XmlTransient
+    public Collection<Sprinttaskassignation> getSprinttaskassignationCollection() {
+        return sprinttaskassignationCollection;
+    }
+
+    public void setSprinttaskassignationCollection(Collection<Sprinttaskassignation> sprinttaskassignationCollection) {
+        this.sprinttaskassignationCollection = sprinttaskassignationCollection;
     }
     
 }
