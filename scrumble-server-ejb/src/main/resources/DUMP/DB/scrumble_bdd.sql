@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 01, 2012 at 10:55 AM
+-- Generation Time: Dec 01, 2012 at 11:56 AM
 -- Server version: 5.5.28
 -- PHP Version: 5.3.10-1ubuntu3.4
 
@@ -56,7 +56,7 @@ INSERT INTO `member` (`id_member`, `firstname`, `lastname`, `login`, `password`,
 (7, 'Product', 'Owner', 'prodowner', 'f5bf48aa40cad7891eb709fcf1fde128', 'productowner@gmailcom', 4),
 (8, 'Scrum', 'Master', 'scrummaster', 'eb0a191797624dd3a48fa681d3061212', 'scrummaster@gmailcom', 3),
 (9, 'Developer', 'Scrum', 'scrumdev', '5e8edd851d2fdfbd7415232c67367cc3', 'scrumdeveloper@gmail.com', 2),
-(10, 'Admin', 'Scrum', 'adminscrum', '21232f297a57a5a743894a0e4a801fc3', 'adminscrum@gmail.com', 1);
+(10, 'Admin', 'Scrum', 'adminscrum', '21232f297a57a5a743894a0e4a801fc3', 'adminscrum@gmail.com', NULL);
 
 -- --------------------------------------------------------
 
@@ -78,9 +78,7 @@ CREATE TABLE IF NOT EXISTS `memberproject` (
 
 INSERT INTO `memberproject` (`id_project`, `id_member`) VALUES
 (1, 1),
-(1, 2),
-(1, 3),
-(1, 5);
+(1, 2);
 
 -- --------------------------------------------------------
 
@@ -123,6 +121,7 @@ CREATE TABLE IF NOT EXISTS `processstatus` (
   `id_process_status` int(11) NOT NULL AUTO_INCREMENT,
   `code_status` varchar(3) DEFAULT NULL,
   `title_status` varchar(45) DEFAULT NULL,
+  `sort_order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_process_status`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
@@ -130,13 +129,13 @@ CREATE TABLE IF NOT EXISTS `processstatus` (
 -- Dumping data for table `processstatus`
 --
 
-INSERT INTO `processstatus` (`id_process_status`, `code_status`, `title_status`) VALUES
-(1, 'pro', 'Proposed'),
-(2, 'acc', 'Accepted'),
-(3, 'est', 'Estimated'),
-(4, 'tod', 'To do'),
-(5, 'inp', 'In progress'),
-(6, 'don', 'Done');
+INSERT INTO `processstatus` (`id_process_status`, `code_status`, `title_status`, `sort_order`) VALUES
+(1, 'pro', 'Proposed', 10),
+(2, 'acc', 'Accepted', 20),
+(3, 'est', 'Estimated', 30),
+(4, 'tod', 'To do', 40),
+(5, 'inp', 'In progress', 50),
+(6, 'don', 'Done', 60);
 
 -- --------------------------------------------------------
 
