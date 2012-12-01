@@ -52,5 +52,12 @@ public interface UserstoryFacadeLocal {
      * @param position 
      */
     public void updateImportance(Integer id, int position);
-
+    
+    
+    /**
+     * Get the list of all Userstory objects of a specified Project object
+     * @param idProject the id of a specified Sprint object
+     * @return a list of all userstories of the project 
+     */
+    public List<Userstory> findAllProjectUserstories(Integer idProject) throws Exception;
 }

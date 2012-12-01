@@ -209,4 +209,9 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
         return this.em.createNamedQuery("Userstory.findAllOrderByImportance").getResultList();
     }
     
+    public List<Userstory> findAllProjectUserstories(Integer idProject) throws Exception{
+        TypedQuery<Userstory> query = getEntityManager().createNamedQuery("Userstory.findByIdProject", Userstory.class);
+        return query.setParameter("idProject", this.em.find(Project.class, idProject)).getResultList();
+    }
+    
 }
