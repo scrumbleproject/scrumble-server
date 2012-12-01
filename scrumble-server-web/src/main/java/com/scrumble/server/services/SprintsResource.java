@@ -125,6 +125,7 @@ public class SprintsResource {
             results = sprintBean.findAllSprintUserstories(Integer.parseInt(idSprint));
         }
         catch (Exception e){
+            System.out.println(e.getMessage());
             System.out.println(e.getStackTrace());
         }
         return results;

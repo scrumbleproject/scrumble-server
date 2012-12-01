@@ -122,4 +122,18 @@ public class TasksResource {
     public List<Task> findAllTaskUserstories(@PathParam("id") String id) {
         return taskBean.findAllTaskUserstories(Integer.parseInt(id));
     }
+    
+    /**
+     * PUT method for updating a processStatus of Task object
+     * @param task JSON representation for the Task object
+     * @return an HTTP response with content of the created resource.
+     */
+    @POST
+    @Path("{id}/{status}")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public void updateProcessStatusOfTask(@PathParam("id") String id, @PathParam("status") String status) {
+        taskBean.updateProcessStatusOfTask(Integer.parseInt(id), status);
+    }
+    
 }

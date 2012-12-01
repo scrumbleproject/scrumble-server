@@ -37,4 +37,12 @@ public interface TaskFacadeLocal {
      * @return a list of all tasks of the project 
      */
     public List<Task> findAllTaskUserstories(Integer idUserstory);
+    
+    /**
+     * Update a processStatus of Task object
+     * @param idTask the id of a specified Task object
+     * @param codeStatus the status code relating to processStatus object
+     */
+    public void updateProcessStatusOfTask(Integer idTask, String codeStatus);
+    
 }

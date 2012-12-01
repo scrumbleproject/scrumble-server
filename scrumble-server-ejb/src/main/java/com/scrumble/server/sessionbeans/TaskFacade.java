@@ -4,12 +4,14 @@
  */
 package com.scrumble.server.sessionbeans;
 
+import com.scrumble.server.entities.Processstatus;
 import com.scrumble.server.entities.Task;
 import com.scrumble.server.entities.Userstory;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -25,7 +27,7 @@ import javax.persistence.TypedQuery;
 public class TaskFacade extends AbstractFacade<Task> implements TaskFacadeLocal {
     @PersistenceContext(unitName = "com.scrumble.server_scrumble-server-ejb_ejb_1.0PU")
     private EntityManager em;
-
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -59,4 +61,20 @@ public class TaskFacade extends AbstractFacade<Task> implements TaskFacadeLocal 
         TypedQuery<Task> query = getEntityManager().createNamedQuery("Task.findByIdUserstory", Task.class);
         return query.setParameter("idUserstory", this.em.find(Userstory.class, idUserstory)).getResultList();
     }
+    
+    public void updateProcessStatusOfTask(Integer idTask, String codeStatus){
+        
+        Task task = this.em.find(Task.class, idTask);
+        if (!codeStatus.equals(task.getIdProcessStatus().getCodeStatus())){
+        
+            TypedQuery<Processstatus> query = getEntityManager().createNamedQuery("Processstatus.findByCodeStatus", Processstatus.class);
+            List<Processstatus> processStatus = query.setParameter("codeStatus", codeStatus).getResultList();
+            if (processStatus.size()>0){ //if related processStatus object found
+                task.setIdProcessStatus(processStatus.get(0)); //must be unique
+            }
+            
+        }
+        
+    }
+    
 }
