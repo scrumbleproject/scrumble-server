@@ -145,7 +145,24 @@ public class UserStoriesResource {
         return reponse;
     }
     
-    
+    /**
+     * Retrieves the list of a com.scrumble.server.entities.Userstory linked with the Project object
+     * @param idProject the id of the Sprint object to retrieve
+     * @return a JSON representation of the list of all userstories.
+     */
+    @GET
+    @Path("{idProject}/projects")
+    @Produces("application/json")
+    public List<Userstory> findAllProjectUserstories(@PathParam("idProject") String idProject) {
+        List<Userstory> results = null;
+        try {
+            results = userStoryBean.findAllProjectUserstories(Integer.parseInt(idProject));
+        }
+        catch (Exception e){
+            System.out.println(e.getStackTrace());
+        }
+        return results;
+    }
     
     
     
@@ -236,5 +253,5 @@ public class UserStoriesResource {
     public List<Task> searchTasksQuick(@PathParam("idUserstory") String idUserstory, @PathParam("pattern") String pattern) {
         return taskBean.quickSearch(pattern);
     }
-    
+
 }
