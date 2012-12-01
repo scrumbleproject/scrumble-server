@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Task.quickSearchSimple", query = "SELECT t FROM Task t WHERE t.title like :pattern"),
     @NamedQuery(name = "Task.quickSearchExact", query = "SELECT t FROM Task t WHERE t.title = :pattern")})
 
-public class Task implements Serializable {
+public class Task implements Serializable, Comparable<Task> {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
     private Collection<Sprinttaskassignation> sprinttaskassignationCollection;
     @JoinColumn(name = "id_process_status", referencedColumnName = "id_process_status")
@@ -152,6 +152,11 @@ public class Task implements Serializable {
 
     public void setIdProcessStatus(Processstatus idProcessStatus) {
         this.idProcessStatus = idProcessStatus;
+    }
+
+    @Override
+    public int compareTo(Task t) {
+        return this.idProcessStatus.getSortOrder().compareTo(t.getIdProcessStatus().getSortOrder());
     }
     
 }

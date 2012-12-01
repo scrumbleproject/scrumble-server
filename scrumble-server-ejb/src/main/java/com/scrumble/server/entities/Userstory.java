@@ -5,7 +5,11 @@
 package com.scrumble.server.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +23,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -198,6 +203,12 @@ public class Userstory implements Serializable {
 
     public void setIdProcessStatus(Processstatus idProcessStatus) {
         this.idProcessStatus = idProcessStatus;
+    }
+    
+    public void sortTasksByProcessStatusOrder(){
+        List<Task> tasks = new ArrayList<Task>(this.taskCollection);
+        Collections.sort(tasks);
+        this.setTaskCollection(tasks);        
     }
     
 }

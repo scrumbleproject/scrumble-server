@@ -40,7 +40,9 @@ public class UserstorysprintFacade extends AbstractFacade<Userstorysprint> imple
             List<Userstorysprint> userstorysprints = query.setParameter("idSprint", idSprint).getResultList();
             results = new ArrayList<Userstory>();
             for (Userstorysprint userstorysprint : userstorysprints){
-                results.add(userstorysprint.getUserstory());
+                Userstory userstory = userstorysprint.getUserstory();
+                userstory.sortTasksByProcessStatusOrder(); //order tasks by status order
+                results.add(userstory);
             }
         }
         catch(Exception e){
