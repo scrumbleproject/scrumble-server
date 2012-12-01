@@ -33,6 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Processstatus.findByCodeStatus", query = "SELECT p FROM Processstatus p WHERE p.codeStatus = :codeStatus"),
     @NamedQuery(name = "Processstatus.findByTitleStatus", query = "SELECT p FROM Processstatus p WHERE p.titleStatus = :titleStatus")})
 public class Processstatus implements Serializable {
+    @Column(name = "sort_order")
+    private Integer sortOrder;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -122,6 +124,14 @@ public class Processstatus implements Serializable {
     @Override
     public String toString() {
         return "com.scrumble.server.entities.Processstatus[ idProcessStatus=" + idProcessStatus + " ]";
+    }
+
+    public Integer getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(Integer sortOrder) {
+        this.sortOrder = sortOrder;
     }
     
 }
