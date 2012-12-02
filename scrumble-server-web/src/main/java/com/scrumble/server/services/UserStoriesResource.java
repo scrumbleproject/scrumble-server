@@ -89,11 +89,12 @@ public class UserStoriesResource {
      * @return an HTTP response with content of the created resource.
      */
     @POST
-    @Path("add")
+    @Path("add/{idProject}")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response addUserStory(Userstory userstory) {
+    public Response addUserStory(Userstory userstory,@PathParam("idProject") String idProject) {
         userStoryBean.create(userstory);
+        userStoryBean.add_updateUserstoryToProject(userstory, Integer.parseInt(idProject));
         
         Response reponse=Response.status(200).build();
         return reponse;
@@ -106,10 +107,12 @@ public class UserStoriesResource {
      * @return an HTTP response with content of the created resource.
      */
     @PUT
+    @Path("{idProject}")
     @Consumes("application/json")
     @Produces("application/json")
-    public void updateUserStory(Userstory userstory) {
+    public void updateUserStory(Userstory userstory,@PathParam("idProject") String idProject) {
         userStoryBean.edit(userstory);
+        userStoryBean.add_updateUserstoryToProject(userstory, Integer.parseInt(idProject));
     }
     
     

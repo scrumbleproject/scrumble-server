@@ -161,7 +161,6 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
         //save
         this.edit(userstory);
         System.out.println("save");
-        
     }
     
     
@@ -213,5 +212,11 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
         TypedQuery<Userstory> query = getEntityManager().createNamedQuery("Userstory.findByIdProject", Userstory.class);
         return query.setParameter("idProject", this.em.find(Project.class, idProject)).getResultList();
     }
+    
+    public void add_updateUserstoryToProject(Userstory userstory, Integer idProject){
+        userstory.setIdProject(this.em.find(Project.class, idProject));
+        this.edit(userstory);
+    }
+    
     
 }

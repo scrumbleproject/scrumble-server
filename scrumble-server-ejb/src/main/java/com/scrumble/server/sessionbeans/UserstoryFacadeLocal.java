@@ -56,8 +56,16 @@ public interface UserstoryFacadeLocal {
     
     /**
      * Get the list of all Userstory objects of a specified Project object
-     * @param idProject the id of a specified Sprint object
+     * @param idProject the id of a specified Project object
      * @return a list of all userstories of the project 
      */
     public List<Userstory> findAllProjectUserstories(Integer idProject) throws Exception;
+    
+     /**
+     * Add or update an userstory to a project
+     * @param userstory the userstory which will be added or updated
+     * @param idProject the id of a specified Project object
+     * @return void
+     */
+    public void add_updateUserstoryToProject(Userstory userstory, Integer idProject);
 }
