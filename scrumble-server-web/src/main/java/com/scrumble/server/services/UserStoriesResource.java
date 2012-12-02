@@ -209,7 +209,7 @@ public class UserStoriesResource {
     @Produces("application/json")
     public void addTask(@PathParam("idUserstory") String idUserstory, Task task) {
         task.setIdUserstory(userStoryBean.find(Integer.parseInt(idUserstory)));
-        taskBean.create(task);
+        taskBean.create(taskBean.useDefaultProcessStatusIfNeededForTask(task));
     }
     
     
@@ -224,7 +224,7 @@ public class UserStoriesResource {
     @Produces("application/json")
     public void updateTask(@PathParam("idUserstory") String idUserstory, Task task) {
         task.setIdUserstory(userStoryBean.find(Integer.parseInt(idUserstory)));
-        taskBean.edit(task);
+        taskBean.edit(taskBean.useDefaultProcessStatusIfNeededForTask(task));
     }
     
     

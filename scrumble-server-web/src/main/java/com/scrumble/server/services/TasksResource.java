@@ -82,7 +82,7 @@ public class TasksResource {
     @Consumes("application/json")
     @Produces("application/json")
     public void addTask(Task task) {
-        taskBean.create(task);
+        taskBean.create(taskBean.useDefaultProcessStatusIfNeededForTask(task));
     }
     
     /**
@@ -94,8 +94,7 @@ public class TasksResource {
     @Consumes("application/json")
     @Produces("application/json")
     public void updateTask(Task task) {
-        System.out.println("PUT");
-        taskBean.edit(task);
+        taskBean.edit(taskBean.useDefaultProcessStatusIfNeededForTask(task));
     }
     
     /**

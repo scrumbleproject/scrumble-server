@@ -77,4 +77,18 @@ public class TaskFacade extends AbstractFacade<Task> implements TaskFacadeLocal 
         
     }
     
+    public Task useDefaultProcessStatusIfNeededForTask(Task task){
+        
+        if (task.getIdProcessStatus()==null){
+            //if no processStatus for this task, we use "To Do" process Status by default
+            TypedQuery<Processstatus> query = getEntityManager().createNamedQuery("Processstatus.findByCodeStatus", Processstatus.class);
+            List<Processstatus> processStatus = query.setParameter("codeStatus", "tod").getResultList();
+            if (processStatus.size()>0){ //if related processStatus object found
+                task.setIdProcessStatus(processStatus.get(0)); //must be unique
+            }
+        }
+        
+        return task;
+    }
+    
 }

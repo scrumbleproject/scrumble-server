@@ -45,4 +45,11 @@ public interface TaskFacadeLocal {
      */
     public void updateProcessStatusOfTask(Integer idTask, String codeStatus);
     
+    /**
+     * Check if a task has already a processStatus, and use default one otherwise
+     * @param task a specified Task object
+     * @return the task with the default processStatus 
+     */
+    public Task useDefaultProcessStatusIfNeededForTask(Task task);
+    
 }
