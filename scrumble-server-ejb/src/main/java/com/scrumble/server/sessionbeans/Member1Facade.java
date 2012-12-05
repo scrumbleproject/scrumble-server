@@ -5,6 +5,7 @@
 package com.scrumble.server.sessionbeans;
 
 import com.scrumble.server.entities.Member1;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -14,6 +15,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import sun.misc.BASE64Encoder;
 
 /**
  *
@@ -51,5 +53,28 @@ public class Member1Facade extends AbstractFacade<Member1> implements Member1Fac
         set.addAll(results);
         
         return new ArrayList<Member1>(set);
+    }
+    
+    
+    public boolean checkLoginAndPassword(String login, String password) throws Exception{
+        
+        TypedQuery<Member1> query = getEntityManager().createNamedQuery("Member1.findByLogin", Member1.class);
+        List<Member1> results = query.setParameter("login", login).getResultList();
+        if (results.size()>0){
+            String hashedPassword = results.get(0).getPassword(); //login should be unique
+            
+            //encrypte passed password
+            MessageDigest md = MessageDigest.getInstance("SHA");
+            md.update(password.getBytes("UTF-8"));
+            byte digest[] = md.digest();
+            String hashedPasswordToCheck = (new BASE64Encoder()).encode(digest);
+            
+            //compare passwords
+            if (hashedPassword.equals(hashedPasswordToCheck)){
+                return true;
+            }
+            
+        }        
+        return false;
     }
 }

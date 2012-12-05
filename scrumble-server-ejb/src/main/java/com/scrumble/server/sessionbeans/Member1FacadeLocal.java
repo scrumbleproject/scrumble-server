@@ -39,5 +39,9 @@ public interface Member1FacadeLocal {
      * @return a list with all matching Member1 object 
      */
     public List<Member1> quickSearch(String pattern);
+
+    
+    
+    public boolean checkLoginAndPassword(String login, String password) throws Exception;
     
 }
