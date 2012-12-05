@@ -17,7 +17,7 @@ import sun.misc.BASE64Encoder;
  * @author cyril
  */
 @Stateless
-//@LocalBean
+@LocalBean
 public class AuthFacade implements AuthFacadeLocal {
     
     //@EJB

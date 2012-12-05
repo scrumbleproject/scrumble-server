@@ -24,7 +24,7 @@ import javax.ws.rs.core.UriInfo;
  * @author cyril
  */
 @Path("auth")
-//@Stateless
+@Stateless
 public class AuthResource {
 
     @Context
