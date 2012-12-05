@@ -111,7 +111,9 @@ public class UserStoriesResource {
     @Consumes("application/json")
     @Produces("application/json")
     public void updateUserStory(Userstory userstory,@PathParam("idProject") String idProject) {
+        
         userStoryBean.edit(userstory);
+        userStoryBean.updateUserstoryTaskCollection(userstory);
         userStoryBean.add_updateUserstoryToProject(userstory, Integer.parseInt(idProject));
     }
     
