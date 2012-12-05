@@ -5,8 +5,10 @@
 package com.scrumble.server.sessionbeans;
 
 import com.scrumble.server.entities.Project;
+import com.scrumble.server.entities.Task;
 import com.scrumble.server.entities.Userstory;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -218,5 +220,10 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
         this.edit(userstory);
     }
     
+    
+    public void updateUserstoryTaskCollection(Userstory userstory) {
+        TypedQuery<Task> query = getEntityManager().createNamedQuery("Task.findByIdUserstory", Task.class);
+        userstory.setTaskCollection(query.setParameter("idUserstory", userstory).getResultList());
+    }
     
 }
