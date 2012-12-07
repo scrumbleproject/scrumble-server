@@ -44,6 +44,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Member1.quickSearchSimple", query = "SELECT m FROM Member1 m WHERE m.firstname like :pattern or m.lastname like :pattern or m.login like :pattern or m.email like :pattern"),
     @NamedQuery(name = "Member1.quickSearchExact", query = "SELECT m FROM Member1 m WHERE m.firstname = :pattern or m.lastname = :pattern or m.login = :pattern or m.email = :pattern")})
 public class Member1 implements Serializable {
+    @Size(max = 20)
+    @Column(name = "internal_phone")
+    private String internalPhone;
+    @Size(max = 20)
+    @Column(name = "mobile_phone")
+    private String mobilePhone;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "member1")
     private Collection<Sprinttaskassignation> sprinttaskassignationCollection;
     @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
@@ -188,6 +194,22 @@ public class Member1 implements Serializable {
 
     public void setSprinttaskassignationCollection(Collection<Sprinttaskassignation> sprinttaskassignationCollection) {
         this.sprinttaskassignationCollection = sprinttaskassignationCollection;
+    }
+
+    public String getInternalPhone() {
+        return internalPhone;
+    }
+
+    public void setInternalPhone(String internalPhone) {
+        this.internalPhone = internalPhone;
+    }
+
+    public String getMobilePhone() {
+        return mobilePhone;
+    }
+
+    public void setMobilePhone(String mobilePhone) {
+        this.mobilePhone = mobilePhone;
     }
     
 }

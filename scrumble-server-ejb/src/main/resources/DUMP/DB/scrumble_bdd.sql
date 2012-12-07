@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 01, 2012 at 11:56 AM
+-- Generation Time: Dec 07, 2012 at 11:24 AM
 -- Server version: 5.5.28
 -- PHP Version: 5.3.10-1ubuntu3.4
 
@@ -37,6 +37,8 @@ CREATE TABLE IF NOT EXISTS `member` (
   `password` varchar(45) NOT NULL,
   `email` varchar(75) DEFAULT NULL,
   `id_role` int(11) DEFAULT NULL,
+  `internal_phone` varchar(20) DEFAULT NULL,
+  `mobile_phone` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id_member`),
   UNIQUE KEY `login_UNIQUE` (`login`),
   KEY `fk_id_role_idx` (`id_role`)
@@ -46,17 +48,17 @@ CREATE TABLE IF NOT EXISTS `member` (
 -- Dumping data for table `member`
 --
 
-INSERT INTO `member` (`id_member`, `firstname`, `lastname`, `login`, `password`, `email`, `id_role`) VALUES
-(1, 'Cyril', 'EPINAT', 'cyril', '9b22e8ac450bf8dabd90915b1b00a15c', 'epicyr@gmail.com', 1),
-(2, 'Arnaud', 'DE LA CRUZ', 'arnaud', 'ea56f45e66e2c57fc79df7dc3ae0437b', 'arnaud.delacruz@gmail.com', 1),
-(3, 'Soukeyna', 'GAYE', 'soukeyna', '416c21534a55783c70de4b14b8719851', 'soukeynag@gmail.com', 4),
-(4, 'Romain', 'THIVILLON', 'romain', '5026bc63b5418ffdb54f238db245ec01', 'romain.thivillon@gmail.com', 1),
-(5, 'Jérémy', 'BARASCUT', 'jeremy', '6967cabefd763ac1a1a88e11159957db', 'jeremy.barascut@gmail.com', 3),
-(6, 'Guest', 'Scrumble', 'guest', '084e0343a0486ff05530df6c705c8bb4', 'guestscrumble@gmailcom', 5),
-(7, 'Product', 'Owner', 'prodowner', 'f5bf48aa40cad7891eb709fcf1fde128', 'productowner@gmailcom', 4),
-(8, 'Scrum', 'Master', 'scrummaster', 'eb0a191797624dd3a48fa681d3061212', 'scrummaster@gmailcom', 3),
-(9, 'Developer', 'Scrum', 'scrumdev', '5e8edd851d2fdfbd7415232c67367cc3', 'scrumdeveloper@gmail.com', 2),
-(10, 'Admin', 'Scrum', 'adminscrum', '21232f297a57a5a743894a0e4a801fc3', 'adminscrum@gmail.com', 1);
+INSERT INTO `member` (`id_member`, `firstname`, `lastname`, `login`, `password`, `email`, `id_role`, `internal_phone`, `mobile_phone`) VALUES
+(1, 'Cyril', 'EPINAT', 'cyril', '9b22e8ac450bf8dabd90915b1b00a15c', 'epicyr@gmail.com', 1, '1257', '0470707070'),
+(2, 'Arnaud', 'DE LA CRUZ', 'arnaud', 'ea56f45e66e2c57fc79df7dc3ae0437b', 'arnaud.delacruz@gmail.com', 1, '1258', '0470707071'),
+(3, 'Soukeyna', 'GAYE', 'soukeyna', '416c21534a55783c70de4b14b8719851', 'soukeynag@gmail.com', 4, '1259', '0470707072'),
+(4, 'Romain', 'THIVILLON', 'romain', '5026bc63b5418ffdb54f238db245ec01', 'romain.thivillon@gmail.com', 1, '1260', '0470707073'),
+(5, 'Jérémy', 'BARASCUT', 'jeremy', '6967cabefd763ac1a1a88e11159957db', 'jeremy.barascut@gmail.com', 3, '1261', '0470707074'),
+(6, 'Guest', 'Scrumble', 'guest', '084e0343a0486ff05530df6c705c8bb4', 'guestscrumble@gmailcom', 5, NULL, NULL),
+(7, 'Product', 'Owner', 'prodowner', 'f5bf48aa40cad7891eb709fcf1fde128', 'productowner@gmailcom', 4, NULL, NULL),
+(8, 'Scrum', 'Master', 'scrummaster', 'eb0a191797624dd3a48fa681d3061212', 'scrummaster@gmailcom', 3, NULL, NULL),
+(9, 'Developer', 'Scrum', 'scrumdev', '5e8edd851d2fdfbd7415232c67367cc3', 'scrumdeveloper@gmail.com', 2, NULL, NULL),
+(10, 'Admin', 'Scrum', 'adminscrum', '21232f297a57a5a743894a0e4a801fc3', 'adminscrum@gmail.com', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
