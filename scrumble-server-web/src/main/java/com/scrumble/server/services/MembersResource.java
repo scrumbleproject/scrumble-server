@@ -82,28 +82,31 @@ public class MembersResource {
     /**
      * POST method for creating an instance of Member1 object
      * @param member JSON representation for the Member1 object
+     * @param idRole the id of the Role object to add
      * @return an HTTP response with content of the created resource.
      */
     @POST
-    @Path("add")
+    @Path("add/{idRole}")
     @Consumes("application/json")
     @Produces("application/json")
-    public void addMember(Member1 member) {
-        System.out.println("ADD "+member);
+    public void addMember(Member1 member,@PathParam("idRole") String idRole) {
         memberBean.create(member);
+        memberBean.add_updateRoleToMember(member, Integer.parseInt(idRole));
     }
     
     /**
      * PUT method for updating an instance of Member1 object
      * @param member JSON representation for the Member1 object
+     * @param idRole the id of the Role object to update
      * @return an HTTP response with content of the created resource.
      */
     @PUT
+    @Path("{idRole}")
     @Consumes("application/json")
     @Produces("application/json")
-    public void updateMember(Member1 member) {
-        System.out.println("PUT");
+    public void updateMember(Member1 member,@PathParam("idRole") String idRole) {
         memberBean.edit(member);
+        memberBean.add_updateRoleToMember(member, Integer.parseInt(idRole));
     }
     
     

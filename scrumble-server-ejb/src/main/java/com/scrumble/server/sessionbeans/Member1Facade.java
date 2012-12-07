@@ -5,6 +5,7 @@
 package com.scrumble.server.sessionbeans;
 
 import com.scrumble.server.entities.Member1;
+import com.scrumble.server.entities.Role;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -76,5 +77,11 @@ public class Member1Facade extends AbstractFacade<Member1> implements Member1Fac
             
         }        
         return false;
+    }
+    
+    
+    public void add_updateRoleToMember(Member1 member, Integer idRole){
+        member.setIdRole(this.em.find(Role.class, idRole));
+        this.edit(member);
     }
 }
