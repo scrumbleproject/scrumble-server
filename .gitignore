@@ -1,3 +1,5 @@
 /scrumble-server-ear/target/
 /scrumble-server-ejb/target/
+/scrumble-server-ejb/src/main/setup/glassfish-resources.xml
 /scrumble-server-web/target/
+
