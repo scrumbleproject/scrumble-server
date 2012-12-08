@@ -24,7 +24,7 @@ import javax.ws.rs.core.UriInfo;
  * @author cyril
  */
 @Path("auth")
-//@Stateless
+@Stateless
 public class AuthResource {
 
     @Context
@@ -66,7 +66,7 @@ public class AuthResource {
         String token = "rien";
         try {
             if (authBean==null) System.out.println("authBean is null");
-            //token = authBean.authenticate(login, password);
+            token = authBean.authenticate(login, password);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             //ex.printStackTrace();

@@ -5,6 +5,7 @@
 package com.scrumble.server.sessionbeans;
 
 import com.scrumble.server.entities.Member1;
+import com.scrumble.server.utils.ScrumbleUtils;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -64,17 +65,15 @@ public class Member1Facade extends AbstractFacade<Member1> implements Member1Fac
             String hashedPassword = results.get(0).getPassword(); //login should be unique
             
             //encrypte passed password
-            MessageDigest md = MessageDigest.getInstance("SHA");
-            md.update(password.getBytes("UTF-8"));
-            byte digest[] = md.digest();
-            String hashedPasswordToCheck = (new BASE64Encoder()).encode(digest);
+            String hashedPasswordToCheck = ScrumbleUtils.encryptStringWithAlgorithm(password, "SHA1");
             
             //compare passwords
-            if (hashedPassword.equals(hashedPasswordToCheck)){
+            if (hashedPassword.equalsIgnoreCase(hashedPasswordToCheck)){
                 return true;
             }
             
         }        
         return false;
     }
+    
 }
