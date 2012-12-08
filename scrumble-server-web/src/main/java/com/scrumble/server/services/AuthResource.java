@@ -16,6 +16,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -29,6 +31,12 @@ public class AuthResource {
 
     @Context
     private UriInfo context;
+    
+    @Context
+    private Request request;
+    
+    @Context
+    private HttpHeaders httpHeaders;
 
     @EJB
     private AuthFacadeLocal authBean;  
@@ -56,26 +64,32 @@ public class AuthResource {
      * @param password the password of the user
      * @return the token as the authentication key or null if authenticate failed.
      */
-    @GET
+    @POST
     @Path("{login}/{password}")
-    //@Consumes("application/json")
-    @Produces("application/json")
+    @Produces("text/plain")
     public String authenticate(@PathParam("login") String login, @PathParam("password") String password) {
-    //public String authenticate() {
-        System.out.println("AUTH with "+login+"/"+password);
-        String token = "rien";
+        String token = "";
         try {
-            if (authBean==null) System.out.println("authBean is null");
             token = authBean.authenticate(login, password);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            //ex.printStackTrace();
-            //Logger.getLogger(AuthResource.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("TOKEN="+token);
             return "FAILED";
         }
-        //String token = "SUCCESS";
-        System.out.println("TOKEN="+token);
         return token;
     }
+    
+    @POST
+    @Path("check")
+    @Produces("text/plain")
+    public String checkToken(){
+        StringBuffer msg = new StringBuffer();
+        
+        for (String s : httpHeaders.getRequestHeader(httpHeaders.AUTHORIZATION)){
+            msg.append(s);
+        }
+        return msg.toString();
+        //return httpHeaders.AUTHORIZATION;   
+        //return "authorization";
+    }
+    
 }
