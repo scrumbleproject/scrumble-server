@@ -6,7 +6,7 @@ package com.scrumble.server.sessionbeans;
 
 import com.scrumble.server.entities.Member1;
 import com.scrumble.server.utils.ScrumbleUtils;
-import java.security.MessageDigest;
+import com.scrumble.server.entities.Role;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,7 +16,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import sun.misc.BASE64Encoder;
 
 /**
  *
@@ -74,6 +73,12 @@ public class Member1Facade extends AbstractFacade<Member1> implements Member1Fac
             
         }        
         return false;
+    }
+    
+    
+    public void add_updateRoleToMember(Member1 member, Integer idRole){
+        member.setIdRole(this.em.find(Role.class, idRole));
+        this.edit(member);
     }
     
 }
