@@ -49,16 +49,6 @@ public class AuthResource {
     }
 
     /**
-     * Retrieves representation of an instance of com.scrumble.server.services.AuthResource
-     * @return an instance of java.lang.String
-     */
-    @GET
-    @Produces("application/json")
-    public String getJson() {
-        return "YES";
-    }
-
-    /**
      * POST method to authenticate user and return a token to use in requests
      * @param login the login of the user
      * @param password the password of the user
