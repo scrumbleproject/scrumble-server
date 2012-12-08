@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Sprint.findAll", query = "SELECT s FROM Sprint s"),
     @NamedQuery(name = "Sprint.findByIdSprint", query = "SELECT s FROM Sprint s WHERE s.idSprint = :idSprint"),
+    @NamedQuery(name = "Sprint.findByIdProject", query = "SELECT s FROM Sprint s WHERE s.idProject = :idProject ORDER BY s.numSprint ASC"),
     @NamedQuery(name = "Sprint.findByNumSprint", query = "SELECT s FROM Sprint s WHERE s.numSprint = :numSprint"),
     @NamedQuery(name = "Sprint.findByTitle", query = "SELECT s FROM Sprint s WHERE s.title = :title"),
     @NamedQuery(name = "Sprint.findByVelocity", query = "SELECT s FROM Sprint s WHERE s.velocity = :velocity"),

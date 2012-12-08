@@ -4,6 +4,7 @@
  */
 package com.scrumble.server.sessionbeans;
 
+import com.scrumble.server.entities.Project;
 import com.scrumble.server.entities.Sprint;
 import com.scrumble.server.entities.Userstory;
 import com.scrumble.server.entities.Userstorysprint;
@@ -14,6 +15,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -36,16 +38,7 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
     public SprintFacade() {
         super(Sprint.class);
     }
-    
-    /*public List<Userstory> findAllSprintUserstories(Integer idSprint){
-        Sprint sprint = em.find(Sprint.class, idSprint);  
-        ArrayList<Userstory> results = new ArrayList<Userstory>(); 
-        for (Userstorysprint uss : sprint.getUserstorysprintCollection()) {
-            results.add(uss.getUserstory());
-        }
-        return results;
-    }*/
-    
+ 
     public List<Userstory> findAllSprintUserstories(Integer idSprint) throws Exception{
         List<Userstory> results;
         try {
@@ -55,6 +48,11 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
             throw e;
         }
         return results;
+    }
+    
+    public List<Sprint> findAllProjectSprints(Integer idProject) throws Exception{
+        TypedQuery<Sprint> query = getEntityManager().createNamedQuery("Sprint.findByIdProject", Sprint.class);
+        return query.setParameter("idProject", this.em.find(Project.class, idProject)).getResultList();
     }
     
 }

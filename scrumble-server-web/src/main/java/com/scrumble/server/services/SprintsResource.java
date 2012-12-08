@@ -131,4 +131,24 @@ public class SprintsResource {
         return results;
     }
     
+    
+    /**
+     * Retrieves the list of a com.scrumble.server.entities.Sprint linked with the Project object
+     * @param idProject the id of the Project object to retrieve
+     * @return a JSON representation of the list of all sprints.
+     */
+    @GET
+    @Path("{idProject}/projects")
+    @Produces("application/json")
+    public List<Sprint> findAllProjectUserstories(@PathParam("idProject") String idProject) {
+        List<Sprint> results = null;
+        try {
+            results = sprintBean.findAllProjectSprints(Integer.parseInt(idProject));
+        }
+        catch (Exception e){
+            System.out.println(e.getStackTrace());
+        }
+        return results;
+    }
+    
 }

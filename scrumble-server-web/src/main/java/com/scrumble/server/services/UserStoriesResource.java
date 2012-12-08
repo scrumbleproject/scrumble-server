@@ -152,7 +152,7 @@ public class UserStoriesResource {
     
     /**
      * Retrieves the list of a com.scrumble.server.entities.Userstory linked with the Project object
-     * @param idProject the id of the Sprint object to retrieve
+     * @param idProject the id of the Project object to retrieve
      * @return a JSON representation of the list of all userstories.
      */
     @GET

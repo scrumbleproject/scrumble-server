@@ -37,5 +37,10 @@ public interface SprintFacadeLocal {
      */
     public List<Userstory> findAllSprintUserstories(Integer idSprint) throws Exception;
     
-    
+    /**
+     * Get the list of all Sprint objects of a specified Project object
+     * @param idProject the id of a specified Project object
+     * @return a list of all sprints of the project 
+     */
+    public List<Sprint> findAllProjectSprints(Integer idProject) throws Exception;
 }
