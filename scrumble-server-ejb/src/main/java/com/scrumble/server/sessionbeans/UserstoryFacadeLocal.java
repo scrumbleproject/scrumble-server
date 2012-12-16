@@ -61,11 +61,11 @@ public interface UserstoryFacadeLocal {
      */
     public List<Userstory> findAllProjectUserstories(Integer idProject) throws Exception;
     
-     /**
-     * Add or update an userstory to a project
-     * @param userstory the userstory which will be added or updated
-     * @param idProject the id of a specified Project object
-     */
+    /**
+    * Add or update an userstory to a project
+    * @param userstory the userstory which will be added or updated
+    * @param idProject the id of a specified Project object
+    */
     public void add_updateUserstoryToProject(Userstory userstory, Integer idProject);
     
     

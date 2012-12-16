@@ -55,4 +55,9 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
         return query.setParameter("idProject", this.em.find(Project.class, idProject)).getResultList();
     }
     
+    public void add_updateSprintToProject(Sprint sprint, Integer idProject){
+        sprint.setIdProject(this.em.find(Project.class, idProject));
+        this.edit(sprint);
+    }
+    
 }

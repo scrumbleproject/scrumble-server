@@ -54,11 +54,11 @@ INSERT INTO `member` (`id_member`, `firstname`, `lastname`, `login`, `password`,
 (3, 'Soukeyna', 'GAYE', 'soukeyna', '416c21534a55783c70de4b14b8719851', 'soukeynag@gmail.com', 4, '1259', '0470707072'),
 (4, 'Romain', 'THIVILLON', 'romain', '5026bc63b5418ffdb54f238db245ec01', 'romain.thivillon@gmail.com', 1, '1260', '0470707073'),
 (5, 'Jérémy', 'BARASCUT', 'jeremy', '6967cabefd763ac1a1a88e11159957db', 'jeremy.barascut@gmail.com', 3, '1261', '0470707074'),
-(6, 'Guest', 'Scrumble', 'guest', '084e0343a0486ff05530df6c705c8bb4', 'guestscrumble@gmailcom', 5, NULL, NULL),
-(7, 'Product', 'Owner', 'prodowner', 'f5bf48aa40cad7891eb709fcf1fde128', 'productowner@gmailcom', 4, NULL, NULL),
-(8, 'Scrum', 'Master', 'scrummaster', 'eb0a191797624dd3a48fa681d3061212', 'scrummaster@gmailcom', 3, NULL, NULL),
-(9, 'Developer', 'Scrum', 'scrumdev', '5e8edd851d2fdfbd7415232c67367cc3', 'scrumdeveloper@gmail.com', 2, NULL, NULL),
-(10, 'Admin', 'Scrum', 'adminscrum', '21232f297a57a5a743894a0e4a801fc3', 'adminscrum@gmail.com', 1, NULL, NULL);
+(6, 'Guest', 'Scrumble', 'guest', '084e0343a0486ff05530df6c705c8bb4', 'guestscrumble@gmailcom', 5, '1262', '0470707075'),
+(7, 'Product', 'Owner', 'prodowner', 'f5bf48aa40cad7891eb709fcf1fde128', 'productowner@gmailcom', 4, '1263', '0470707076'),
+(8, 'Scrum', 'Master', 'scrummaster', 'eb0a191797624dd3a48fa681d3061212', 'scrummaster@gmailcom', 3, '1264', '0470707077'),
+(9, 'Developer', 'Scrum', 'scrumdev', '5e8edd851d2fdfbd7415232c67367cc3', 'scrumdeveloper@gmail.com', 2, '1265', '0470707078'),
+(10, 'Admin', 'Scrum', 'adminscrum', '21232f297a57a5a743894a0e4a801fc3', 'adminscrum@gmail.com', 1, '1266', '0470707079');
 
 -- --------------------------------------------------------
 
@@ -208,8 +208,10 @@ CREATE TABLE IF NOT EXISTS `sprint` (
 --
 
 INSERT INTO `sprint` (`id_sprint`, `num_sprint`, `title`, `id_project`, `velocity`, `date_start`, `date_end`, `duree`) VALUES
-(1, 1, 'sprint 1', 1, NULL, NULL, NULL, NULL),
-(2, 2, 'Sprint 2', 1, NULL, NULL, NULL, NULL);
+(1, 1, 'Sprint 1', 1, 4, '2012-11-19 00:00:00', '2012-11-28 00:00:00', 9),
+(2, 2, 'Sprint 2', 1, 42, '2012-11-28 00:00:00', '2012-11-30 00:00:00', 2),
+(3, 0, 'Sprint 3', 1, 42, '2012-12-01 00:00:00', '2012-12-04 00:00:00', 3),
+(4, 0, 'Sprint 4', 1, 42, '2012-12-05 00:00:00', '2012-12-12 00:00:00', 7);
 
 -- --------------------------------------------------------
 

@@ -43,4 +43,12 @@ public interface SprintFacadeLocal {
      * @return a list of all sprints of the project 
      */
     public List<Sprint> findAllProjectSprints(Integer idProject) throws Exception;
+    
+    /**
+    * Add or update an sprint related to a project
+    * @param sprint the sprint which will be added or updated
+    * @param idProject the id of a specified Project object
+    */
+    public void add_updateSprintToProject(Sprint sprint, Integer idProject);
+
 }

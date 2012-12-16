@@ -69,14 +69,17 @@ public class SprintsResource {
     /**
      * POST method for creating an instance of Sprint object
      * @param sprint JSON representation for the Sprint object
+     * @param idProject the id of the Project object related to the Userstory object
      * @return an HTTP response with content of the created resource.
      */
     @POST
-    @Path("add")
+    @Path("add/{idProject}")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response addSprint(Sprint sprint) {
+    public Response addSprint(Sprint sprint,@PathParam("idProject") String idProject) {
         sprintBean.create(sprint);
+        sprintBean.add_updateSprintToProject(sprint, Integer.parseInt(idProject));
+
         
         Response reponse=Response.status(200).build();
         return reponse;
@@ -85,13 +88,16 @@ public class SprintsResource {
     /**
      * PUT method for updating an instance of Sprint object
      * @param sprint JSON representation for the Sprint object
+     * @param idProject the id of the Project object related to the Userstory object
      * @return an HTTP response with content of the created resource.
      */
     @PUT
+    @Path("{idProject}")
     @Consumes("application/json")
     @Produces("application/json")
-    public void updateSprint(Sprint sprint) {
+    public void updateSprint(Sprint sprint,@PathParam("idProject") String idProject) {
         sprintBean.edit(sprint);
+        sprintBean.add_updateSprintToProject(sprint, Integer.parseInt(idProject));
     }
     
     /**

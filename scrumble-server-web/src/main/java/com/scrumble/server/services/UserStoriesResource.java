@@ -86,6 +86,7 @@ public class UserStoriesResource {
     /**
      * POST method for creating an instance of Userstory object
      * @param userstory JSON representation for the Userstory object
+     * @param idProject the id of the Project object related to the Userstory object
      * @return an HTTP response with content of the created resource.
      */
     @POST
@@ -104,6 +105,7 @@ public class UserStoriesResource {
     /**
      * PUT method for updating an instance of Userstory object
      * @param userstory JSON representation for the Userstory object
+     * @param idProject the id of the Project object related to the Userstory object
      * @return an HTTP response with content of the created resource.
      */
     @PUT
@@ -111,7 +113,6 @@ public class UserStoriesResource {
     @Consumes("application/json")
     @Produces("application/json")
     public void updateUserStory(Userstory userstory,@PathParam("idProject") String idProject) {
-        
         userStoryBean.edit(userstory);
         userStoryBean.updateUserstoryTaskCollection(userstory);
         userStoryBean.add_updateUserstoryToProject(userstory, Integer.parseInt(idProject));
