@@ -51,4 +51,11 @@ public interface Member1FacadeLocal {
      */
     public void add_updateRoleToMember(Member1 member, Integer idRole);
     
+    /**
+     * Retrieve display name for a specified user login
+     * @param login the login of the user
+     * @return the display name as string.
+     */
+    public String getDisplayNameForLogin(String login);
+    
 }

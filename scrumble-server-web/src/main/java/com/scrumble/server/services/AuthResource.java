@@ -5,20 +5,14 @@
 package com.scrumble.server.services;
 
 import com.scrumble.server.sessionbeans.AuthFacadeLocal;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.Request;
-import javax.ws.rs.core.UriInfo;
 
 /**
  * REST Web Service
@@ -28,18 +22,12 @@ import javax.ws.rs.core.UriInfo;
 @Path("auth")
 @Stateless
 public class AuthResource {
-
-    @Context
-    private UriInfo context;
-    
-    @Context
-    private Request request;
     
     @Context
     private HttpHeaders httpHeaders;
 
     @EJB
-    private AuthFacadeLocal authBean;  
+    private AuthFacadeLocal authBean; 
     
     /**
      * Creates a new instance of AuthResource

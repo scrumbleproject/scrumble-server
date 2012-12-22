@@ -123,4 +123,17 @@ public class MembersResource {
             memberBean.remove(memberBean.find(Integer.parseInt(id)));
     }
     
+    
+    /**
+     * GET method to retrieve display name for a specified user login
+     * @param login the login of the user
+     * @return the display name as string.
+     */
+    @GET
+    @Path("{login}/display-name")
+    @Produces("text/plain")
+    public String displayNameForLogin(@PathParam("login") String login) {
+        return memberBean.getDisplayNameForLogin(login);
+    }
+    
 }

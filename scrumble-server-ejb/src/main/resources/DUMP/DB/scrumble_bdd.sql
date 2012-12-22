@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 07, 2012 at 11:24 AM
+-- Generation Time: Dec 22, 2012 at 12:47 PM
 -- Server version: 5.5.28
 -- PHP Version: 5.3.10-1ubuntu3.4
 
@@ -42,23 +42,24 @@ CREATE TABLE IF NOT EXISTS `member` (
   PRIMARY KEY (`id_member`),
   UNIQUE KEY `login_UNIQUE` (`login`),
   KEY `fk_id_role_idx` (`id_role`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `member`
 --
 
 INSERT INTO `member` (`id_member`, `firstname`, `lastname`, `login`, `password`, `email`, `id_role`, `internal_phone`, `mobile_phone`) VALUES
-(1, 'Cyril', 'EPINAT', 'cyril', '9b22e8ac450bf8dabd90915b1b00a15c', 'epicyr@gmail.com', 1, '1257', '0470707070'),
-(2, 'Arnaud', 'DE LA CRUZ', 'arnaud', 'ea56f45e66e2c57fc79df7dc3ae0437b', 'arnaud.delacruz@gmail.com', 1, '1258', '0470707071'),
-(3, 'Soukeyna', 'GAYE', 'soukeyna', '416c21534a55783c70de4b14b8719851', 'soukeynag@gmail.com', 4, '1259', '0470707072'),
-(4, 'Romain', 'THIVILLON', 'romain', '5026bc63b5418ffdb54f238db245ec01', 'romain.thivillon@gmail.com', 1, '1260', '0470707073'),
-(5, 'Jérémy', 'BARASCUT', 'jeremy', '6967cabefd763ac1a1a88e11159957db', 'jeremy.barascut@gmail.com', 3, '1261', '0470707074'),
-(6, 'Guest', 'Scrumble', 'guest', '084e0343a0486ff05530df6c705c8bb4', 'guestscrumble@gmailcom', 5, '1262', '0470707075'),
-(7, 'Product', 'Owner', 'prodowner', 'f5bf48aa40cad7891eb709fcf1fde128', 'productowner@gmailcom', 4, '1263', '0470707076'),
-(8, 'Scrum', 'Master', 'scrummaster', 'eb0a191797624dd3a48fa681d3061212', 'scrummaster@gmailcom', 3, '1264', '0470707077'),
-(9, 'Developer', 'Scrum', 'scrumdev', '5e8edd851d2fdfbd7415232c67367cc3', 'scrumdeveloper@gmail.com', 2, '1265', '0470707078'),
-(10, 'Admin', 'Scrum', 'adminscrum', '21232f297a57a5a743894a0e4a801fc3', 'adminscrum@gmail.com', 1, '1266', '0470707079');
+(1, 'Cyril', 'EPINAT', 'cyril', '367d233c448abb973a0136207eb0cf446765a6f5', 'epicyr@gmail.com', 1, '1257', '0470707070'),
+(2, 'Arnaud', 'DE LA CRUZ', 'arnaud', '1a340065606634b575ed162e9c434c27fe24a7c3', 'arnaud.delacruz@gmail.com', 1, '1258', '0470707071'),
+(3, 'Soukeyna', 'GAYE', 'soukeyna', '06a11ac0396770e9b4076aa0c79df5b7b9d7d3c0', 'soukeynag@gmail.com', 4, '1259', '0470707072'),
+(4, 'Romain', 'THIVILLON', 'romain', 'b8aabb4b95c817d9df69b6be95b2b94d6b1efe17', 'romain.thivillon@gmail.com', 1, '1260', '0470707073'),
+(5, 'Jérémy', 'BARASCUT', 'jeremy', 'b3f594e10a9edcf5413cf1190121d45078c62290', 'jeremy.barascut@gmail.com', 3, '1261', '0470707074'),
+(6, 'Guest', 'Scrumble', 'guest', '084e0343a0486ff05530df6c705c8bb4', 'guestscrumble@gmailcom', 5, NULL, NULL),
+(7, 'Product', 'Owner', 'prodowner', 'f5bf48aa40cad7891eb709fcf1fde128', 'productowner@gmailcom', 4, NULL, NULL),
+(8, 'Scrum', 'Master', 'scrummaster', 'eb0a191797624dd3a48fa681d3061212', 'scrummaster@gmailcom', 3, NULL, NULL),
+(9, 'Developer', 'Scrum', 'scrumdev', '5e8edd851d2fdfbd7415232c67367cc3', 'scrumdeveloper@gmail.com', 2, NULL, NULL),
+(10, 'Admin', 'Scrum', 'adminscrum', '21232f297a57a5a743894a0e4a801fc3', 'adminscrum@gmail.com', 1, NULL, NULL),
+(11, 'gggg', 'gggg', 'ggg', 'ggg', 'cyrilcyrilcyril@hotmail.fr', 3, 'f', 'f');
 
 -- --------------------------------------------------------
 
@@ -171,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `role` (
   `title` varchar(75) DEFAULT NULL,
   `description` text,
   PRIMARY KEY (`id_role`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `role`
@@ -208,10 +209,8 @@ CREATE TABLE IF NOT EXISTS `sprint` (
 --
 
 INSERT INTO `sprint` (`id_sprint`, `num_sprint`, `title`, `id_project`, `velocity`, `date_start`, `date_end`, `duree`) VALUES
-(1, 1, 'Sprint 1', 1, 4, '2012-11-19 00:00:00', '2012-11-28 00:00:00', 9),
-(2, 2, 'Sprint 2', 1, 42, '2012-11-28 00:00:00', '2012-11-30 00:00:00', 2),
-(3, 0, 'Sprint 3', 1, 42, '2012-12-01 00:00:00', '2012-12-04 00:00:00', 3),
-(4, 0, 'Sprint 4', 1, 42, '2012-12-05 00:00:00', '2012-12-12 00:00:00', 7);
+(1, 1, 'sprint 1', 1, NULL, NULL, NULL, NULL),
+(2, 2, 'Sprint 2', 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -252,17 +251,17 @@ CREATE TABLE IF NOT EXISTS `task` (
 
 INSERT INTO `task` (`id_task`, `title`, `estimation`, `id_userstory`, `id_process_status`) VALUES
 (3, 'YTEST Créer la Home Page de l''application', 2, 2, 4),
-(4, 'Créer le formulaire de création d''un projet', 1, 2, 4),
+(4, 'Créer le formulaire de création d''un projet', 1, 2, 5),
 (5, 'Créer la Page Members de l''application', 2, 3, 4),
 (6, 'Ajouter des utilisateurs à la base de données', 1, 3, 4),
-(7, 'Faire interagir la Home Page et la Page Membe', 1, 3, 4),
+(7, 'Faire interagir la Home Page et la Page Membe', 1, 3, 5),
 (8, 'Créer la page du Dashboard', 3, 4, 4),
 (10, 'Créer la UserStory Page', 3, 5, 4),
 (11, 'Afficher la liste des user stories du projet', 1, 5, 4),
 (12, 'Créer le formulaire d''ajout d''une user story', 1, 5, 4),
 (13, 'Lier la UserStory Page aux autres pages de l''', 1, 5, 4),
 (14, 'Créer les fonctions pour modifier, supprimer ', 2, 5, 4),
-(24, 'design d''UI', 1, 1, 5),
+(24, 'design d''UI', 1, 1, 6),
 (25, 'TEST', 0, 7, 4);
 
 -- --------------------------------------------------------
@@ -307,12 +306,12 @@ CREATE TABLE IF NOT EXISTS `userstory` (
 --
 
 INSERT INTO `userstory` (`id_userstory`, `title`, `importance`, `estimation`, `demonstration`, `note`, `id_project`, `category`, `id_process_status`) VALUES
-(1, 'Se connecter à l''application', 41, 1, '-Renseigner son Login\r\n-Renseigner son mot de passe\r\n-Valider\r\n-Accéder à la page d''accueil de l''application\r\n', NULL, 1, 'Base de données', 4),
+(1, 'Se connecter à l''application', 42, 1, '-Renseigner son Login\r\n-Renseigner son mot de passe\r\n-Valider\r\n-Accéder à la page d''accueil de l''application\r\n', '', 1, NULL, NULL),
 (2, 'Créer un nouveau projet', 36, 1, '- Cliquer sur "New project"\r\n- choisir une méthode ou des modules\r\n- Renseigner les données du formulaire de création\r\n- Valider et revenir à la page d''accueil\r\n- Accéder au projet créé', '', 1, NULL, 4),
 (3, 'TEST CYRIL', 34, 2, '- Accéder à un projet donné\r\n- Cliquer sur Members\r\n- Visualiser la liste de tous les membres (avec leurs compétences)\r\n- cocher les membres à ajouter au projet et valider\r\n- Revenir sur le projet et visualiser les membres sélectionnés.', 'fdsg', 1, NULL, 4),
 (4, 'Visualiser le Dashboard d''un projet', 40, 2, '-Accéder à l''application et sélectionner un projet donné\r\n-Cliquer su le menu "Dashbord" et visualiser le tableau de bord du projet', NULL, 1, 'Web', 4),
 (5, 'Gérer les user stories du projet', 38, 1, '-Accéder à l''application et sélectionner un projet\r\n-Cliquer sur le menu "Story"\r\n-Cliquer sur "New Story" pour ajouter une story ou sélectionner une story existante pour la modifier ou la supprimer \r\n- Sauvegarder et visualiser les modifications', NULL, 1, 'Base de données', 4),
-(7, 'Gérer les membres', 42, 3, 'faire ci ou ça', '', 1, NULL, 4);
+(7, 'Gérer les membres', 41, 3, 'faire ci ou ça', '', 1, NULL, 4);
 
 -- --------------------------------------------------------
 
@@ -367,16 +366,16 @@ ALTER TABLE `sprint`
 -- Constraints for table `sprinttaskassignation`
 --
 ALTER TABLE `sprinttaskassignation`
-  ADD CONSTRAINT `fk_assignation_task` FOREIGN KEY (`id_task`) REFERENCES `task` (`id_task`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_assignation_member` FOREIGN KEY (`id_member`) REFERENCES `member` (`id_member`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_assignation_sprint` FOREIGN KEY (`id_sprint`) REFERENCES `sprint` (`id_sprint`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_assignation_member` FOREIGN KEY (`id_member`) REFERENCES `member` (`id_member`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_assignation_task` FOREIGN KEY (`id_task`) REFERENCES `task` (`id_task`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `task`
 --
 ALTER TABLE `task`
-  ADD CONSTRAINT `fk_task_status` FOREIGN KEY (`id_process_status`) REFERENCES `processstatus` (`id_process_status`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_id_userstory` FOREIGN KEY (`id_userstory`) REFERENCES `userstory` (`id_userstory`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_id_userstory` FOREIGN KEY (`id_userstory`) REFERENCES `userstory` (`id_userstory`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_task_status` FOREIGN KEY (`id_process_status`) REFERENCES `processstatus` (`id_process_status`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `tasksprint`
@@ -389,8 +388,8 @@ ALTER TABLE `tasksprint`
 -- Constraints for table `userstory`
 --
 ALTER TABLE `userstory`
-  ADD CONSTRAINT `fk_userstory_status` FOREIGN KEY (`id_process_status`) REFERENCES `processstatus` (`id_process_status`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_id_project` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_id_project` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_userstory_status` FOREIGN KEY (`id_process_status`) REFERENCES `processstatus` (`id_process_status`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `userstorysprint`
