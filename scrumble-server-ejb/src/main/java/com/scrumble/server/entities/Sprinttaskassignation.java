@@ -25,7 +25,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Sprinttaskassignation.findAll", query = "SELECT s FROM Sprinttaskassignation s"),
     @NamedQuery(name = "Sprinttaskassignation.findByIdTask", query = "SELECT s FROM Sprinttaskassignation s WHERE s.sprinttaskassignationPK.idTask = :idTask"),
     @NamedQuery(name = "Sprinttaskassignation.findByIdSprint", query = "SELECT s FROM Sprinttaskassignation s WHERE s.sprinttaskassignationPK.idSprint = :idSprint"),
-    @NamedQuery(name = "Sprinttaskassignation.findByIdMember", query = "SELECT s FROM Sprinttaskassignation s WHERE s.sprinttaskassignationPK.idMember = :idMember")})
+    @NamedQuery(name = "Sprinttaskassignation.findByIdMember", query = "SELECT s FROM Sprinttaskassignation s WHERE s.sprinttaskassignationPK.idMember = :idMember"),
+    @NamedQuery(name = "Sprinttaskassignation.findByAssignation", query = "SELECT s FROM Sprinttaskassignation s WHERE s.sprinttaskassignationPK.idTask = :idTask and s.sprinttaskassignationPK.idSprint = :idSprint and s.sprinttaskassignationPK.idMember = :idMember")})
 public class Sprinttaskassignation implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId

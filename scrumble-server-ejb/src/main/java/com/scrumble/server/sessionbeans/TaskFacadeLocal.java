@@ -52,4 +52,13 @@ public interface TaskFacadeLocal {
      */
     public Task useDefaultProcessStatusIfNeededForTask(Task task);
     
+    /**
+     * Assign a member to a Task object if not already assigned
+     * @param idSprint id of sprint
+     * @param idTask id of task
+     * @param login login of member to assign to this task
+     * @return an HTTP response with content of the created resource.
+     */
+    public void addAssignedMemberForTask(Integer idSprint, Integer idTask, String login) throws Exception;
+    
 }

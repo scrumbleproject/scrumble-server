@@ -52,6 +52,13 @@ public interface Member1FacadeLocal {
     public void add_updateRoleToMember(Member1 member, Integer idRole);
     
     /**
+     * Retrieve a member from his login
+     * @param login login of member
+     * @return the related member.
+     */
+    public Member1 findByLogin(String login);
+    
+    /**
      * Retrieve display name for a specified user login
      * @param login the login of the user
      * @return the display name as string.

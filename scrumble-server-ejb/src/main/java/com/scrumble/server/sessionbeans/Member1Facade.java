@@ -81,12 +81,19 @@ public class Member1Facade extends AbstractFacade<Member1> implements Member1Fac
         this.edit(member);
     }
     
-    public String getDisplayNameForLogin(String login){
+    public Member1 findByLogin(String login){
         TypedQuery<Member1> query = getEntityManager().createNamedQuery("Member1.findByLogin", Member1.class);
         List<Member1> results = query.setParameter("login", login).getResultList();
         if (results.size()>0){
-            Member1 result = results.get(0);
-            return ScrumbleUtils.capitalize(result.getFirstname())+" "+ScrumbleUtils.capitalize(result.getLastname());
+            return results.get(0);
+        }
+        return null;
+    }
+    
+    public String getDisplayNameForLogin(String login){
+        Member1 member = this.findByLogin(login);
+        if (member != null) {
+            return ScrumbleUtils.capitalize(member.getFirstname())+" "+ScrumbleUtils.capitalize(member.getLastname());
         }
         return "Not Found";
     }

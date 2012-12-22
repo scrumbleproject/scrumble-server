@@ -4,7 +4,10 @@
  */
 package com.scrumble.server.sessionbeans;
 
+import com.scrumble.server.entities.Member1;
 import com.scrumble.server.entities.Processstatus;
+import com.scrumble.server.entities.Sprint;
+import com.scrumble.server.entities.Sprinttaskassignation;
 import com.scrumble.server.entities.Task;
 import com.scrumble.server.entities.Userstory;
 import java.util.ArrayList;
@@ -27,6 +30,12 @@ import javax.persistence.TypedQuery;
 public class TaskFacade extends AbstractFacade<Task> implements TaskFacadeLocal {
     @PersistenceContext(unitName = "com.scrumble.server_scrumble-server-ejb_ejb_1.0PU")
     private EntityManager em;
+    
+    @EJB
+    private SprinttaskassignationFacadeLocal assignationBean;
+    
+    @EJB
+    private Member1FacadeLocal memberBean;
     
     @Override
     protected EntityManager getEntityManager() {
@@ -89,6 +98,30 @@ public class TaskFacade extends AbstractFacade<Task> implements TaskFacadeLocal 
         }
         
         return task;
+    }
+    
+    public void addAssignedMemberForTask(Integer idSprint, Integer idTask, String login) throws Exception{
+        
+        Member1 member = memberBean.findByLogin(login);
+
+        if (member != null) {
+
+            //synchronized(Sprinttaskassignation.class){
+
+                TypedQuery<Sprinttaskassignation> query = getEntityManager().createNamedQuery("Sprinttaskassignation.findByAssignation", Sprinttaskassignation.class);
+                query.setParameter("idTask", idTask);
+                query.setParameter("idSprint", idSprint);
+                query.setParameter("idMember", member.getIdMember());
+                List<Sprinttaskassignation> assignations = query.getResultList();
+                if (assignations.size()<1){ //if related assignation object found
+                    Sprinttaskassignation assignation = new Sprinttaskassignation(idTask, idSprint, member.getIdMember());
+                    //assignationBean.create(assignation);
+                    member.getSprinttaskassignationCollection().add(assignation); //must be unique
+                }
+            //}
+
+        }
+        
     }
     
 }
