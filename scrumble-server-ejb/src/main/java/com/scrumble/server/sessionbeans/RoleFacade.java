@@ -29,4 +29,7 @@ public class RoleFacade extends AbstractFacade<Role> implements RoleFacadeLocal 
         super(Role.class);
     }
     
+    public Role getRole(Integer idRole) {
+        return this.em.find(Role.class, idRole);
+    }
 }

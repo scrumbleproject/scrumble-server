@@ -159,7 +159,7 @@ public class Member1 implements Serializable {
 
     @Override
     public String toString() {
-        return "Member[ idMember=" + idMember + ", firstname="+firstname+", lastname="+lastname+" ]";
+        return "Member[ idMember=" + idMember + ", firstname="+firstname+", lastname="+lastname+", login="+login+", password="+password+", email="+email+", mobilePhone="+mobilePhone+", internalPhone="+internalPhone+" ]";
     }
 
     public String getEmail() {

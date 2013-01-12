@@ -94,6 +94,7 @@ public class UserStoriesResource {
     @Consumes("application/json")
     @Produces("application/json")
     public Response addUserStory(Userstory userstory,@PathParam("idProject") String idProject) {
+        System.out.println(userstory.toString());
         userStoryBean.create(userstory);
         userStoryBean.add_updateUserstoryToProject(userstory, Integer.parseInt(idProject));
         

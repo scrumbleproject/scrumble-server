@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -26,6 +27,9 @@ import javax.persistence.TypedQuery;
 public class Member1Facade extends AbstractFacade<Member1> implements Member1FacadeLocal {
     @PersistenceContext(unitName = "com.scrumble.server_scrumble-server-ejb_ejb_1.0PU")
     private EntityManager em;
+    
+    @EJB
+    private RoleFacadeLocal roleBean;
 
     @Override
     protected EntityManager getEntityManager() {
@@ -75,9 +79,13 @@ public class Member1Facade extends AbstractFacade<Member1> implements Member1Fac
         return false;
     }
     
+    public void addRoleToMember(Member1 member, Integer idRole){
+        member.setIdRole(roleBean.getRole(idRole));
+        this.create(member);
+    }
     
-    public void add_updateRoleToMember(Member1 member, Integer idRole){
-        member.setIdRole(this.em.find(Role.class, idRole));
+    public void updateRoleToMember(Member1 member, Integer idRole){
+        member.setIdRole(roleBean.getRole(idRole));
         this.edit(member);
     }
     

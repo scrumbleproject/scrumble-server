@@ -29,4 +29,6 @@ public interface RoleFacadeLocal {
 
     int count();
     
+    Role getRole(Integer idRole);
+    
 }

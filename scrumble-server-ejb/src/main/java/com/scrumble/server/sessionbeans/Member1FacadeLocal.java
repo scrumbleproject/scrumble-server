@@ -45,11 +45,18 @@ public interface Member1FacadeLocal {
     public boolean checkLoginAndPassword(String login, String password) throws Exception;
     
     /**
-     * Add or update a role attached to a member
+     * Add a role attached to a member
      * @param member the member which will be added or updated
      * @param idRole the id of a specified Role object
      */
-    public void add_updateRoleToMember(Member1 member, Integer idRole);
+    public void addRoleToMember(Member1 member, Integer idRole);
+    
+    /**
+     * Update a role attached to a member
+     * @param member the member which will be added or updated
+     * @param idRole the id of a specified Role object
+     */
+    public void updateRoleToMember(Member1 member, Integer idRole);
     
     /**
      * Retrieve a member from his login
