@@ -106,22 +106,38 @@ public class TaskFacade extends AbstractFacade<Task> implements TaskFacadeLocal 
 
         if (member != null) {
 
-            //synchronized(Sprinttaskassignation.class){
-
-                TypedQuery<Sprinttaskassignation> query = getEntityManager().createNamedQuery("Sprinttaskassignation.findByAssignation", Sprinttaskassignation.class);
-                query.setParameter("idTask", idTask);
-                query.setParameter("idSprint", idSprint);
-                query.setParameter("idMember", member.getIdMember());
-                List<Sprinttaskassignation> assignations = query.getResultList();
-                if (assignations.size()<1){ //if related assignation object found
-                    Sprinttaskassignation assignation = new Sprinttaskassignation(idTask, idSprint, member.getIdMember());
-                    //assignationBean.create(assignation);
-                    member.getSprinttaskassignationCollection().add(assignation); //must be unique
-                }
-            //}
+            TypedQuery<Sprinttaskassignation> query = getEntityManager().createNamedQuery("Sprinttaskassignation.findByAssignation", Sprinttaskassignation.class);
+            query.setParameter("idTask", idTask);
+            query.setParameter("idSprint", idSprint);
+            query.setParameter("idMember", member.getIdMember());
+            List<Sprinttaskassignation> assignations = query.getResultList();
+            if (assignations != null && assignations.size()<1){ //if related assignation object found
+                Sprinttaskassignation assignation = new Sprinttaskassignation(idTask, idSprint, member.getIdMember());
+                //assignationBean.create(assignation);
+                member.getSprinttaskassignationCollection().add(assignation); //must be unique
+            }
 
         }
         
+    }
+    
+    public List<Member1> getAssignedMemberForTask(Integer idSprint, Integer idTask) throws Exception {
+        
+        TypedQuery<Sprinttaskassignation> query = getEntityManager().createNamedQuery("Sprinttaskassignation.findByIdSprintAndIdTask", Sprinttaskassignation.class);
+        query.setParameter("idTask", idTask);
+        query.setParameter("idSprint", idSprint);
+        List<Sprinttaskassignation> assignations = query.getResultList();
+        if (assignations!=null){ //if related assignation object found
+            List<Member1> assignedMembers = new ArrayList<Member1>();
+            for (Sprinttaskassignation assign : assignations){
+                if (!assignedMembers.contains(assign.getMember1()) ) {
+                    assignedMembers.add(assign.getMember1());
+                }
+            }
+            return assignedMembers;            
+        }
+        
+        return null;
     }
     
 }

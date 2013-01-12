@@ -4,6 +4,7 @@
  */
 package com.scrumble.server.sessionbeans;
 
+import com.scrumble.server.entities.Member1;
 import com.scrumble.server.entities.Task;
 import java.util.List;
 import javax.ejb.Local;
@@ -60,5 +61,13 @@ public interface TaskFacadeLocal {
      * @return an HTTP response with content of the created resource.
      */
     public void addAssignedMemberForTask(Integer idSprint, Integer idTask, String login) throws Exception;
+    
+    /**
+     * Retrieve members that are assigned to this Task object
+     * @param idSprint id of sprint
+     * @param idTask id of task
+     * @return a list of Member1 object
+     */
+    public List<Member1> getAssignedMemberForTask(Integer idSprint, Integer idTask) throws Exception;
     
 }

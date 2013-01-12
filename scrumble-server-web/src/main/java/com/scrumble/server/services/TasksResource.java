@@ -5,16 +5,14 @@
 package com.scrumble.server.services;
 
 
+import com.scrumble.server.entities.Member1;
 import com.scrumble.server.entities.Task;
 import com.scrumble.server.sessionbeans.TaskFacadeLocal;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -158,6 +156,22 @@ public class TasksResource {
             //Logger.getLogger(TasksResource.class.getName()).log(Level.SEVERE, null, ex);
             
         }
+    }
+    
+    @GET
+    @Path("{idSprint}/{idTask}/members")
+    @Produces("application/json")
+    public List<Member1> getAssignedMemberForTask (@PathParam("idSprint") String idSprint,
+                                        @PathParam("idTask") String idTask) {
+        
+        List<Member1> assignedMembers = null;
+        try {
+            assignedMembers = taskBean.getAssignedMemberForTask(Integer.parseInt(idSprint), Integer.parseInt(idTask));
+        }
+        catch(Exception e){
+            throw new RESTException(e.getMessage());
+        }
+        return assignedMembers;
     }
     
 }
