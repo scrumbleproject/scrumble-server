@@ -49,9 +49,9 @@ public class AuthResource {
         String token = "";
         try {
             token = authBean.authenticate(login, password);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            return "FAILED";
+        }
+        catch(Exception e){
+            throw new RESTException(e.getMessage());
         }
         return token;
     }
