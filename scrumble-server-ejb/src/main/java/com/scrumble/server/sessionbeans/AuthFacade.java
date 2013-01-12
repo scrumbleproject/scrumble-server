@@ -50,8 +50,11 @@ public class AuthFacade implements AuthFacadeLocal {
             
             return encryptedKey;
         }
+        else {
+            throw new Exception("User or password in not correct ! Please retry !");
+        }
         
-        return null;
+        //return null;
     }
     
     public boolean checkToken(String login, String encryptKey) throws Exception{
