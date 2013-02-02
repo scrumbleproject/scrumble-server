@@ -144,13 +144,35 @@ public class TasksResource {
      * @return an HTTP response with content of the created resource.
      */
     @POST
-    @Path("{idSprint}/{idTask}/{login}")
+    @Path("{idSprint}/{idTask}/{login}/add")
     @Produces("application/json")
     public void addAssignedMemberForTask(@PathParam("idSprint") String idSprint,
                                         @PathParam("idTask") String idTask,
                                         @PathParam("login") String login) {
         try {
             taskBean.addAssignedMemberForTask(Integer.parseInt(idSprint), Integer.parseInt(idTask), login);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            //Logger.getLogger(TasksResource.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+    }
+    
+    /**
+     * POST assign a member to a Task object if not already assigned
+     * @param id id of task
+     * @param login login of member to assign to this task
+     * @return an HTTP response with content of the created resource.
+     */
+    @POST
+    @Path("{idSprint}/{idTask}/{login}/remove")
+    @Produces("application/json")
+    public void removeAssignedMemberForTask(@PathParam("idSprint") String idSprint,
+                                        @PathParam("idTask") String idTask,
+                                        @PathParam("login") String login) {
+        
+        try {
+            taskBean.removeAssignedMemberForTask(Integer.parseInt(idSprint), Integer.parseInt(idTask), login);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             //Logger.getLogger(TasksResource.class.getName()).log(Level.SEVERE, null, ex);
