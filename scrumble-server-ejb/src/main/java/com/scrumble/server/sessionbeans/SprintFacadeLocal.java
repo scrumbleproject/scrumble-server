@@ -6,6 +6,7 @@ package com.scrumble.server.sessionbeans;
 
 import com.scrumble.server.entities.Sprint;
 import com.scrumble.server.entities.Userstory;
+import com.scrumble.server.entities.Userstorysprint;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -50,5 +51,12 @@ public interface SprintFacadeLocal {
     * @param idProject the id of a specified Project object
     */
     public void add_updateSprintToProject(Sprint sprint, Integer idProject);
+
+    /**
+     * Get the list of all Userstory objects that are NOT linked with a  specified Sprint object
+     * @param idSprint the id of a specified Sprint object
+     * @return a list of userstories
+     */
+    public List<Userstory> findAllNotSprintUserstories(Integer idSprint) throws Exception;    
 
 }

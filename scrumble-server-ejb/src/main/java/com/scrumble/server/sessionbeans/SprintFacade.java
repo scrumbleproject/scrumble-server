@@ -9,6 +9,8 @@ import com.scrumble.server.entities.Sprint;
 import com.scrumble.server.entities.Userstory;
 import com.scrumble.server.entities.Userstorysprint;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -29,6 +31,9 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
 
     @EJB 
     private UserstorysprintFacadeLocal userstorysprintBean;
+    
+    @EJB 
+    private UserstoryFacadeLocal userstoryBean;
     
     @Override
     protected EntityManager getEntityManager() {
@@ -60,4 +65,36 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
         this.edit(sprint);
     }
     
+    public List<Userstory> findAllNotSprintUserstories(Integer idSprint) throws Exception{
+        
+        Sprint sprint = em.find(Sprint.class, idSprint);
+        List<Userstory> userstories = userstoryBean.findAllProjectUserstories(sprint.getIdProject().getIdProject());
+
+        //Get the list of userstories which mustn't be displayed
+        List<Sprint> sprints = this.findAllProjectSprints(sprint.getIdProject().getIdProject());
+        
+        List<Userstory> userstorysprints;
+        ArrayList<Userstory> result=new ArrayList<Userstory>();
+        int j=0;
+        while(j<sprints.size())
+        {
+            userstorysprints = userstorysprintBean.findUserstoriesForSprint(sprints.get(j).getIdSprint());
+            
+            if(sprints.get(j).getIdSprint()!=idSprint)
+            {
+                int i=0;
+                while(i<userstorysprints.size())
+                {
+                    result.add(em.find(Userstory.class, userstorysprints.get(i).getIdUserstory()));
+                    i++;
+                }
+            }
+            
+            j++;
+        }
+        
+        userstories.removeAll((Collection) result);
+        
+        return userstories;
+    }
 }

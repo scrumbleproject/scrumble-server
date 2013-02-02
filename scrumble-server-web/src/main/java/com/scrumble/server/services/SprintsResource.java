@@ -6,6 +6,7 @@ package com.scrumble.server.services;
 
 import com.scrumble.server.entities.Sprint;
 import com.scrumble.server.entities.Userstory;
+import com.scrumble.server.entities.Userstorysprint;
 import com.scrumble.server.sessionbeans.SprintFacadeLocal;
 import java.util.List;
 import javax.ejb.EJB;
@@ -150,6 +151,26 @@ public class SprintsResource {
         List<Sprint> results = null;
         try {
             results = sprintBean.findAllProjectSprints(Integer.parseInt(idProject));
+        }
+        catch (Exception e){
+            System.out.println(e.getStackTrace());
+        }
+        return results;
+    }
+    
+    /**
+     * Retrieves the list of a com.scrumble.server.entities.Userstorysprints linked with the Sprint object
+     * @param id the id of the Sprint object to retrieve
+     * @return a JSON representation of the related Project object.
+     */
+    @GET
+    @Path("{idSprint}/userstories/no")
+    @Produces("application/json")
+    public List<Userstory> findAllNotSprintUserstories(@PathParam("idSprint") String idSprint) {
+        List<Userstory> results = null;
+
+        try {
+            results = sprintBean.findAllNotSprintUserstories(Integer.parseInt(idSprint));
         }
         catch (Exception e){
             System.out.println(e.getStackTrace());
