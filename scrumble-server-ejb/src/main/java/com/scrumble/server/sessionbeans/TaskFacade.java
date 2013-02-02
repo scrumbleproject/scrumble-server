@@ -37,6 +37,10 @@ public class TaskFacade extends AbstractFacade<Task> implements TaskFacadeLocal 
     
     @EJB
     private Member1FacadeLocal memberBean;
+    @EJB
+    private TaskFacadeLocal taskBean;
+    @EJB
+    private SprintFacadeLocal sprintBean;
     
     @Override
     protected EntityManager getEntityManager() {
@@ -114,6 +118,9 @@ public class TaskFacade extends AbstractFacade<Task> implements TaskFacadeLocal 
             List<Sprinttaskassignation> assignations = query.getResultList();
             if (assignations != null && assignations.size()<1){ //if related assignation object not found
                 Sprinttaskassignation assignation = new Sprinttaskassignation(idTask, idSprint, member.getIdMember());
+                assignation.setMember1(member);
+                assignation.setTask(taskBean.find(idTask));
+                assignation.setSprint(sprintBean.find(idSprint));
                 assignationBean.create(assignation);
                 member.getSprinttaskassignationCollection().add(assignation); //must be unique
             }
