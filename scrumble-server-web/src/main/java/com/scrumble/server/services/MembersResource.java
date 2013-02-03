@@ -90,7 +90,6 @@ public class MembersResource {
     @Consumes("application/json")
     @Produces("application/json")
     public void addMember(Member1 member,@PathParam("idRole") String idRole) {
-        //memberBean.create(member);
         memberBean.addRoleToMember(member, Integer.parseInt(idRole));
     }
     
@@ -105,8 +104,6 @@ public class MembersResource {
     @Consumes("application/json")
     @Produces("application/json")
     public void updateMember(Member1 member,@PathParam("idRole") String idRole) {
-        /*System.out.println(member.toString());
-        memberBean.edit(member);*/
         memberBean.updateRoleToMember(member, Integer.parseInt(idRole));
     }
     

@@ -177,4 +177,30 @@ public class SprintsResource {
         return results;
     }
     
+    /**
+     * POST method for saving the list of userstories related to a sprint
+     * @param array JSON representation for the Sprint object
+     * @param idSprint the id of the Project object related to the Userstory object
+     * @return an HTTP response with content of the created resource.
+     */
+    @POST
+    @Path("save/{idSprint}")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response saveListUserstories(List<Integer> array,@PathParam("idSprint") String idSprint) {
+        
+        int i=0;
+        
+        System.out.println();
+        while(i<array.size())
+        {
+            
+            i++;
+        }
+
+        
+        Response reponse=Response.status(200).build();
+        return reponse;
+    }
+    
 }
