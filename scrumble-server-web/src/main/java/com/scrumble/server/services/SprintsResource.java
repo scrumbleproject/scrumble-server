@@ -167,7 +167,7 @@ public class SprintsResource {
     @Produces("application/json")
     public List<Userstory> findAllNotSprintUserstories(@PathParam("idSprint") String idSprint) {
         List<Userstory> results = null;
-
+        System.out.println("SPRINT STORY TEST");
         try {
             results = sprintBean.findAllNotSprintUserstories(Integer.parseInt(idSprint));
         }

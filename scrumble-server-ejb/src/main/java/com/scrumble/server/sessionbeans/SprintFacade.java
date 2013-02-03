@@ -80,16 +80,12 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
         {
             userstorysprints = userstorysprintBean.findUserstoriesForSprint(sprints.get(j).getIdSprint());
             
-            if(sprints.get(j).getIdSprint()!=idSprint)
+            int i=0;
+            while(i<userstorysprints.size())
             {
-                int i=0;
-                while(i<userstorysprints.size())
-                {
-                    result.add(em.find(Userstory.class, userstorysprints.get(i).getIdUserstory()));
-                    i++;
-                }
+                result.add(em.find(Userstory.class, userstorysprints.get(i).getIdUserstory()));
+                i++;
             }
-            
             j++;
         }
         
