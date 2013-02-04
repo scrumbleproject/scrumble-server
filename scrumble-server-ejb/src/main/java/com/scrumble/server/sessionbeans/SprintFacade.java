@@ -93,4 +93,65 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
         
         return userstories;
     }
+    
+    public void addListUserstoriesToSprint(List<Integer> array, Integer idSprint) throws Exception
+    {
+        List<Userstory> list = null;
+        Userstory us=null;
+        
+        try 
+        {
+            list = userstorysprintBean.findUserstoriesForSprint(idSprint);
+            int i = 0;
+        
+            while(i<array.size())
+            {
+                us = this.em.find(Userstory.class, array.get(i));
+                
+                //If this us isn't in the database, we will create it
+                if(!list.contains(us))
+                {
+                    userstorysprintBean.create(new Userstorysprint(idSprint, list.get(i).getIdUserstory()));
+                }
+                else
+                {
+                    list.remove(us);
+                }
+                
+                i++;
+            }
+            
+            //Remove object which are not in the new list anymore
+            i=0;
+            while(i<list.size())
+            {
+                userstorysprintBean.remove(new Userstorysprint(idSprint, list.get(i).getIdUserstory()));
+                i++;
+            }
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
+    }
+    
+    public void addUserstoriesToSprint(List<String> array, Integer idSprint) throws Exception
+    {
+        List<Userstory> list = null;
+        try 
+        {
+            list =this.findAllSprintUserstories(idSprint);
+            int i = 0;
+        
+            while(i<array.size())
+            {
+                
+                i++;
+            }
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
+    }
 }

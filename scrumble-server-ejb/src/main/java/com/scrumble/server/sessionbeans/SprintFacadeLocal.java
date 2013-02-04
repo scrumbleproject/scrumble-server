@@ -57,6 +57,13 @@ public interface SprintFacadeLocal {
      * @param idSprint the id of a specified Sprint object
      * @return a list of userstories
      */
-    public List<Userstory> findAllNotSprintUserstories(Integer idSprint) throws Exception;    
+    public List<Userstory> findAllNotSprintUserstories(Integer idSprint) throws Exception;
+    
+    /**
+     * Save the list of Userstories, related to a sprint
+     * @param idSprint the id of a specified Sprint object
+     * @return void
+     */
+    public void addListUserstoriesToSprint(List<Integer> array, Integer idSprint) throws Exception;
 
 }
