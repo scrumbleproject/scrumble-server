@@ -8,6 +8,7 @@ import com.scrumble.server.entities.Sprint;
 import com.scrumble.server.entities.Userstory;
 import com.scrumble.server.entities.Userstorysprint;
 import com.scrumble.server.sessionbeans.SprintFacadeLocal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -167,7 +168,7 @@ public class SprintsResource {
     @Produces("application/json")
     public List<Userstory> findAllNotSprintUserstories(@PathParam("idSprint") String idSprint) {
         List<Userstory> results = null;
-        System.out.println("SPRINT STORY TEST");
+
         try {
             results = sprintBean.findAllNotSprintUserstories(Integer.parseInt(idSprint));
         }
@@ -187,16 +188,16 @@ public class SprintsResource {
     @Path("save/{idSprint}")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response saveListUserstories(List<Integer> array,@PathParam("idSprint") String idSprint) {
+    public Response saveListUserstoriesToSprint(ArrayList array, @PathParam("idSprint") String idSprint) {
         
         int i=0;
         
-        System.out.println();
-        while(i<array.size())
+        System.out.println(array.toString());
+        /*while(i<array.size())
         {
-            
+            //System.out.println();
             i++;
-        }
+        }*/
 
         
         Response reponse=Response.status(200).build();
