@@ -106,16 +106,19 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
         
             while(i<array.size())
             {
+                System.out.println("array["+i+"]=>"+array.get(i));
                 us = this.em.find(Userstory.class, array.get(i));
                 
                 //If this us isn't in the database, we will create it
                 if(!list.contains(us))
                 {
-                    userstorysprintBean.create(new Userstorysprint(idSprint, list.get(i).getIdUserstory()));
+                    //userstorysprintBean.create(new Userstorysprint(idSprint, array.get(i)));
+                    System.out.println("userstory "+array.get(i)+" ajoutee dans le sprint "+idSprint);
                 }
                 else
                 {
                     list.remove(us);
+                     System.out.println("userstory "+array.get(i)+" ne doit pas etre supprimee du sprint "+idSprint);
                 }
                 
                 i++;
@@ -125,7 +128,8 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
             i=0;
             while(i<list.size())
             {
-                userstorysprintBean.remove(new Userstorysprint(idSprint, list.get(i).getIdUserstory()));
+                //userstorysprintBean.remove(new Userstorysprint(idSprint, list.get(i).getIdUserstory()));
+                System.out.println("userstory "+list.get(i).getIdUserstory()+" supprimee du sprint "+idSprint);
                 i++;
             }
         }

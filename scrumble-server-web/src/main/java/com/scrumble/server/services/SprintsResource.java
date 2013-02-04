@@ -190,13 +190,18 @@ public class SprintsResource {
         
         try {
             userstories = userstories.substring(1, userstories.length()-1);
-            String[] listToConvert = userstories.split(",");
             List<Integer> listUserstories = new ArrayList<Integer>();
-            for (String s : listToConvert) {
-                listUserstories.add(Integer.valueOf(s));
+            System.out.println(userstories);
+            if(userstories!="")
+            {
+                String[] listToConvert = userstories.split(",");
+                for (String s : listToConvert) {
+                    listUserstories.add(Integer.valueOf(s));
+                }
             }
+            System.out.println(listUserstories);
             
-            //sprintBean.addListUserstoriesToSprint(listUserstories, Integer.parseInt(idSprint));
+            sprintBean.addListUserstoriesToSprint(listUserstories, Integer.parseInt(idSprint));
         }
         catch (Exception e){
             throw new RESTException(e.getMessage());
