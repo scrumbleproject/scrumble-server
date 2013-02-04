@@ -189,10 +189,9 @@ public class SprintsResource {
     public void saveListUserstoriesToSprint(@PathParam("idSprint") String idSprint, String userstories) {
         
         try {
-            userstories = userstories.substring(1, userstories.length()-1);
             List<Integer> listUserstories = new ArrayList<Integer>();
             System.out.println(userstories);
-            if(userstories!="")
+            if(!userstories.equals("empty"))
             {
                 String[] listToConvert = userstories.split(",");
                 for (String s : listToConvert) {
