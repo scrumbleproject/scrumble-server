@@ -112,7 +112,10 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
                 //If this us isn't in the database, we will create it
                 if(!list.contains(us))
                 {
-                    userstorysprintBean.create(new Userstorysprint(idSprint, array.get(i)));
+                    Userstorysprint userstorysprint = new Userstorysprint(idSprint, array.get(i));
+                    userstorysprint.setSprint(this.find(idSprint));
+                    userstorysprint.setUserstory(userstoryBean.find(array.get(i)));
+                    userstorysprintBean.create(userstorysprint);
                     System.out.println("userstory "+array.get(i)+" ajoutee dans le sprint "+idSprint);
                 }
                 else
