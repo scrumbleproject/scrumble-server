@@ -180,28 +180,28 @@ public class SprintsResource {
     
     /**
      * POST method for saving the list of userstories related to a sprint
-     * @param array JSON representation for the Sprint object
-     * @param idSprint the id of the Project object related to the Userstory object
-     * @return an HTTP response with content of the created resource.
+     * @param idSprint the id of the Sprint object
+     * @param userstories JSON representation for list of userstories id to save in the sprint
      */
     @POST
     @Path("save/{idSprint}")
     @Consumes("application/json")
-    @Produces("application/json")
-    public Response saveListUserstoriesToSprint(ArrayList array, @PathParam("idSprint") String idSprint) {
+    public void saveListUserstoriesToSprint(@PathParam("idSprint") String idSprint, String userstories) {
         
-        int i=0;
+        try {
+            userstories = userstories.substring(1, userstories.length()-1);
+            String[] listToConvert = userstories.split(",");
+            List<Integer> listUserstories = new ArrayList<Integer>();
+            for (String s : listToConvert) {
+                listUserstories.add(Integer.valueOf(s));
+            }
+            
+            //sprintBean.addListUserstoriesToSprint(listUserstories, Integer.parseInt(idSprint));
+        }
+        catch (Exception e){
+            throw new RESTException(e.getMessage());
+        }
         
-        System.out.println(array.toString());
-        /*while(i<array.size())
-        {
-            //System.out.println();
-            i++;
-        }*/
-
-        
-        Response reponse=Response.status(200).build();
-        return reponse;
     }
     
 }
