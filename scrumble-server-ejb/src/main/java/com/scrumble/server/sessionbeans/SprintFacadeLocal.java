@@ -65,5 +65,12 @@ public interface SprintFacadeLocal {
      * @return void
      */
     public void addListUserstoriesToSprint(List<Integer> array, Integer idSprint) throws Exception;
+    
+    /**
+     * Update the process status of the sprint
+     * @param idSprint the id of a specified Sprint object
+     * @param status the status to update
+     */
+    public void updateProcessStatusOfSprint(Integer idSprint, String codeStatus);
 
 }
