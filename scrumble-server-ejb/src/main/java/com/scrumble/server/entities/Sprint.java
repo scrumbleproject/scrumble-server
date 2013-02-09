@@ -45,10 +45,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Sprint.findByDateEnd", query = "SELECT s FROM Sprint s WHERE s.dateEnd = :dateEnd"),
     @NamedQuery(name = "Sprint.findByDuree", query = "SELECT s FROM Sprint s WHERE s.duree = :duree")})
 public class Sprint implements Serializable {
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "started")
-    private boolean started;
+    @JoinColumn(name = "id_process_status", referencedColumnName = "id_process_status")
+    @ManyToOne
+    private Processstatus idProcessStatus;
     @Column(name = "velocity")
     private Integer velocity;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sprint")
@@ -203,12 +202,12 @@ public class Sprint implements Serializable {
         this.sprinttaskassignationCollection = sprinttaskassignationCollection;
     }
 
-    public boolean getStarted() {
-        return started;
+    public Processstatus getIdProcessStatus() {
+        return idProcessStatus;
     }
 
-    public void setStarted(boolean started) {
-        this.started = started;
+    public void setIdProcessStatus(Processstatus idProcessStatus) {
+        this.idProcessStatus = idProcessStatus;
     }
     
 }

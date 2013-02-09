@@ -33,6 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Processstatus.findByCodeStatus", query = "SELECT p FROM Processstatus p WHERE p.codeStatus = :codeStatus"),
     @NamedQuery(name = "Processstatus.findByTitleStatus", query = "SELECT p FROM Processstatus p WHERE p.titleStatus = :titleStatus")})
 public class Processstatus implements Serializable {
+    @OneToMany(mappedBy = "idProcessStatus")
+    private Collection<Sprint> sprintCollection;
     @Column(name = "sort_order")
     private Integer sortOrder;
     private static final long serialVersionUID = 1L;
@@ -132,6 +134,15 @@ public class Processstatus implements Serializable {
 
     public void setSortOrder(Integer sortOrder) {
         this.sortOrder = sortOrder;
+    }
+
+    @XmlTransient
+    public Collection<Sprint> getSprintCollection() {
+        return sprintCollection;
+    }
+
+    public void setSprintCollection(Collection<Sprint> sprintCollection) {
+        this.sprintCollection = sprintCollection;
     }
     
 }
