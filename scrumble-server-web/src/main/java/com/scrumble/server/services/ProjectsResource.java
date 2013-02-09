@@ -180,7 +180,9 @@ public class ProjectsResource {
     }
     
     /**
-     * 
+     * Retrieves the list of project allowed to a member
+     * @param id the id of the member to retrieve
+     * @return a JSON representation of the project list
      */
     @GET
     @Path("{idMember}/project")
