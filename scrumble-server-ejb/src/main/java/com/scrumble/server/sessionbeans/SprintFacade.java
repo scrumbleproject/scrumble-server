@@ -4,8 +4,10 @@
  */
 package com.scrumble.server.sessionbeans;
 
+import com.scrumble.server.entities.Processstatus;
 import com.scrumble.server.entities.Project;
 import com.scrumble.server.entities.Sprint;
+import com.scrumble.server.entities.Task;
 import com.scrumble.server.entities.Userstory;
 import com.scrumble.server.entities.Userstorysprint;
 import java.util.ArrayList;
@@ -34,6 +36,9 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
     
     @EJB 
     private UserstoryFacadeLocal userstoryBean;
+    
+    @EJB 
+    private TaskFacadeLocal taskBean;
     
     @Override
     protected EntityManager getEntityManager() {
@@ -161,4 +166,44 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
             throw e;
         }
     }
+    
+    public List<String> findSprintBurndownChartInformations(Integer idSprint) throws Exception{
+        List<Userstory> listUserstories = this.userstorysprintBean.findUserstoriesForSprint(idSprint);
+        List<Task> listTasks = null;
+        /*TypedQuery<Sprinttaskassignation> query = getEntityManager().createNamedQuery("Sprinttaskassignation.findByIdSprint", Sprinttaskassignation.class);
+        List<Sprinttaskassignation> sprinttask = query.setParameter("idSprint", idSprint).getResultList();*/
+        
+        int i = 0;
+        int j = 0;
+        
+        while(i<listUserstories.size())
+        {
+            listTasks = this.taskBean.findAllTaskUserstories(listUserstories.get(i).getIdUserstory());
+            
+            j=0;
+            while(j<listTasks.size())
+            {
+                System.out.println("Task:"+listTasks.get(j).getIdTask()+";Estimation:"+listTasks.get(j).getEstimation());
+                j++;
+            }
+            
+            i++;
+        }
+        
+        return null;
+    }
+    
+    public void updateProcessStatusOfSprint(Integer idSprint, String codeStatus) {
+        Sprint sprint = this.find(idSprint);
+        if (!codeStatus.equals(sprint.getIdProcessStatus().getCodeStatus())){
+        
+            TypedQuery<Processstatus> query = getEntityManager().createNamedQuery("Processstatus.findByCodeStatus", Processstatus.class);
+            List<Processstatus> processStatus = query.setParameter("codeStatus", codeStatus).getResultList();
+            if (processStatus.size()>0){ //if related processStatus object found
+                sprint.setIdProcessStatus(processStatus.get(0)); //must be unique
+            }
+            
+        }
+    }
+    
 }

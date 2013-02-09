@@ -8,6 +8,7 @@ import com.scrumble.server.entities.Sprint;
 import com.scrumble.server.entities.Userstory;
 import com.scrumble.server.entities.Userstorysprint;
 import com.scrumble.server.sessionbeans.SprintFacadeLocal;
+import com.scrumble.server.sessionbeans.SprinttaskassignationFacade;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -38,6 +39,9 @@ public class SprintsResource {
     
     @EJB
     private SprintFacadeLocal sprintBean;
+    
+    @EJB
+    private SprinttaskassignationFacade sprinttaskassignationBean;
 
     /**
      * Creates a new instance of SprintsResource
@@ -207,5 +211,40 @@ public class SprintsResource {
         }
         
     }
+    
+    
+    /**
+     * Retrieves informations to display the sprint burndown chart
+     * @param idSprint the id of the Sprint object
+     * @return the list of informations needed to display a Sprint Burndown Chart
+     */
+    @GET
+    @Path("{idSprint}/burndown")
+    @Produces("application/json")
+    public List<String> findSprintBurndownChartInformations(@PathParam("idSprint") String idSprint) {
+        List<String> results = null;
+        try {
+            results = sprintBean.findSprintBurndownChartInformations(Integer.parseInt(idSprint));
+        }
+        catch (Exception e){
+            throw new RESTException(e.getMessage());
+        }
+        return results;
+    }
+    
+    /**
+     * POST method for updating a processStatus of Sprint object
+     * @param id id of sprint
+     * @param status status of sprint
+     * @return an HTTP response with content of the created resource.
+     */
+    @POST
+    @Path("{id}/{status}")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public void updateProcessStatusOfSprint(@PathParam("id") String id, @PathParam("status") String status) {
+        sprintBean.updateProcessStatusOfSprint(Integer.parseInt(id), status);
+    }
+    
     
 }
