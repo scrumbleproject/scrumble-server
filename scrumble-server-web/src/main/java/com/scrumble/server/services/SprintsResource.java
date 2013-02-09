@@ -6,7 +6,9 @@ package com.scrumble.server.services;
 
 import com.scrumble.server.entities.Sprint;
 import com.scrumble.server.entities.Userstory;
+import com.scrumble.server.entities.Userstorysprint;
 import com.scrumble.server.sessionbeans.SprintFacadeLocal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -131,8 +133,7 @@ public class SprintsResource {
             results = sprintBean.findAllSprintUserstories(Integer.parseInt(idSprint));
         }
         catch (Exception e){
-            System.out.println(e.getMessage());
-            System.out.println(e.getStackTrace());
+            throw new RESTException(e.getMessage());
         }
         return results;
     }
@@ -155,6 +156,56 @@ public class SprintsResource {
             System.out.println(e.getStackTrace());
         }
         return results;
+    }
+    
+    /**
+     * Retrieves the list of a com.scrumble.server.entities.Userstorysprints linked with the Sprint object
+     * @param id the id of the Sprint object to retrieve
+     * @return a JSON representation of the related Project object.
+     */
+    @GET
+    @Path("{idSprint}/userstories/no")
+    @Produces("application/json")
+    public List<Userstory> findAllNotSprintUserstories(@PathParam("idSprint") String idSprint) {
+        List<Userstory> results = null;
+
+        try {
+            results = sprintBean.findAllNotSprintUserstories(Integer.parseInt(idSprint));
+        }
+        catch (Exception e){
+            System.out.println(e.getStackTrace());
+        }
+        return results;
+    }
+    
+    /**
+     * POST method for saving the list of userstories related to a sprint
+     * @param idSprint the id of the Sprint object
+     * @param userstories JSON representation for list of userstories id to save in the sprint
+     */
+    @POST
+    @Path("save/{idSprint}")
+    @Consumes("application/json")
+    public void saveListUserstoriesToSprint(@PathParam("idSprint") String idSprint, String userstories) {
+        
+        try {
+            List<Integer> listUserstories = new ArrayList<Integer>();
+            System.out.println(userstories);
+            if(!userstories.equals("empty"))
+            {
+                String[] listToConvert = userstories.split(",");
+                for (String s : listToConvert) {
+                    listUserstories.add(Integer.valueOf(s));
+                }
+            }
+            System.out.println(listUserstories);
+            
+            sprintBean.addListUserstoriesToSprint(listUserstories, Integer.parseInt(idSprint));
+        }
+        catch (Exception e){
+            throw new RESTException(e.getMessage());
+        }
+        
     }
     
 }
