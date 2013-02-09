@@ -67,4 +67,10 @@ public interface ProjectFacadeLocal {
      */
     public void removeMemberFromProject(Integer idProject, Integer idMember);
     
+    /**
+     * View project if the member is included in
+     * @param idMember the id of a specified Member object
+     */
+    public List<Project> findProjectByUser (Integer idMember);
+    
 }
