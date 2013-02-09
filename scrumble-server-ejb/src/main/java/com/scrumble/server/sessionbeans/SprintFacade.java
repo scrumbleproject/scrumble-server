@@ -42,6 +42,9 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
     
     @EJB 
     private TasksprintFacadeLocal tasksprintBean;
+
+    @EJB
+    private ProcessstatusFacadeLocal processStatusBean;
     
     @Override
     protected EntityManager getEntityManager() {
@@ -207,6 +210,18 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
             }
             
         }
+    }
+    
+    @Override
+    public void create(Sprint s){
+        
+        TypedQuery<Processstatus> query = getEntityManager().createNamedQuery("Processstatus.findByCodeStatus", Processstatus.class);
+        List<Processstatus> processStatus = query.setParameter("codeStatus", "tod").getResultList();
+        if (processStatus.size()>0){ //if related processStatus object found
+            s.setIdProcessStatus(processStatus.get(0)); //must be unique
+        }
+        super.create(s);
+        
     }
     
 }
