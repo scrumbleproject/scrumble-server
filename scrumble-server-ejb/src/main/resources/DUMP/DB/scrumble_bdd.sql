@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le : Sam 09 Février 2013 à 09:40
+-- Généré le : Sam 09 Février 2013 à 09:54
 -- Version du serveur: 5.5.20
 -- Version de PHP: 5.3.10
 
@@ -19,6 +19,9 @@ SET time_zone = "+00:00";
 --
 -- Base de données: `scrumble_bdd`
 --
+DROP DATABASE `scrumble_bdd`;
+CREATE DATABASE `scrumble_bdd` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `scrumble_bdd`;
 
 -- --------------------------------------------------------
 
