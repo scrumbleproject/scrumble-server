@@ -43,8 +43,6 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
     @EJB 
     private TasksprintFacadeLocal tasksprintBean;
 
-    @EJB
-    private ProcessstatusFacadeLocal processStatusBean;
     
     @Override
     protected EntityManager getEntityManager() {
