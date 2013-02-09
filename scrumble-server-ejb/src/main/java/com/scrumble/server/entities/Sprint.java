@@ -22,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -44,6 +45,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Sprint.findByDateEnd", query = "SELECT s FROM Sprint s WHERE s.dateEnd = :dateEnd"),
     @NamedQuery(name = "Sprint.findByDuree", query = "SELECT s FROM Sprint s WHERE s.duree = :duree")})
 public class Sprint implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "started")
+    private boolean started;
     @Column(name = "velocity")
     private Integer velocity;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sprint")
@@ -196,6 +201,14 @@ public class Sprint implements Serializable {
 
     public void setSprinttaskassignationCollection(Collection<Sprinttaskassignation> sprinttaskassignationCollection) {
         this.sprinttaskassignationCollection = sprinttaskassignationCollection;
+    }
+
+    public boolean getStarted() {
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
     }
     
 }
