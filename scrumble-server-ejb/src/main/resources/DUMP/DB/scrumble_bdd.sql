@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le : Sam 09 Février 2013 à 09:54
+-- Généré le : Sam 09 Février 2013 à 10:04
 -- Version du serveur: 5.5.20
 -- Version de PHP: 5.3.10
 
@@ -199,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `sprint` (
   `date_start` datetime DEFAULT NULL,
   `date_end` datetime DEFAULT NULL,
   `duree` int(3) DEFAULT NULL,
-  `Started` tinyint(1) NOT NULL DEFAULT '0',
+  `started` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_sprint`),
   KEY `fk_sprint_1_idx` (`id_project`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
@@ -208,7 +208,7 @@ CREATE TABLE IF NOT EXISTS `sprint` (
 -- Contenu de la table `sprint`
 --
 
-INSERT INTO `sprint` (`id_sprint`, `num_sprint`, `title`, `id_project`, `velocity`, `date_start`, `date_end`, `duree`, `Started`) VALUES
+INSERT INTO `sprint` (`id_sprint`, `num_sprint`, `title`, `id_project`, `velocity`, `date_start`, `date_end`, `duree`, `started`) VALUES
 (1, 1, 'sprint 1', 1, NULL, NULL, NULL, NULL, 0),
 (2, 2, 'Sprint 2', 1, NULL, NULL, NULL, NULL, 0);
 
