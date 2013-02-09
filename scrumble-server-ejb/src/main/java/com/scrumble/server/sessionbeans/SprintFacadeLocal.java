@@ -65,5 +65,12 @@ public interface SprintFacadeLocal {
      * @return void
      */
     public void addListUserstoriesToSprint(List<Integer> array, Integer idSprint) throws Exception;
+    
+    /**
+     * Retrieves informations to display the sprint burndown chart
+     * @param idSprint the id of the Sprint object
+     * @return the list of informations needed to display a Sprint Burndown Chart
+     */
+    public List<String> findSprintBurndownChartInformations(Integer idSprint) throws Exception;
 
 }
