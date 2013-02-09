@@ -4,6 +4,7 @@
  */
 package com.scrumble.server.sessionbeans;
 
+import com.scrumble.server.entities.Processstatus;
 import com.scrumble.server.entities.Project;
 import com.scrumble.server.entities.Sprint;
 import com.scrumble.server.entities.Task;
@@ -191,4 +192,18 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
         
         return null;
     }
+    
+    public void updateProcessStatusOfSprint(Integer idSprint, String codeStatus) {
+        Sprint sprint = this.find(idSprint);
+        if (!codeStatus.equals(sprint.getIdProcessStatus().getCodeStatus())){
+        
+            TypedQuery<Processstatus> query = getEntityManager().createNamedQuery("Processstatus.findByCodeStatus", Processstatus.class);
+            List<Processstatus> processStatus = query.setParameter("codeStatus", codeStatus).getResultList();
+            if (processStatus.size()>0){ //if related processStatus object found
+                sprint.setIdProcessStatus(processStatus.get(0)); //must be unique
+            }
+            
+        }
+    }
+    
 }

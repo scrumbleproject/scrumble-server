@@ -232,4 +232,19 @@ public class SprintsResource {
         return results;
     }
     
+    /**
+     * POST method for updating a processStatus of Sprint object
+     * @param id id of sprint
+     * @param status status of sprint
+     * @return an HTTP response with content of the created resource.
+     */
+    @POST
+    @Path("{id}/{status}")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public void updateProcessStatusOfSprint(@PathParam("id") String id, @PathParam("status") String status) {
+        sprintBean.updateProcessStatusOfSprint(Integer.parseInt(id), status);
+    }
+    
+    
 }

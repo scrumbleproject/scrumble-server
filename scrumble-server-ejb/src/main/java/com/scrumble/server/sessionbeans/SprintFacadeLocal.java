@@ -72,5 +72,12 @@ public interface SprintFacadeLocal {
      * @return the list of informations needed to display a Sprint Burndown Chart
      */
     public List<String> findSprintBurndownChartInformations(Integer idSprint) throws Exception;
+    
+    /**
+     * Update the process status of the sprint
+     * @param idSprint the id of a specified Sprint object
+     * @param status the status to update
+     */
+    public void updateProcessStatusOfSprint(Integer idSprint, String codeStatus);
 
 }
