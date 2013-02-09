@@ -179,4 +179,15 @@ public class ProjectsResource {
         projectBean.removeMemberFromProject(Integer.parseInt(idProject), Integer.parseInt(idMember));
     }
     
+    /**
+     * 
+     */
+    @GET
+    @Path("{idMember}/project")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public List<Project> findProjectByUser (@PathParam("idMember") String idMember) {
+        return projectBean.findProjectByUser(Integer.parseInt(idMember));
+    }
+    
 }
