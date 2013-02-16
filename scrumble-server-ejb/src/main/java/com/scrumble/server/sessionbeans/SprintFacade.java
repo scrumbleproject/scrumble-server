@@ -10,9 +10,12 @@ import com.scrumble.server.entities.Sprint;
 import com.scrumble.server.entities.Task;
 import com.scrumble.server.entities.Userstory;
 import com.scrumble.server.entities.Userstorysprint;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -174,12 +177,39 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
     public List<String> findSprintBurndownChartInformations(Integer idSprint) throws Exception{
         List<Userstory> listUserstories = this.userstorysprintBean.findUserstoriesForSprint(idSprint);
         List<Task> listTasks = null;
-        /*TypedQuery<Sprinttaskassignation> query = getEntityManager().createNamedQuery("Sprinttaskassignation.findByIdSprint", Sprinttaskassignation.class);
-        List<Sprinttaskassignation> sprinttask = query.setParameter("idSprint", idSprint).getResultList();*/
         
-        int i = 0;
-        int j = 0;
+        HashMap<String, ArrayList<String>> li = new HashMap<String, ArrayList<String>>();
         
+        ArrayList<String> listIdealChart = new ArrayList<String>();
+        ArrayList<String> listActualChart = new ArrayList<String>();
+        ArrayList<String> listDate = new ArrayList<String>();
+        
+        int i=0, j=0, est=0, nbdays=1;
+        
+        Date dateStart = em.find(Sprint.class, idSprint).getDateStart();
+        Date dateEnd = em.find(Sprint.class, idSprint).getDateEnd();
+
+        
+        //Get the list of days between the beginning and the end of the sprint
+        long dat=dateStart.getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        listDate.add(dateFormat.format(new Date(dat)));
+        
+        while(dat<dateEnd.getTime())
+        {
+            dat+=1000*60*60*24;
+            if(dat<dateEnd.getTime())
+            {
+                listDate.add(dateFormat.format(new Date(dat)));
+                nbdays++;
+            }
+        }
+        li.put("Date", listDate);
+        System.out.println(listDate);
+        System.out.println(nbdays);
+        
+
+        //Count the sum of estimation of all tasks of this sprint
         while(i<listUserstories.size())
         {
             listTasks = this.taskBean.findAllTaskUserstories(listUserstories.get(i).getIdUserstory());
@@ -188,11 +218,30 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
             while(j<listTasks.size())
             {
                 System.out.println("Task:"+listTasks.get(j).getIdTask()+";Estimation:"+listTasks.get(j).getEstimation());
+                est+=listTasks.get(j).getEstimation();
                 j++;
             }
             
             i++;
         }
+        System.out.println("Somme estimation du sprint:"+est);
+        
+        //Get data for the ideal chart
+        i=1;
+        float l ;
+        while(i<=nbdays)
+        {
+            l = (float) est - (float) i*est/nbdays;
+            //Float.parseFloat(null);
+            listIdealChart.add(""+l);
+            //est-i*(est/nbdays)
+            i++;
+        }
+        li.put("idealChart", listIdealChart);
+        System.out.println(listIdealChart);
+        
+        li.put("actualChart", null);
+
         
         return null;
     }
