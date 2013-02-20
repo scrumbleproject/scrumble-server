@@ -118,7 +118,7 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
         
             while(i<array.size())
             {
-                System.out.println("array["+i+"]=>"+array.get(i));
+                //System.out.println("array["+i+"]=>"+array.get(i));
                 us = this.em.find(Userstory.class, array.get(i));
                 
                 //If this us isn't in the database, we will create it
@@ -128,12 +128,12 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
                     userstorysprint.setSprint(this.find(idSprint));
                     userstorysprint.setUserstory(userstoryBean.find(array.get(i)));
                     userstorysprintBean.create(userstorysprint);
-                    System.out.println("userstory "+array.get(i)+" ajoutee dans le sprint "+idSprint);
+                    //System.out.println("userstory "+array.get(i)+" ajoutee dans le sprint "+idSprint);
                 }
                 else
                 {
                     list.remove(us);
-                    System.out.println("userstory "+array.get(i)+" ne doit pas etre supprimee du sprint "+idSprint);
+                    //System.out.println("userstory "+array.get(i)+" ne doit pas etre supprimee du sprint "+idSprint);
                 }
                 
                 i++;
@@ -144,7 +144,7 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
             while(i<list.size())
             {
                 userstorysprintBean.remove(new Userstorysprint(idSprint, list.get(i).getIdUserstory()));
-                System.out.println("userstory "+list.get(i).getIdUserstory()+" supprimee du sprint "+idSprint);
+                //System.out.println("userstory "+list.get(i).getIdUserstory()+" supprimee du sprint "+idSprint);
                 i++;
             }
         }
@@ -174,76 +174,74 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
         }
     }
     
-    public List<String> findSprintBurndownChartInformations(Integer idSprint) throws Exception{
+    public String findSprintBurndownChartInformations(Integer idSprint) throws Exception{
         List<Userstory> listUserstories = this.userstorysprintBean.findUserstoriesForSprint(idSprint);
         List<Task> listTasks = null;
-        
-        HashMap<String, ArrayList<String>> li = new HashMap<String, ArrayList<String>>();
-        
-        ArrayList<String> listIdealChart = new ArrayList<String>();
-        ArrayList<String> listActualChart = new ArrayList<String>();
-        ArrayList<String> listDate = new ArrayList<String>();
-        
+        Sprint sprint = em.find(Sprint.class, idSprint);
         int i=0, j=0, est=0, nbdays=1;
         
-        Date dateStart = em.find(Sprint.class, idSprint).getDateStart();
-        Date dateEnd = em.find(Sprint.class, idSprint).getDateEnd();
-
-        
-        //Get the list of days between the beginning and the end of the sprint
-        long dat=dateStart.getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        listDate.add(dateFormat.format(new Date(dat)));
-        
-        while(dat<dateEnd.getTime())
+        if(sprint.getDateStart()!= null && sprint.getDateEnd()!= null && !sprint.getDateStart().equals(null) && !sprint.getDateEnd().equals(null))
         {
-            dat+=1000*60*60*24;
-            if(dat<dateEnd.getTime())
-            {
-                listDate.add(dateFormat.format(new Date(dat)));
-                nbdays++;
-            }
-        }
-        li.put("Date", listDate);
-        System.out.println(listDate);
-        System.out.println(nbdays);
-        
+            Date dateStart = sprint.getDateStart();
+            Date dateEnd = sprint.getDateEnd();
 
-        //Count the sum of estimation of all tasks of this sprint
-        while(i<listUserstories.size())
-        {
-            listTasks = this.taskBean.findAllTaskUserstories(listUserstories.get(i).getIdUserstory());
+            long dat=dateStart.getTime();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String listDates = "{\"listDates\": [";
+            listDates +="\""+dateFormat.format(new Date(dat))+"\"";
             
-            j=0;
-            while(j<listTasks.size())
+            //Get the list of days between the beginning and the end of the sprint
+            while(dat<dateEnd.getTime())
             {
-                System.out.println("Task:"+listTasks.get(j).getIdTask()+";Estimation:"+listTasks.get(j).getEstimation());
-                est+=listTasks.get(j).getEstimation();
-                j++;
+                dat+=1000*60*60*24;
+                if(dat<dateEnd.getTime())
+                {
+                    listDates +=", \""+dateFormat.format(new Date(dat))+"\"";
+                    nbdays++;
+                }
             }
-            
-            i++;
-        }
-        System.out.println("Somme estimation du sprint:"+est);
-        
-        //Get data for the ideal chart
-        i=1;
-        float l ;
-        while(i<=nbdays)
-        {
-            l = (float) est - (float) i*est/nbdays;
-            //Float.parseFloat(null);
-            listIdealChart.add(""+l);
-            //est-i*(est/nbdays)
-            i++;
-        }
-        li.put("idealChart", listIdealChart);
-        System.out.println(listIdealChart);
-        
-        li.put("actualChart", null);
+            listDates +="]";
 
+            //System.out.println(nbdays);
+
+            //Count the sum of estimation of all tasks of this sprint
+            while(i<listUserstories.size())
+            {
+                listTasks = this.taskBean.findAllTaskUserstories(listUserstories.get(i).getIdUserstory());
+
+                j=0;
+                while(j<listTasks.size())
+                {
+                    //System.out.println("Task:"+listTasks.get(j).getIdTask()+";Estimation:"+listTasks.get(j).getEstimation());
+                    est+=listTasks.get(j).getEstimation();
+                    j++;
+                }
+
+                i++;
+            }
+            //System.out.println("Somme estimation du sprint:"+est);
+
+            //Get data for the ideal chart
+            i=1;
+            float l ;
+            String idealChart = ", \"idealChart\": [";
+            while(i<=nbdays)
+            {
+                l = (float) est - (float) i*est/nbdays;
+
+                if(i==1)
+                    idealChart +=""+l+"";
+                else
+                    idealChart +=", "+l+"";
+                //est-i*(est/nbdays)
+                i++;
+            }
+            idealChart +="]";
+            //System.out.println(listDates+idealChart);
+            return listDates+idealChart+", \"actualChart\": []}";
+        }
         
-        return null;
+        return "{\"listDates\": [], \"idealChart\": [], \"actualChart\": []}";
     }
     
     public void updateProcessStatusOfSprint(Integer idSprint, String codeStatus) {

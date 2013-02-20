@@ -7,6 +7,8 @@ package com.scrumble.server.sessionbeans;
 import com.scrumble.server.entities.Sprint;
 import com.scrumble.server.entities.Userstory;
 import com.scrumble.server.entities.Userstorysprint;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -71,7 +73,7 @@ public interface SprintFacadeLocal {
      * @param idSprint the id of the Sprint object
      * @return the list of informations needed to display a Sprint Burndown Chart
      */
-    public List<String> findSprintBurndownChartInformations(Integer idSprint) throws Exception;
+    public String findSprintBurndownChartInformations(Integer idSprint) throws Exception;
     
     /**
      * Update the process status of the sprint

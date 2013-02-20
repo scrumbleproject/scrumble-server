@@ -10,6 +10,7 @@ import com.scrumble.server.entities.Userstorysprint;
 import com.scrumble.server.sessionbeans.SprintFacadeLocal;
 import com.scrumble.server.sessionbeans.SprinttaskassignationFacade;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -221,8 +222,8 @@ public class SprintsResource {
     @GET
     @Path("{idSprint}/burndown")
     @Produces("application/json")
-    public List<String> findSprintBurndownChartInformations(@PathParam("idSprint") String idSprint) {
-        List<String> results = null;
+    public String findSprintBurndownChartInformations(@PathParam("idSprint") String idSprint) {
+        String results = "";
         try {
             results = sprintBean.findSprintBurndownChartInformations(Integer.parseInt(idSprint));
         }
