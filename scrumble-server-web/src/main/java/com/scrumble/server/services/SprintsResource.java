@@ -224,10 +224,12 @@ public class SprintsResource {
     @Produces("application/json")
     public String findSprintBurndownChartInformations(@PathParam("idSprint") String idSprint) {
         String results = "";
-        try {
+        try
+        {
             results = sprintBean.findSprintBurndownChartInformations(Integer.parseInt(idSprint));
         }
-        catch (Exception e){
+        catch (Exception e)
+        {
             throw new RESTException(e.getMessage());
         }
         return results;
