@@ -86,8 +86,8 @@ public class ProjectFacade extends AbstractFacade<Project> implements ProjectFac
         }
     }
     
-    public List<Project> findProjectByUser (Integer idMember) {
-        Member1 member1 = em.find(Member1.class, idMember);
+    public List<Project> findProjectByUser (String login) {
+        Member1 member1 = memberLocal.findByLogin(login);
         return new ArrayList<Project>(member1.getProjectCollection());
     }
 }

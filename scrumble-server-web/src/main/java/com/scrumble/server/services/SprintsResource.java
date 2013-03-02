@@ -104,7 +104,6 @@ public class SprintsResource {
     @Consumes("application/json")
     @Produces("application/json")
     public void updateSprint(Sprint sprint,@PathParam("idProject") String idProject) {
-        sprintBean.edit(sprint);
         sprintBean.add_updateSprintToProject(sprint, Integer.parseInt(idProject));
     }
     

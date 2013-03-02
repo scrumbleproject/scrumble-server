@@ -69,8 +69,8 @@ public interface ProjectFacadeLocal {
     
     /**
      * View project if the member is included in
-     * @param idMember the id of a specified Member object
+     * @param login the login of a specified Member object
      */
-    public List<Project> findProjectByUser (Integer idMember);
+    public List<Project> findProjectByUser (String login);
     
 }
