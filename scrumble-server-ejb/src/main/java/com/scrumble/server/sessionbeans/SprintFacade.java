@@ -77,6 +77,7 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
     
     public void add_updateSprintToProject(Sprint sprint, Integer idProject){
         sprint.setIdProject(this.em.find(Project.class, idProject));
+        sprint.setIdProcessStatus(this.find(sprint.getIdSprint()).getIdProcessStatus());
         this.edit(sprint);
     }
     
