@@ -215,8 +215,10 @@ public class UserStoriesResource {
     @Consumes("application/json")
     @Produces("application/json")
     public void addTask(@PathParam("idUserstory") String idUserstory, Task task) {
-        task.setIdUserstory(userStoryBean.find(Integer.parseInt(idUserstory)));
+        Userstory userstory = userStoryBean.find(Integer.parseInt(idUserstory));
+        task.setIdUserstory(userstory);
         taskBean.create(taskBean.useDefaultProcessStatusIfNeededForTask(task));
+        userstory.getTaskCollection().add(task);
     }
     
     
