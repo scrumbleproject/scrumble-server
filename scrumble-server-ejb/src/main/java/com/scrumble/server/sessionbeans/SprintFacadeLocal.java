@@ -4,6 +4,7 @@
  */
 package com.scrumble.server.sessionbeans;
 
+import com.scrumble.server.entities.Processstatus;
 import com.scrumble.server.entities.Sprint;
 import com.scrumble.server.entities.Userstory;
 import com.scrumble.server.entities.Userstorysprint;
@@ -74,6 +75,14 @@ public interface SprintFacadeLocal {
      * @return the list of informations needed to display a Sprint Burndown Chart
      */
     public String findSprintBurndownChartInformations(Integer idSprint) throws Exception;
+    
+    /**
+     * Retrieves process status of the specified sprint
+     * @param idSprint the id of the Sprint object
+     * @return the process status object
+     */
+    public Processstatus getProcessStatusOfSprint(Integer idSprint) throws Exception;
+    
     
     /**
      * Update the process status of the sprint

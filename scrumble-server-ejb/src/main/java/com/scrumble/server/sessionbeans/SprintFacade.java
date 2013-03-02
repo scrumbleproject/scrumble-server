@@ -45,6 +45,9 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
     
     @EJB 
     private TasksprintFacadeLocal tasksprintBean;
+    
+    @EJB 
+    private ProcessstatusFacadeLocal processStatusBean;
 
     
     @Override
@@ -242,6 +245,17 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
         }
         
         return "{\"listDates\": [], \"idealChart\": [], \"actualChart\": []}";
+    }
+    
+    public Processstatus getProcessStatusOfSprint(Integer idSprint) throws Exception{
+        
+        Sprint sprint = this.find(idSprint);
+        if (sprint!=null){
+            return sprint.getIdProcessStatus();
+        }
+        else { 
+            throw new Exception("Sprint with id["+idSprint+"] not found !");
+        }
     }
     
     public void updateProcessStatusOfSprint(Integer idSprint, String codeStatus) {

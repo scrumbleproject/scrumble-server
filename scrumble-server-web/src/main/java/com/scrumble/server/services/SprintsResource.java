@@ -4,6 +4,7 @@
  */
 package com.scrumble.server.services;
 
+import com.scrumble.server.entities.Processstatus;
 import com.scrumble.server.entities.Sprint;
 import com.scrumble.server.entities.Userstory;
 import com.scrumble.server.entities.Userstorysprint;
@@ -233,6 +234,27 @@ public class SprintsResource {
             throw new RESTException(e.getMessage());
         }
         return results;
+    }
+    
+    /**
+     * Retrieves process status of a specified sprint
+     * @param idSprint the id of the Sprint object
+     * @return the process status object
+     */
+    @GET
+    @Path("{idSprint}/status")
+    @Produces("application/json")
+    public Processstatus getProcessStatusOfSprint(@PathParam("idSprint") String idSprint) {
+        Processstatus status = null;
+        try
+        {
+            status = sprintBean.getProcessStatusOfSprint(Integer.parseInt(idSprint));
+        }
+        catch (Exception e)
+        {
+            throw new RESTException(e.getMessage());
+        }
+        return status;
     }
     
     /**
