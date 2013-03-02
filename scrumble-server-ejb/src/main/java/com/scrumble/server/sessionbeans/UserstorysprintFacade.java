@@ -4,6 +4,7 @@
  */
 package com.scrumble.server.sessionbeans;
 
+import com.scrumble.server.entities.Sprint;
 import com.scrumble.server.entities.Userstory;
 import com.scrumble.server.entities.Userstorysprint;
 import java.util.ArrayList;
@@ -50,6 +51,28 @@ public class UserstorysprintFacade extends AbstractFacade<Userstorysprint> imple
         }
         
         return results;
+    }
+    
+    public Userstorysprint findByIdSprintAndIdUserstory(Integer idSprint, Integer idStory) throws Exception{
+        
+        TypedQuery<Userstorysprint> query = getEntityManager().createNamedQuery("Userstorysprint.findByIdSprintAndIdUserstory", Userstorysprint.class);
+        List<Userstorysprint> results = query.setParameter("idSprint", idSprint).setParameter("idUserstory", idStory).getResultList();
+        if (results.size()>0){
+            return results.get(0);
+        }
+        return null;
+    }
+    
+    public List<Sprint> findSprintAssignationForUserstory(Integer idStory){
+        
+        List<Sprint> sprints = new ArrayList<Sprint>();
+        
+        TypedQuery<Userstorysprint> query = getEntityManager().createNamedQuery("Userstorysprint.findByIdUserstory", Userstorysprint.class);
+        List<Userstorysprint> results = query.setParameter("idUserstory", idStory).getResultList();
+        for (Userstorysprint us : results ){
+            sprints.add(us.getSprint());
+        }
+        return sprints;
     }
     
 }

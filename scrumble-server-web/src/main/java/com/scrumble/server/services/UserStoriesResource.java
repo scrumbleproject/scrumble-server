@@ -262,5 +262,22 @@ public class UserStoriesResource {
     public List<Task> searchTasksQuick(@PathParam("idUserstory") String idUserstory, @PathParam("pattern") String pattern) {
         return taskBean.quickSearch(pattern);
     }
+    
+    /**
+     * CHeck whether the userstory is editable or not in relation with 
+     * its assignation to a sprint and the status of the sprint
+     * @param idUserstory the id of the userstory to check
+     * @return a boolean.
+     */
+    @GET
+    @Path("{idUserstory}/iseditable")
+    @Produces("text/plain")
+    public String isUserstoryEditable(@PathParam("idUserstory") String idUserstory) {
+        
+        if (userStoryBean.isUserstoryEditable(Integer.parseInt(idUserstory))) {
+           return "true"; 
+        }
+        return "false";
+    }
 
 }

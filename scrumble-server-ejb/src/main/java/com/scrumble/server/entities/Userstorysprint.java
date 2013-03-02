@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Userstorysprint.findAll", query = "SELECT u FROM Userstorysprint u"),
     @NamedQuery(name = "Userstorysprint.findByIdSprint", query = "SELECT u FROM Userstorysprint u WHERE u.userstorysprintPK.idSprint = :idSprint"),
+    @NamedQuery(name = "Userstorysprint.findByIdSprintAndIdUserstory", query = "SELECT u FROM Userstorysprint u WHERE u.userstorysprintPK.idSprint = :idSprint and u.userstorysprintPK.idUserstory = :idUserstory"),
     @NamedQuery(name = "Userstorysprint.findByIdUserstory", query = "SELECT u FROM Userstorysprint u WHERE u.userstorysprintPK.idUserstory = :idUserstory"),
     @NamedQuery(name = "Userstorysprint.findByDateStart", query = "SELECT u FROM Userstorysprint u WHERE u.dateStart = :dateStart"),
     @NamedQuery(name = "Userstorysprint.findByDateEnd", query = "SELECT u FROM Userstorysprint u WHERE u.dateEnd = :dateEnd")})

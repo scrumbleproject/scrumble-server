@@ -75,4 +75,13 @@ public interface UserstoryFacadeLocal {
      */
     public void updateUserstoryTaskCollection(Userstory userstory);
     
+    
+    /**
+     * CHeck whether the userstory is editable or not in relation with 
+     * its assignation to a sprint and the status of the sprint
+     * @param idUserstory the id of the userstory to check
+     * @return a boolean.
+     */
+    public boolean isUserstoryEditable(Integer idUserstory);
+    
 }

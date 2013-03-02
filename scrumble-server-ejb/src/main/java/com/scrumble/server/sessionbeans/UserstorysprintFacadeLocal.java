@@ -4,6 +4,7 @@
  */
 package com.scrumble.server.sessionbeans;
 
+import com.scrumble.server.entities.Sprint;
 import com.scrumble.server.entities.Userstory;
 import com.scrumble.server.entities.Userstorysprint;
 import java.util.List;
@@ -32,4 +33,7 @@ public interface UserstorysprintFacadeLocal {
     
     public List<Userstory> findUserstoriesForSprint(Integer idSprint) throws Exception;
     
+    public Userstorysprint findByIdSprintAndIdUserstory(Integer idSprint, Integer idStory) throws Exception;
+    
+    public List<Sprint> findSprintAssignationForUserstory(Integer idStory);
 }

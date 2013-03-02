@@ -5,6 +5,7 @@
 package com.scrumble.server.sessionbeans;
 
 import com.scrumble.server.entities.Project;
+import com.scrumble.server.entities.Sprint;
 import com.scrumble.server.entities.Task;
 import com.scrumble.server.entities.Userstory;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -28,6 +30,10 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
     @PersistenceContext(unitName = "com.scrumble.server_scrumble-server-ejb_ejb_1.0PU")
     private EntityManager em;
 
+    @EJB 
+    private UserstorysprintFacadeLocal userstorySprintBean;
+    
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -224,6 +230,17 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
     public void updateUserstoryTaskCollection(Userstory userstory) {
         TypedQuery<Task> query = getEntityManager().createNamedQuery("Task.findByIdUserstory", Task.class);
         userstory.setTaskCollection(query.setParameter("idUserstory", userstory).getResultList());
+    }
+    
+    public boolean isUserstoryEditable(Integer idUserstory){
+        //check if userstory is assigned to a sprint
+        List<Sprint> sprints = userstorySprintBean.findSprintAssignationForUserstory(idUserstory);
+        for (Sprint s : sprints) {//if yes check sprint status
+            if (s.getIdProcessStatus().getCodeStatus().equals("inp")) {
+                return false;
+            }            
+        } 
+        return true;
     }
     
 }
