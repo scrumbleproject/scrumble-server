@@ -185,11 +185,11 @@ public class ProjectsResource {
      * @return a JSON representation of the project list
      */
     @GET
-    @Path("{idMember}/project")
+    @Path("{login}/project")
     @Consumes("application/json")
     @Produces("application/json")
-    public List<Project> findProjectByUser (@PathParam("idMember") String idMember) {
-        return projectBean.findProjectByUser(Integer.parseInt(idMember));
+    public List<Project> findProjectByUser (@PathParam("login") String login) {
+        return projectBean.findProjectByUser(login);
     }
     
 }
