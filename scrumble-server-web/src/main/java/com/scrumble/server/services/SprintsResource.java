@@ -270,5 +270,42 @@ public class SprintsResource {
         sprintBean.updateProcessStatusOfSprint(Integer.parseInt(id), status);
     }
     
+    /**
+     * Retrieves the number of userstories assigned to a sprint
+     * @param idSprint the id of the sprint
+     * @return a number of userstories
+     */
+    @GET
+    @Path("{idSprint}/userstorynumber")
+    @Produces("application/json")
+    public String findUserstoryNumberOfSprint(@PathParam("idSprint") String idSprint) {
+        int number=0;
+        try {
+            number=sprintBean.findUserstoryNumberOfSprint(Integer.parseInt(idSprint));
+        }
+        catch (Exception e){
+            System.out.println(e.getStackTrace());
+        }
+        return "{\"UserstoryNumber\": "+number+" }";
+    }
+    
+    /**
+     * Retrieves the progression of a sprint
+     * @param idSprint the id of the sprint
+     * @return the progression in percent
+     */
+    @GET
+    @Path("{idSprint}/progression")
+    @Produces("application/json")
+    public String findProgressionOfSprint(@PathParam("idSprint") String idSprint) {
+        float number=0;
+        try {
+            number=sprintBean.findProgressionOfSprint(Integer.parseInt(idSprint));
+        }
+        catch (Exception e){
+            System.out.println(e.getStackTrace());
+        }
+        return "{\"Progression\": "+number+" }";
+    }
     
 }

@@ -90,5 +90,21 @@ public interface SprintFacadeLocal {
      * @param status the status to update
      */
     public void updateProcessStatusOfSprint(Integer idSprint, String codeStatus);
+    
+    
+    /**
+     * Retrieves the number of userstories assigned to a sprint
+     * @param idSprint the id of the sprint
+     * @return a number of userstories
+     */
+    public int findUserstoryNumberOfSprint(Integer idSprint) throws Exception;
+    
+    
+    /**
+     * Retrieves the progression of a sprint
+     * @param idSprint the id of the sprint
+     * @return the progression in percent
+     */
+    public float findProgressionOfSprint(Integer idSprint) throws Exception;
 
 }

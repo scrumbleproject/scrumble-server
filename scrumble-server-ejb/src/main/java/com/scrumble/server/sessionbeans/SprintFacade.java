@@ -237,7 +237,6 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
                     idealChart +=""+l+"";
                 else
                     idealChart +=", "+l+"";
-                //est-i*(est/nbdays)
                 i++;
             }
             idealChart +="]";
@@ -282,6 +281,44 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
         }
         super.create(s);
         
+    }
+    
+    
+    public int findUserstoryNumberOfSprint(Integer idSprint) throws Exception{
+        return this.userstorysprintBean.findUserstoriesForSprint(idSprint).size();
+    }
+    
+    
+    public float findProgressionOfSprint(Integer idSprint) throws Exception{
+        List<Task> listTasks = null;
+        List<Userstory> listUserstories = this.userstorysprintBean.findUserstoriesForSprint(idSprint);
+        int i = 0,j = 0, donetask = 0, totaltask = 0;
+        
+        //Count the sum of estimation of all tasks of this sprint
+        while(i<listUserstories.size())
+        {
+            listTasks = this.taskBean.findAllTaskUserstories(listUserstories.get(i).getIdUserstory());
+            totaltask += listTasks.size();
+            
+            j=0;
+            while(j<listTasks.size())
+            {
+                //System.out.println("Tache:"+listTasks.get(j).getIdTask()+";Status:"+listTasks.get(j).getIdProcessStatus().getIdProcessStatus()+";libelle:"+listTasks.get(j).getIdProcessStatus().getTitleStatus());
+                if(listTasks.get(j).getIdProcessStatus().getIdProcessStatus()==6)
+                {
+                    donetask++;
+                    //System.out.println("    DONE !");
+                }
+                j++;
+            }
+
+            i++;
+        }
+        
+        if(donetask == 0 || totaltask == 0)
+            return 0;
+        else
+            return ((float) donetask / (float) totaltask)*100;
     }
     
 }
