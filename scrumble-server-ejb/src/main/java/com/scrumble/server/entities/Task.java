@@ -48,8 +48,6 @@ public class Task implements Serializable, Comparable<Task> {
     @Column(name = "estimation")
     private Integer estimation;
     @Size(max = 20)
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
-    private Collection<Tasksprint> tasksprintCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -126,15 +124,6 @@ public class Task implements Serializable, Comparable<Task> {
 
     public void setEstimation(Integer estimation) {
         this.estimation = estimation;
-    }
-
-    @XmlTransient
-    public Collection<Tasksprint> getTasksprintCollection() {
-        return tasksprintCollection;
-    }
-
-    public void setTasksprintCollection(Collection<Tasksprint> tasksprintCollection) {
-        this.tasksprintCollection = tasksprintCollection;
     }
 
     @XmlTransient

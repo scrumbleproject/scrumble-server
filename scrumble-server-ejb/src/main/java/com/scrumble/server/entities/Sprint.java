@@ -71,8 +71,6 @@ public class Sprint implements Serializable {
     private Date dateEnd;
     @Column(name = "duree")
     private Integer duree;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sprint")
-    private Collection<Tasksprint> tasksprintCollection;
     @JoinColumn(name = "id_project", referencedColumnName = "id_project")
     @ManyToOne
     private Project idProject;
@@ -132,15 +130,6 @@ public class Sprint implements Serializable {
 
     public void setDuree(Integer duree) {
         this.duree = duree;
-    }
-
-    @XmlTransient
-    public Collection<Tasksprint> getTasksprintCollection() {
-        return tasksprintCollection;
-    }
-
-    public void setTasksprintCollection(Collection<Tasksprint> tasksprintCollection) {
-        this.tasksprintCollection = tasksprintCollection;
     }
 
     public Project getIdProject() {

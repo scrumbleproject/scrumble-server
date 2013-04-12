@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.11.1deb1
+-- version 3.4.10.1deb1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 09, 2013 at 12:35 PM
+-- Generation Time: Apr 12, 2013 at 02:36 PM
 -- Server version: 5.5.29
--- PHP Version: 5.4.6-1ubuntu1.1
+-- PHP Version: 5.3.10-1ubuntu3.6
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS `memberproject` (
 
 INSERT INTO `memberproject` (`id_project`, `id_member`) VALUES
 (1, 1),
+(17, 1),
 (1, 2);
 
 -- --------------------------------------------------------
@@ -150,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `project` (
   `title` varchar(150) DEFAULT NULL,
   `description` text,
   PRIMARY KEY (`id_project`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
 
 --
 -- Dumping data for table `project`
@@ -158,7 +159,8 @@ CREATE TABLE IF NOT EXISTS `project` (
 
 INSERT INTO `project` (`id_project`, `title`, `description`) VALUES
 (1, 'Scrumble Project', 'Projet Scrumble Test'),
-(2, 'Test Barascouda', 'sa rox du poulet !');
+(2, 'Test Barascouda', 'sa rox du poulet !'),
+(17, 'test 2', 'test 2 swdg sdth srth srths ');
 
 -- --------------------------------------------------------
 
@@ -210,7 +212,7 @@ CREATE TABLE IF NOT EXISTS `sprint` (
 --
 
 INSERT INTO `sprint` (`id_sprint`, `num_sprint`, `title`, `id_project`, `velocity`, `date_start`, `date_end`, `duree`, `id_process_status`) VALUES
-(1, 1, 'sprint 1', 1, 13, NULL, NULL, 0, 5),
+(1, 1, 'sprint 1', 1, 13, '2013-04-01 01:00:00', '2013-04-17 01:00:00', 0, 5),
 (2, 2, 'Sprint 2', 1, NULL, NULL, NULL, NULL, 4);
 
 -- --------------------------------------------------------
@@ -223,11 +225,20 @@ CREATE TABLE IF NOT EXISTS `sprinttaskassignation` (
   `id_task` int(11) NOT NULL,
   `id_sprint` int(11) NOT NULL,
   `id_member` int(11) NOT NULL,
+  `date_start` datetime DEFAULT NULL,
+  `date_end` datetime DEFAULT NULL,
   PRIMARY KEY (`id_task`,`id_sprint`,`id_member`),
   KEY `fk_assignation_task_idx` (`id_task`),
   KEY `fk_sprinttaskassignation_1_idx` (`id_sprint`),
   KEY `fk_sprinttaskassignation_1_idx1` (`id_member`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `sprinttaskassignation`
+--
+
+INSERT INTO `sprinttaskassignation` (`id_task`, `id_sprint`, `id_member`, `date_start`, `date_end`) VALUES
+(24, 1, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -262,24 +273,8 @@ INSERT INTO `task` (`id_task`, `title`, `estimation`, `id_userstory`, `id_proces
 (12, 'Créer le formulaire d''ajout d''une user story', 1, 5, 4),
 (13, 'Lier la UserStory Page aux autres pages de l''', 1, 5, 4),
 (14, 'Créer les fonctions pour modifier, supprimer ', 2, 5, 4),
-(24, 'design d''UI', 1, 1, 4),
+(24, 'design d''UI', 1, 1, 6),
 (25, 'TEST', 0, 7, 4);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tasksprint`
---
-
-CREATE TABLE IF NOT EXISTS `tasksprint` (
-  `id_task` int(11) NOT NULL,
-  `id_sprint` int(11) NOT NULL,
-  `date_start` datetime DEFAULT NULL,
-  `date_end` datetime DEFAULT NULL,
-  PRIMARY KEY (`id_task`,`id_sprint`),
-  KEY `fk_tasksprint_1_idx` (`id_task`),
-  KEY `fk_tasksprint_1_idx1` (`id_sprint`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -312,7 +307,7 @@ INSERT INTO `userstory` (`id_userstory`, `title`, `importance`, `estimation`, `d
 (3, 'TEST CYRIL', 34, 2, '- Accéder à un projet donné\r\n- Cliquer sur Members\r\n- Visualiser la liste de tous les membres (avec leurs compétences)\r\n- cocher les membres à ajouter au projet et valider\r\n- Revenir sur le projet et visualiser les membres sélectionnés.', 'fdsg', 1, NULL, 4),
 (4, 'Visualiser le Dashboard d''un projet', 41, 2, '-Accéder à l''application et sélectionner un projet donné\r\n-Cliquer su le menu "Dashbord" et visualiser le tableau de bord du projet', NULL, 1, 'Web', 4),
 (5, 'Gérer les user stories du projet', 40, 1, '-Accéder à l''application et sélectionner un projet\r\n-Cliquer sur le menu "Story"\r\n-Cliquer sur "New Story" pour ajouter une story ou sélectionner une story existante pour la modifier ou la supprimer \r\n- Sauvegarder et visualiser les modifications', NULL, 1, 'Base de données', 4),
-(7, 'Gérer les membres', 42, 3, 'faire ci ou ça', '', 1, NULL, 4);
+(7, 'Gérer les membres', 42, 3, 'faire ci ou ça', '', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -378,13 +373,6 @@ ALTER TABLE `sprinttaskassignation`
 ALTER TABLE `task`
   ADD CONSTRAINT `fk_id_userstory` FOREIGN KEY (`id_userstory`) REFERENCES `userstory` (`id_userstory`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_task_status` FOREIGN KEY (`id_process_status`) REFERENCES `processstatus` (`id_process_status`) ON DELETE CASCADE ON UPDATE NO ACTION;
-
---
--- Constraints for table `tasksprint`
---
-ALTER TABLE `tasksprint`
-  ADD CONSTRAINT `fk_tasksprint_sprint` FOREIGN KEY (`id_sprint`) REFERENCES `sprint` (`id_sprint`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_tasksprint_task` FOREIGN KEY (`id_task`) REFERENCES `task` (`id_task`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `userstory`

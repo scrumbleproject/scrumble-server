@@ -12,6 +12,7 @@ import com.scrumble.server.entities.Task;
 import com.scrumble.server.entities.Userstory;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -121,8 +122,15 @@ public class TaskFacade extends AbstractFacade<Task> implements TaskFacadeLocal 
                 assignation.setMember1(member);
                 assignation.setTask(taskBean.find(idTask));
                 assignation.setSprint(sprintBean.find(idSprint));
+                assignation.setDateStart(new Date());
                 assignationBean.create(assignation);
                 member.getSprinttaskassignationCollection().add(assignation); //must be unique
+            } else if (assignations.size()==1){ //if assignation already exists
+                Sprinttaskassignation assignation = assignations.get(0);
+                Task task = this.find(idTask);
+                if (task.getIdProcessStatus().getCodeStatus().equals("don")) { //if task status is done
+                    assignation.setDateEnd(new Date());
+                }
             }
 
         }
