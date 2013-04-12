@@ -73,4 +73,19 @@ public interface ProjectFacadeLocal {
      */
     public List<Project> findProjectByUser (String login);
     
+    
+    /** 
+     * Creates an instance of Project object assigned by default to the creator user
+     * @param project the project to create
+     * @param userLogin the login of a specified Member object
+     */
+    public void createForUserLogin(Project project, String userLogin);
+    
+    /** 
+     * Removes an instance of Project object assigned to the user
+     * @param idProject the id of the project to remove
+     * @param userLogin the login of a specified Member object
+     */
+    public void removeForUserLogin(Integer idProject, String userLogin);
+    
 }

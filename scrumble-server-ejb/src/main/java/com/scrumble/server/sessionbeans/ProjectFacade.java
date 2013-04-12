@@ -75,6 +75,7 @@ public class ProjectFacade extends AbstractFacade<Project> implements ProjectFac
         Member1 member1 = em.find(Member1.class, idMember);
         if (!project.getMember1Collection().contains(member1)) {
             project.getMember1Collection().add(member1);
+            member1.getProjectCollection().add(project);
         }
     }
     
@@ -90,4 +91,19 @@ public class ProjectFacade extends AbstractFacade<Project> implements ProjectFac
         Member1 member1 = memberLocal.findByLogin(login);
         return new ArrayList<Project>(member1.getProjectCollection());
     }
+    
+    public void createForUserLogin(Project project, String userLogin){
+        this.create(project);
+        Member1 member = memberLocal.findByLogin(userLogin);
+        this.addMemberToProject(project.getIdProject(), member.getIdMember());
+    }
+    
+    public void removeForUserLogin(Integer idProject, String userLogin){
+        Project project = this.find(idProject);
+        Member1 member = memberLocal.findByLogin(userLogin);
+        member.getProjectCollection().remove(project);
+        this.remove(project);
+    }
 }
+
+

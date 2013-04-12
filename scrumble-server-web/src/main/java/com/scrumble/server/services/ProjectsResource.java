@@ -36,6 +36,7 @@ public class ProjectsResource {
 
     @EJB
     private ProjectFacadeLocal projectBean;
+    
     /**
      * Creates a new instance of ProjectsResource
      */
@@ -79,7 +80,6 @@ public class ProjectsResource {
         return projectBean.find(Integer.parseInt(id));
     }
     
-    
     /**
      * POST method for creating an instance of Project object
      * @param project JSON representation for the Project object
@@ -91,6 +91,23 @@ public class ProjectsResource {
     @Produces("application/json")
     public Response addProject(Project project) {
         projectBean.create(project);
+        
+        Response reponse=Response.status(200).build();
+        return reponse;
+    }
+    
+    /**
+     * POST method for creating an instance of Project object assigned by default to the creator user
+     * @param project JSON representation for the Project object
+     * @param userLogin login of user that is adding the new project
+     * @return an HTTP response with content of the created resource.
+     */
+    @POST
+    @Path("add/{login}")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response addProjectForUser(Project project, @PathParam("login") String userLogin) {
+        projectBean.createForUserLogin(project, userLogin);
         
         Response reponse=Response.status(200).build();
         return reponse;
@@ -119,12 +136,32 @@ public class ProjectsResource {
     @Path("{id}")
     @Produces("application/json")
     public Response removeProject(@PathParam("id") String id) {
-        if(projectBean.find(Integer.parseInt(id))!=null)
+        if(projectBean.find(Integer.parseInt(id))!=null) {
             projectBean.remove(projectBean.find(Integer.parseInt(id)));
-        
+            
+        }
         Response reponse=Response.status(200).build();
         return reponse;
     }
+    
+    /**
+     * Removes a single com.scrumble.server.entities.Project object
+     * @param id the id of the Project object to remove
+     * @return nothing.
+     */
+    @DELETE
+    @Path("{id}/{login}")
+    @Produces("application/json")
+    public Response removeProjectForUser(@PathParam("id") String idProject, @PathParam("login") String userLogin) {
+        if(projectBean.find(Integer.parseInt(idProject))!=null) {
+            projectBean.removeForUserLogin(Integer.parseInt(idProject), userLogin);
+            
+        }
+        Response reponse=Response.status(200).build();
+        return reponse;
+    }
+    
+
     
     
     /**

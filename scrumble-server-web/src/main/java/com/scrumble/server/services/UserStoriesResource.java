@@ -273,7 +273,6 @@ public class UserStoriesResource {
     @Path("{idUserstory}/iseditable")
     @Produces("text/plain")
     public String isUserstoryEditable(@PathParam("idUserstory") String idUserstory) {
-        
         if (userStoryBean.isUserstoryEditable(Integer.parseInt(idUserstory))) {
            return "true"; 
         }
