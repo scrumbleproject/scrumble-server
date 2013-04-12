@@ -117,19 +117,24 @@ public class TaskFacade extends AbstractFacade<Task> implements TaskFacadeLocal 
             query.setParameter("idSprint", idSprint);
             query.setParameter("idMember", member.getIdMember());
             List<Sprinttaskassignation> assignations = query.getResultList();
+            Task task = this.find(idTask);
             if (assignations != null && assignations.size()<1){ //if related assignation object not found
                 Sprinttaskassignation assignation = new Sprinttaskassignation(idTask, idSprint, member.getIdMember());
                 assignation.setMember1(member);
-                assignation.setTask(taskBean.find(idTask));
+                assignation.setTask(task);
                 assignation.setSprint(sprintBean.find(idSprint));
                 assignation.setDateStart(new Date());
+                if (task.getIdProcessStatus().getCodeStatus().equals("don")) { //if task status is done
+                    assignation.setDateEnd(new Date());
+                }
                 assignationBean.create(assignation);
                 member.getSprinttaskassignationCollection().add(assignation); //must be unique
             } else if (assignations.size()==1){ //if assignation already exists
                 Sprinttaskassignation assignation = assignations.get(0);
-                Task task = this.find(idTask);
                 if (task.getIdProcessStatus().getCodeStatus().equals("don")) { //if task status is done
                     assignation.setDateEnd(new Date());
+                } else {
+                    assignation.setDateEnd(null);
                 }
             }
 
