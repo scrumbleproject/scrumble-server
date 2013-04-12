@@ -107,4 +107,12 @@ public interface SprintFacadeLocal {
      */
     public float findProgressionOfSprint(Integer idSprint) throws Exception;
 
+    
+    /**
+     * Check whether userstories can be added to this sprint or not
+     * @param idSprint the id of the sprint to check
+     * @return a boolean.
+     */
+    public boolean isSprintEditable(Integer idSprint);
+    
 }

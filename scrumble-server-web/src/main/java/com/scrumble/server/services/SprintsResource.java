@@ -308,4 +308,22 @@ public class SprintsResource {
         return "{\"Progression\": "+number+" }";
     }
     
+    
+    /**
+     * Check whether userstories can be added to this sprint or not
+     * @param idSprint the id of the sprint to check
+     * @return a boolean.
+     */
+    @GET
+    @Path("{idSprint}/iseditable")
+    @Produces("text/plain")
+    public String isSprintEditable(@PathParam("idSprint") String idSprint) {
+        
+        if (sprintBean.isSprintEditable(Integer.parseInt(idSprint))) {
+           return "true"; 
+        }
+        return "false";
+    }
+    
+    
 }
