@@ -4,11 +4,14 @@
  */
 package com.scrumble.server.sessionbeans;
 
+import com.scrumble.server.entities.Sprint;
 import com.scrumble.server.entities.Sprinttaskassignation;
+import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -27,6 +30,11 @@ public class SprinttaskassignationFacade extends AbstractFacade<Sprinttaskassign
 
     public SprinttaskassignationFacade() {
         super(Sprinttaskassignation.class);
+    }
+    
+    public List<Sprinttaskassignation> findSprinttaskassignationByIdSprint(Integer idSprint) throws Exception {
+        TypedQuery<Sprinttaskassignation> query = getEntityManager().createNamedQuery("Sprinttaskassignation.findByIdSprint", Sprinttaskassignation.class);
+        return query.setParameter("idSprint", idSprint).getResultList();
     }
     
 }

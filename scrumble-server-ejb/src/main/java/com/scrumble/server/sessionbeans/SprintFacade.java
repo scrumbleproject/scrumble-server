@@ -7,6 +7,7 @@ package com.scrumble.server.sessionbeans;
 import com.scrumble.server.entities.Processstatus;
 import com.scrumble.server.entities.Project;
 import com.scrumble.server.entities.Sprint;
+import com.scrumble.server.entities.Sprinttaskassignation;
 import com.scrumble.server.entities.Task;
 import com.scrumble.server.entities.Userstory;
 import com.scrumble.server.entities.Userstorysprint;
@@ -42,6 +43,8 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
     private TaskFacadeLocal taskBean;
     @EJB
     private ProcessstatusFacadeLocal processStatusBean;
+    @EJB
+    private SprinttaskassignationFacadeLocal sprinttaskassignationBean;
 
     @Override
     protected EntityManager getEntityManager() {
@@ -160,23 +163,29 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
         Sprint sprint = em.find(Sprint.class, idSprint);
         int i = 0, j = 0, est = 0, nbdays = 1;
 
-        if (sprint.getDateStart() != null && sprint.getDateEnd() != null && !sprint.getDateStart().equals(null) && !sprint.getDateEnd().equals(null)) {
+        if (sprint.getDateStart() != null && sprint.getDateEnd() != null && !sprint.getDateStart().equals(null) && !sprint.getDateEnd().equals(null)) 
+        {
             Date dateStart = sprint.getDateStart();
             Date dateEnd = sprint.getDateEnd();
 
             long dat = dateStart.getTime();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String listDates = "{\"listDates\": [";
-            listDates += "\"" + dateFormat.format(new Date(dat)) + "\"";
+            listDates += "\"" + dateFormat.format(new Date(dat)) + "\", ";
 
+            
             //Get the list of days between the beginning and the end of the sprint
-            while (dat < dateEnd.getTime()) {
+            while (dat < dateEnd.getTime())
+            {
                 dat += 1000 * 60 * 60 * 24;
-                if (dat < dateEnd.getTime()) {
-                    listDates += ", \"" + dateFormat.format(new Date(dat)) + "\"";
+                if (dat < dateEnd.getTime())
+                {
+                    listDates += "\"" + dateFormat.format(new Date(dat)) + "\", ";
                     nbdays++;
                 }
             }
+            nbdays++;
+            listDates += "\"" + dateFormat.format(new Date(dateEnd.getTime())) + "\"";
             listDates += "]";
 
             //System.out.println(nbdays);
@@ -196,6 +205,7 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
             }
             //System.out.println("Somme estimation du sprint:"+est);
 
+            
             //Get data for the ideal chart
             i = 1;
             float l;
@@ -205,14 +215,80 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
 
                 if (i == 1) {
                     idealChart += "" + l + "";
-                } else {
+                } 
+                else {
                     idealChart += ", " + l + "";
                 }
                 i++;
             }
             idealChart += "]";
-            //System.out.println(listDates+idealChart);
-            return listDates + idealChart + ", \"actualChart\": []}";
+            
+            
+            //Get data for the actual chart
+            i = 0;
+            int tmp_var = est;
+            String actualChart = ", \"actualChart\": [";
+            dat = dateStart.getTime();
+            List<Sprinttaskassignation> list_sprinttaskassign = sprinttaskassignationBean.findSprinttaskassignationByIdSprint(idSprint);
+            
+            while (dat < dateEnd.getTime())
+            {
+                //System.out.println("Entre "+dat+"("+dateFormat.format(new Date(dat))+") et "+(dat+1000 * 60 * 60 * 24)+"("+dateFormat.format(new Date((dat+1000 * 60 * 60 * 24)))+") ?");
+
+                if(i<list_sprinttaskassign.size() && list_sprinttaskassign.get(i).getDateEnd() != null && (list_sprinttaskassign.get(i).getDateEnd().getTime()>=dat && list_sprinttaskassign.get(i).getDateEnd().getTime()<(dat+1000 * 60 * 60 * 24)))
+                {
+                    while(i<list_sprinttaskassign.size())
+                    {
+                        if(list_sprinttaskassign.get(i).getDateEnd().getTime()>(dat+1000 * 60 * 60 * 24))
+                        {
+                            break;
+                        }
+                        
+                        if(list_sprinttaskassign.get(i).getDateEnd().getTime()>=dat && list_sprinttaskassign.get(i).getDateEnd().getTime()<(dat+1000 * 60 * 60 * 24))
+                        {
+                            tmp_var -= list_sprinttaskassign.get(i).getTask().getEstimation();
+                            
+                            i++;
+                        }
+                    }
+                    actualChart += "" + tmp_var + ", ";
+                }
+                else
+                {
+                    actualChart += "" + tmp_var + ", ";
+                    System.out.println("  NON");
+                }
+                
+                dat += 1000 * 60 * 60 * 24;
+            }
+            
+            if(i<list_sprinttaskassign.size() && list_sprinttaskassign.get(i).getDateEnd() != null && (list_sprinttaskassign.get(i).getDateEnd().getTime()>=dat && list_sprinttaskassign.get(i).getDateEnd().getTime()<(dat+1000 * 60 * 60 * 24)))
+            {
+                while(i<list_sprinttaskassign.size())
+                {
+                    if(list_sprinttaskassign.get(i).getDateEnd().getTime()>(dat+1000 * 60 * 60 * 24))
+                    {
+                        break;
+                    }
+
+                    if(list_sprinttaskassign.get(i).getDateEnd().getTime()>=dat && list_sprinttaskassign.get(i).getDateEnd().getTime()<(dat+1000 * 60 * 60 * 24))
+                    {
+                        tmp_var -= list_sprinttaskassign.get(i).getTask().getEstimation();
+
+                        i++;
+                    }
+                }
+                actualChart += "" + tmp_var + "";
+            }
+            else
+            {
+                actualChart += "" + tmp_var + "";
+            }
+            
+            actualChart += "]}";
+            
+            //System.out.println(listDates+idealChart+actualChart);
+            return listDates + idealChart + actualChart;
         }
 
         return "{\"listDates\": [], \"idealChart\": [], \"actualChart\": []}";
