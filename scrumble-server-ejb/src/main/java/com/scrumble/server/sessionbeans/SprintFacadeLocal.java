@@ -115,4 +115,11 @@ public interface SprintFacadeLocal {
      */
     public boolean isSprintEditable(Integer idSprint);
     
+    /**
+     * Retrieves sprint velocity value
+     * @param idSprint the id of the sprint to check
+     * @return an Integer.
+     */
+    public Integer getVelocityOfSprint(Integer idSprint);
+    
 }

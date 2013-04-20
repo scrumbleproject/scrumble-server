@@ -296,4 +296,10 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
         
         return true;
     }
+    
+    
+    public Integer getVelocityOfSprint(Integer idSprint){
+        Sprint sprint = this.find(idSprint);
+        return sprint.getVelocity();
+    }
 }

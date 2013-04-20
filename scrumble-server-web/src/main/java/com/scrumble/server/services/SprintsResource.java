@@ -326,4 +326,17 @@ public class SprintsResource {
     }
     
     
+    /**
+     * Retrieves sprint velocity value
+     * @param idSprint the id of the sprint
+     * @return an Integer.
+     */
+    @GET
+    @Path("{idSprint}/velocity")
+    @Produces("text/plain")
+    public String getVelocityOfSprint(@PathParam("idSprint") String idSprint) {
+        Integer velocity = sprintBean.getVelocityOfSprint(Integer.parseInt(idSprint));
+        return String.valueOf(velocity);
+    }
+    
 }
