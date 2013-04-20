@@ -80,6 +80,19 @@ public class MembersResource {
     
     
     /**
+     * Retrieves the id of the member
+     * @param login the login of the Member1 object
+     * @return an Id of the member
+     */
+    @GET
+    @Path("login/{login}")
+    @Produces("application/json")
+    public String getIDMemberFromLogin(@PathParam("login") String login) {
+        return memberBean.getIDMemberFromLogin(login);
+    }
+    
+    
+    /**
      * POST method for creating an instance of Member1 object
      * @param member JSON representation for the Member1 object
      * @param idRole the id of the Role object to add

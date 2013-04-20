@@ -72,4 +72,11 @@ public interface Member1FacadeLocal {
      */
     public String getDisplayNameForLogin(String login);
     
+    /**
+     * Retrieve IdMember for a specified user login
+     * @param login the login of the user
+     * @return the idmember as string.
+     */
+    public String getIDMemberFromLogin(String login);
+    
 }

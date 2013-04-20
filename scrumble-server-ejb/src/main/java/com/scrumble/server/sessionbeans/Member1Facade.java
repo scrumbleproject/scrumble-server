@@ -106,4 +106,12 @@ public class Member1Facade extends AbstractFacade<Member1> implements Member1Fac
         return "Not Found";
     }
     
+    public String getIDMemberFromLogin(String login){
+        Member1 member = this.findByLogin(login);
+        if (member != null) {
+                return member.getIdMember().toString();
+        }
+        return "Not Found";
+    }
+    
 }
