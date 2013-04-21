@@ -77,11 +77,17 @@ public interface UserstoryFacadeLocal {
     
     
     /**
-     * CHeck whether the userstory is editable or not in relation with 
+     * Check whether the userstory is editable or not in relation with 
      * its assignation to a sprint and the status of the sprint
      * @param idUserstory the id of the userstory to check
      * @return a boolean.
      */
     public boolean isUserstoryEditable(Integer idUserstory);
+    
+    /**
+    * update estimation of an UserStory
+    * @param idUserstory the id of the userstory
+    */
+    public void updateEstimation(Integer idUserstory) throws Exception;
     
 }

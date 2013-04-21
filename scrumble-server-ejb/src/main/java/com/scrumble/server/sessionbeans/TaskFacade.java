@@ -35,7 +35,6 @@ public class TaskFacade extends AbstractFacade<Task> implements TaskFacadeLocal 
     
     @EJB
     private SprinttaskassignationFacadeLocal assignationBean;
-    
     @EJB
     private Member1FacadeLocal memberBean;
     @EJB
@@ -53,7 +52,7 @@ public class TaskFacade extends AbstractFacade<Task> implements TaskFacadeLocal 
     }
   
     @Override
-     public List<Task> quickSearch(String pattern){
+    public List<Task> quickSearch(String pattern){
         List<Task> results;
         
         //run named queries
@@ -81,15 +80,12 @@ public class TaskFacade extends AbstractFacade<Task> implements TaskFacadeLocal 
         
         Task task = this.em.find(Task.class, idTask);
         if (!codeStatus.equals(task.getIdProcessStatus().getCodeStatus())){
-        
             TypedQuery<Processstatus> query = getEntityManager().createNamedQuery("Processstatus.findByCodeStatus", Processstatus.class);
             List<Processstatus> processStatus = query.setParameter("codeStatus", codeStatus).getResultList();
             if (processStatus.size()>0){ //if related processStatus object found
                 task.setIdProcessStatus(processStatus.get(0)); //must be unique
             }
-            
         }
-        
     }
     
     public Task useDefaultProcessStatusIfNeededForTask(Task task){
@@ -111,7 +107,6 @@ public class TaskFacade extends AbstractFacade<Task> implements TaskFacadeLocal 
         Member1 member = memberBean.findByLogin(login);
 
         if (member != null) {
-
             TypedQuery<Sprinttaskassignation> query = getEntityManager().createNamedQuery("Sprinttaskassignation.findByAssignation", Sprinttaskassignation.class);
             query.setParameter("idTask", idTask);
             query.setParameter("idSprint", idSprint);
@@ -137,7 +132,6 @@ public class TaskFacade extends AbstractFacade<Task> implements TaskFacadeLocal 
                     assignation.setDateEnd(null);
                 }
             }
-
         }
     }
     
@@ -145,8 +139,7 @@ public class TaskFacade extends AbstractFacade<Task> implements TaskFacadeLocal 
         
         Member1 member = memberBean.findByLogin(login);
 
-        if (member != null) {
-
+        if (member != null){
             TypedQuery<Sprinttaskassignation> query = getEntityManager().createNamedQuery("Sprinttaskassignation.findByAssignation", Sprinttaskassignation.class);
             query.setParameter("idTask", idTask);
             query.setParameter("idSprint", idSprint);
@@ -161,11 +154,8 @@ public class TaskFacade extends AbstractFacade<Task> implements TaskFacadeLocal 
                 else throw new Exception("Cannot found related assignation for member !");
             }
             else throw new Exception("No assignation found !");
-
         }
         else throw new Exception("No member found !");
-
-        
     }
     
     
@@ -178,14 +168,12 @@ public class TaskFacade extends AbstractFacade<Task> implements TaskFacadeLocal 
         if (assignations!=null){ //if related assignation object found
             List<Member1> assignedMembers = new ArrayList<Member1>();
             for (Sprinttaskassignation assign : assignations){
-                if (!assignedMembers.contains(assign.getMember1()) ) {
+                if (!assignedMembers.contains(assign.getMember1())) {
                     assignedMembers.add(assign.getMember1());
                 }
             }
             return assignedMembers;            
         }
-        
         return null;
     }
-    
 }

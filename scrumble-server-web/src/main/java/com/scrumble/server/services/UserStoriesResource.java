@@ -219,6 +219,15 @@ public class UserStoriesResource {
         task.setIdUserstory(userstory);
         taskBean.create(taskBean.useDefaultProcessStatusIfNeededForTask(task));
         userstory.getTaskCollection().add(task);
+        
+        try
+        {
+            this.userStoryBean.updateEstimation(task.getIdUserstory().getIdUserstory());
+        }
+        catch (Exception ex)
+        {
+            System.out.println(ex.getMessage());
+        }
     }
     
     
@@ -234,6 +243,15 @@ public class UserStoriesResource {
     public void updateTask(@PathParam("idUserstory") String idUserstory, Task task) {
         task.setIdUserstory(userStoryBean.find(Integer.parseInt(idUserstory)));
         taskBean.edit(taskBean.useDefaultProcessStatusIfNeededForTask(task));
+        
+        try
+        {
+            this.userStoryBean.updateEstimation(task.getIdUserstory().getIdUserstory());
+        }
+        catch (Exception ex)
+        {
+            System.out.println(ex.getMessage());
+        }
     }
     
     
@@ -247,7 +265,18 @@ public class UserStoriesResource {
     @Produces("application/json")
     public void removeTask(@PathParam("idUserstory") String idUserstory, @PathParam("idTask") String idTask) {
         if(taskBean.find(Integer.parseInt(idTask))!=null)
+        {
             taskBean.remove(taskBean.find(Integer.parseInt(idTask)));
+            
+            try
+            {
+                userStoryBean.updateEstimation(Integer.parseInt(idUserstory));
+            }
+            catch (Exception ex)
+            {
+                System.out.println(ex.getMessage());
+            }
+        }
     }
     
 
@@ -259,12 +288,13 @@ public class UserStoriesResource {
     @GET
     @Path("{idUserstory}/tasks/search/{pattern}")
     @Produces("application/json")
-    public List<Task> searchTasksQuick(@PathParam("idUserstory") String idUserstory, @PathParam("pattern") String pattern) {
+    public List<Task> searchTasksQuick(@PathParam("idUserstory") String idUserstory, @PathParam("pattern") String pattern)
+    {
         return taskBean.quickSearch(pattern);
     }
     
     /**
-     * CHeck whether the userstory is editable or not in relation with 
+     * Check whether the userstory is editable or not in relation with 
      * its assignation to a sprint and the status of the sprint
      * @param idUserstory the id of the userstory to check
      * @return a boolean.

@@ -8,7 +8,10 @@ package com.scrumble.server.services;
 import com.scrumble.server.entities.Member1;
 import com.scrumble.server.entities.Task;
 import com.scrumble.server.sessionbeans.TaskFacadeLocal;
+import com.scrumble.server.sessionbeans.UserstoryFacadeLocal;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.*;
@@ -24,12 +27,14 @@ import javax.ws.rs.core.UriInfo;
 @Stateless
 public class TasksResource {
     
-
     @Context
     private UriInfo context;
     
     @EJB
     private TaskFacadeLocal taskBean;
+    
+    @EJB
+    private UserstoryFacadeLocal userstoryBean;
     /**
      * Creates a new instance of TasksResource
      */
@@ -81,7 +86,8 @@ public class TasksResource {
     @Path("add")
     @Consumes("application/json")
     @Produces("application/json")
-    public void addTask(Task task) {
+    public void addTask(Task task)
+    {
         taskBean.create(taskBean.useDefaultProcessStatusIfNeededForTask(task));
     }
     
@@ -93,7 +99,8 @@ public class TasksResource {
     @PUT
     @Consumes("application/json")
     @Produces("application/json")
-    public void updateTask(Task task) {
+    public void updateTask(Task task)
+    {
         taskBean.edit(taskBean.useDefaultProcessStatusIfNeededForTask(task));
     }
     
@@ -107,7 +114,9 @@ public class TasksResource {
     @Produces("application/json")
     public void removeTask(@PathParam("id") String id) {
         if(taskBean.find(Integer.parseInt(id))!=null)
+        {
             taskBean.remove(taskBean.find(Integer.parseInt(id)));
+        }
     }
     
     /**
@@ -149,12 +158,14 @@ public class TasksResource {
     public void addAssignedMemberForTask(@PathParam("idSprint") String idSprint,
                                         @PathParam("idTask") String idTask,
                                         @PathParam("login") String login) {
-        try {
+        try
+        {
             taskBean.addAssignedMemberForTask(Integer.parseInt(idSprint), Integer.parseInt(idTask), login);
-        } catch (Exception ex) {
+        }
+        catch(Exception ex)
+        {
             System.out.println(ex.getMessage());
             //Logger.getLogger(TasksResource.class.getName()).log(Level.SEVERE, null, ex);
-            
         }
     }
     
@@ -171,12 +182,14 @@ public class TasksResource {
                                         @PathParam("idTask") String idTask,
                                         @PathParam("login") String login) {
         
-        try {
+        try
+        {
             taskBean.removeAssignedMemberForTask(Integer.parseInt(idSprint), Integer.parseInt(idTask), login);
-        } catch (Exception ex) {
+        } 
+        catch(Exception ex)
+        {
             System.out.println(ex.getMessage());
             //Logger.getLogger(TasksResource.class.getName()).log(Level.SEVERE, null, ex);
-            
         }
     }
     
@@ -187,13 +200,14 @@ public class TasksResource {
                                         @PathParam("idTask") String idTask) {
         
         List<Member1> assignedMembers = null;
-        try {
+        try
+        {
             assignedMembers = taskBean.getAssignedMemberForTask(Integer.parseInt(idSprint), Integer.parseInt(idTask));
         }
-        catch(Exception e){
+        catch(Exception e)
+        {
             throw new RESTException(e.getMessage());
         }
         return assignedMembers;
     }
-    
 }
