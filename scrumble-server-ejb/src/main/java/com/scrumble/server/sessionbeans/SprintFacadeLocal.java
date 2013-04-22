@@ -48,19 +48,22 @@ public interface SprintFacadeLocal {
      */
     public List<Sprint> findAllProjectSprints(Integer idProject) throws Exception;
     
+    
     /**
     * Add or update an sprint related to a project
     * @param sprint the sprint which will be added or updated
     * @param idProject the id of a specified Project object
     */
     public void add_updateSprintToProject(Sprint sprint, Integer idProject);
-
+    
+    
     /**
      * Get the list of all Userstory objects that are NOT linked with a  specified Sprint object
      * @param idSprint the id of a specified Sprint object
      * @return a list of userstories
      */
     public List<Userstory> findAllNotSprintUserstories(Integer idSprint) throws Exception;
+    
     
     /**
      * Save the list of Userstories, related to a sprint
@@ -69,12 +72,14 @@ public interface SprintFacadeLocal {
      */
     public void addListUserstoriesToSprint(List<Integer> array, Integer idSprint) throws Exception;
     
+    
     /**
      * Retrieves informations to display the sprint burndown chart
      * @param idSprint the id of the Sprint object
      * @return the list of informations needed to display a Sprint Burndown Chart
      */
     public String findSprintBurndownChartInformations(Integer idSprint) throws Exception;
+    
     
     /**
      * Retrieves process status of the specified sprint
@@ -115,11 +120,20 @@ public interface SprintFacadeLocal {
      */
     public boolean isSprintEditable(Integer idSprint);
     
+    
     /**
      * Retrieves sprint velocity value
      * @param idSprint the id of the sprint to check
      * @return an Integer.
      */
     public Integer getVelocityOfSprint(Integer idSprint);
+    
+    
+    /**
+     * Retrieves the running sprint of a project
+     * @param idProject the id of the Project object
+     * @return a JSON representation of the related Sprint object.
+     */
+    public Sprint getRunningSprint(Integer idProject);
     
 }

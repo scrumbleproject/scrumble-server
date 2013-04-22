@@ -70,7 +70,7 @@ public class SprintsResource {
     @GET
     @Path("{id}")
     @Produces("application/json")
-    public Sprint getProject(@PathParam("id") String id) {
+    public Sprint getSprint(@PathParam("id") String id) {
         return sprintBean.find(Integer.parseInt(id));
     }
     
@@ -88,7 +88,6 @@ public class SprintsResource {
         sprintBean.create(sprint);
         sprintBean.add_updateSprintToProject(sprint, Integer.parseInt(idProject));
 
-        
         Response reponse=Response.status(200).build();
         return reponse;
     }
@@ -339,4 +338,16 @@ public class SprintsResource {
         return String.valueOf(velocity);
     }
     
+    
+    /**
+     * Retrieves the running sprint of a project
+     * @param idProject the id of the Project object
+     * @return a JSON representation of the related Sprint object.
+     */
+    @GET
+    @Path("{idProject}/runningsprint")
+    @Produces("application/json")
+    public Sprint getRunningSprint(@PathParam("idProject") String idProject) {
+        return sprintBean.getRunningSprint(Integer.parseInt(idProject));
+    }
 }

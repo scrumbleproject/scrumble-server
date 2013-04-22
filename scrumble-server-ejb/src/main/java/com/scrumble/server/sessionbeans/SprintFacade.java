@@ -363,10 +363,12 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
         }
     }
 
-    public boolean isSprintEditable(Integer idSprint) {
+    public boolean isSprintEditable(Integer idSprint)
+    {
         //check if userstory is assigned to a sprint
         Sprint sprint = this.find(idSprint);
-        if (sprint.getIdProcessStatus().getCodeStatus().equals("inp")){
+        if(sprint.getIdProcessStatus().getCodeStatus().equals("inp"))
+        {
             return false;
         }
         
@@ -374,8 +376,20 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
     }
     
     
-    public Integer getVelocityOfSprint(Integer idSprint){
+    public Integer getVelocityOfSprint(Integer idSprint)
+    {
         Sprint sprint = this.find(idSprint);
         return sprint.getVelocity();
+    }
+    
+    
+    public Sprint getRunningSprint(Integer idProject)
+    {
+        TypedQuery<Sprint> query = getEntityManager().createNamedQuery("Sprint.findRunningSprint", Sprint.class);
+        List<Sprint> list = query.setParameter("idProject", em.find(Project.class, idProject)).getResultList();
+        if(list.size()>0)
+            return list.get(0);
+        else
+            return null;
     }
 }
