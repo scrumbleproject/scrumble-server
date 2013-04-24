@@ -42,7 +42,6 @@ public class SprinttaskassignationFacade extends AbstractFacade<Sprinttaskassign
     public List<Sprinttaskassignation> findRunningTaskByIdSprint(Integer idSprint) throws Exception {
         TypedQuery<Sprinttaskassignation> query = getEntityManager().createNamedQuery("Sprinttaskassignation.findRunningTaskByIdSprint", Sprinttaskassignation.class);
         List<Sprinttaskassignation> list = query.setParameter("idSprint", idSprint).getResultList();
-        System.out.println(list);
         int i=0;
         List<Sprinttaskassignation> tasklist = new ArrayList<Sprinttaskassignation>();
         
