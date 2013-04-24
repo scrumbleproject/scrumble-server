@@ -6,9 +6,12 @@ package com.scrumble.server.services;
 
 
 import com.scrumble.server.entities.Member1;
+import com.scrumble.server.entities.Sprinttaskassignation;
 import com.scrumble.server.entities.Task;
+import com.scrumble.server.sessionbeans.SprinttaskassignationFacade;
 import com.scrumble.server.sessionbeans.TaskFacadeLocal;
 import com.scrumble.server.sessionbeans.UserstoryFacadeLocal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +38,9 @@ public class TasksResource {
     
     @EJB
     private UserstoryFacadeLocal userstoryBean;
+    
+    @EJB
+    private SprinttaskassignationFacade sprinttaskassignationBean;
     /**
      * Creates a new instance of TasksResource
      */
@@ -209,5 +215,31 @@ public class TasksResource {
             throw new RESTException(e.getMessage());
         }
         return assignedMembers;
+    }
+    
+    
+    /**
+     * Retrieves the running tasks of a sprint
+     * @param idSprint the id of the Sprint object
+     * @return a list of Tasks
+     */
+    @GET
+    @Path("{idSprint}/runningtasks")
+    @Produces("application/json")
+    public List<Sprinttaskassignation> getRunningTasks(@PathParam("idSprint") String idSprint) {
+        try {
+            /*List<Sprinttaskassignation> tasklist = new ArrayList<Sprinttaskassignation>();
+            try {
+                tasklist=sprinttaskassignationBean.findRunningTaskByIdSprint(Integer.parseInt(idSprint));
+                System.out.println(tasklist);
+                
+            } catch (Exception ex) {
+                Logger.getLogger(TasksResource.class.getName()).log(Level.SEVERE, null, ex);
+            }*/
+            return sprinttaskassignationBean.findRunningTaskByIdSprint(Integer.parseInt(idSprint));
+        } catch (Exception ex) {
+            Logger.getLogger(TasksResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

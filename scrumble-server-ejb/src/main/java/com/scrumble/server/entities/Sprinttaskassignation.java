@@ -28,7 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Sprinttaskassignation.findAll", query = "SELECT s FROM Sprinttaskassignation s"),
     @NamedQuery(name = "Sprinttaskassignation.findByIdTask", query = "SELECT s FROM Sprinttaskassignation s WHERE s.sprinttaskassignationPK.idTask = :idTask"),
-    @NamedQuery(name = "Sprinttaskassignation.findByIdSprint", query = "SELECT s FROM Sprinttaskassignation s WHERE s.sprinttaskassignationPK.idSprint = :idSprint AND s.dateEnd IS NOT NULL ORDER BY s.dateEnd ASC"),
+    @NamedQuery(name = "Sprinttaskassignation.findFinishedTaskByIdSprint", query = "SELECT s FROM Sprinttaskassignation s WHERE s.sprinttaskassignationPK.idSprint = :idSprint AND s.dateEnd IS NOT NULL ORDER BY s.dateEnd ASC"),
+    @NamedQuery(name = "Sprinttaskassignation.findRunningTaskByIdSprint", query = "SELECT s FROM Sprinttaskassignation s WHERE s.sprinttaskassignationPK.idSprint = :idSprint ORDER BY s.dateStart DESC"),
     @NamedQuery(name = "Sprinttaskassignation.findByIdMember", query = "SELECT s FROM Sprinttaskassignation s WHERE s.sprinttaskassignationPK.idMember = :idMember"),
     @NamedQuery(name = "Sprinttaskassignation.findByIdSprintAndIdTask", query = "SELECT s FROM Sprinttaskassignation s WHERE s.sprinttaskassignationPK.idSprint = :idSprint and s.sprinttaskassignationPK.idTask = :idTask"),
     @NamedQuery(name = "Sprinttaskassignation.findByAssignation", query = "SELECT s FROM Sprinttaskassignation s WHERE s.sprinttaskassignationPK.idTask = :idTask and s.sprinttaskassignationPK.idSprint = :idSprint and s.sprinttaskassignationPK.idMember = :idMember")})

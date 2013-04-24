@@ -6,6 +6,7 @@ package com.scrumble.server.sessionbeans;
 
 import com.scrumble.server.entities.Sprint;
 import com.scrumble.server.entities.Sprinttaskassignation;
+import com.scrumble.server.entities.Task;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -37,5 +38,11 @@ public interface SprinttaskassignationFacadeLocal {
      */
     public List<Sprinttaskassignation> findSprinttaskassignationByIdSprint(Integer idSprint) throws Exception;
 
-    
+    /**
+     * Get the list of all Task objects that are linked with a specified Sprint object
+     * @param idSprint the id of a specified Sprint object
+     * @return a list of Task
+     */
+    public List<Sprinttaskassignation> findRunningTaskByIdSprint(Integer idSprint) throws Exception;
+
 }
