@@ -36,6 +36,7 @@ public class MembersResource {
     @EJB
     private Member1FacadeLocal memberBean;
 
+    
     /**
      * Creates a new instance of MembersResource
      */
@@ -54,6 +55,7 @@ public class MembersResource {
         return memberBean.findAll();
     }
     
+    
     /**
      * Retrieves representation of a single com.scrumble.server.entities.Member1 object
      * @param id the id of the Member1 object to retrieve
@@ -65,6 +67,7 @@ public class MembersResource {
     public List<Member1> searchMembersQuick(@PathParam("pattern") String pattern) {
         return memberBean.quickSearch(pattern);
     }
+    
     
     /**
      * Retrieves representation of a single com.scrumble.server.entities.Member1 object
@@ -106,6 +109,7 @@ public class MembersResource {
         memberBean.addRoleToMember(member, Integer.parseInt(idRole));
     }
     
+    
     /**
      * PUT method for updating an instance of Member1 object
      * @param member JSON representation for the Member1 object
@@ -146,5 +150,4 @@ public class MembersResource {
     public String displayNameForLogin(@PathParam("login") String login) {
         return memberBean.getDisplayNameForLogin(login);
     }
-    
 }

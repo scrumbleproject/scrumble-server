@@ -45,11 +45,14 @@ public class SprintsResource {
     @EJB
     private SprinttaskassignationFacade sprinttaskassignationBean;
 
+    
     /**
      * Creates a new instance of SprintsResource
      */
-    public SprintsResource() {
+    public SprintsResource()
+    {
     }
+    
     
     /**
      * Retrieves representation of list of com.scrumble.server.entities.Sprint object
@@ -58,9 +61,11 @@ public class SprintsResource {
     @GET
     @Path("all")
     @Produces("application/json")
-    public List<Sprint> findAll() {
+    public List<Sprint> findAll()
+    {
         return sprintBean.findAll();
     }
+    
     
     /**
      * Retrieves representation of a single com.scrumble.server.entities.Sprint object
@@ -70,9 +75,11 @@ public class SprintsResource {
     @GET
     @Path("{id}")
     @Produces("application/json")
-    public Sprint getSprint(@PathParam("id") String id) {
+    public Sprint getSprint(@PathParam("id") String id)
+    {
         return sprintBean.find(Integer.parseInt(id));
     }
+    
     
     /**
      * POST method for creating an instance of Sprint object
@@ -84,13 +91,14 @@ public class SprintsResource {
     @Path("add/{idProject}")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response addSprint(Sprint sprint,@PathParam("idProject") String idProject) {
+    public Response addSprint(Sprint sprint,@PathParam("idProject") String idProject)
+    {
         sprintBean.create(sprint);
         sprintBean.add_updateSprintToProject(sprint, Integer.parseInt(idProject));
-
         Response reponse=Response.status(200).build();
         return reponse;
     }
+    
     
     /**
      * PUT method for updating an instance of Sprint object
@@ -102,9 +110,11 @@ public class SprintsResource {
     @Path("{idProject}")
     @Consumes("application/json")
     @Produces("application/json")
-    public void updateSprint(Sprint sprint,@PathParam("idProject") String idProject) {
+    public void updateSprint(Sprint sprint,@PathParam("idProject") String idProject)
+    {
         sprintBean.add_updateSprintToProject(sprint, Integer.parseInt(idProject));
     }
+    
     
     /**
      * Removes a single com.scrumble.server.entities.Sprint object
@@ -114,7 +124,8 @@ public class SprintsResource {
     @DELETE
     @Path("{id}")
     @Produces("application/json")
-    public Response removeSprint(@PathParam("id") String id) {
+    public Response removeSprint(@PathParam("id") String id)
+    {
         if(sprintBean.find(Integer.parseInt(id))!=null)
             sprintBean.remove(sprintBean.find(Integer.parseInt(id)));
         
@@ -131,12 +142,15 @@ public class SprintsResource {
     @GET
     @Path("{idSprint}/userstories")
     @Produces("application/json")
-    public List<Userstory> findAllSprintUserstories(@PathParam("idSprint") String idSprint) {
+    public List<Userstory> findAllSprintUserstories(@PathParam("idSprint") String idSprint)
+    {
         List<Userstory> results = null;
-        try {
+        try
+        {
             results = sprintBean.findAllSprintUserstories(Integer.parseInt(idSprint));
         }
-        catch (Exception e){
+        catch(Exception e)
+        {
             throw new RESTException(e.getMessage());
         }
         return results;
@@ -151,16 +165,20 @@ public class SprintsResource {
     @GET
     @Path("{idProject}/projects")
     @Produces("application/json")
-    public List<Sprint> findAllProjectUserstories(@PathParam("idProject") String idProject) {
+    public List<Sprint> findAllProjectUserstories(@PathParam("idProject") String idProject)
+    {
         List<Sprint> results = null;
-        try {
+        try
+        {
             results = sprintBean.findAllProjectSprints(Integer.parseInt(idProject));
         }
-        catch (Exception e){
+        catch(Exception e)
+        {
             System.out.println(e.getStackTrace());
         }
         return results;
     }
+    
     
     /**
      * Retrieves the list of a com.scrumble.server.entities.Userstorysprints linked with the Sprint object
@@ -170,17 +188,21 @@ public class SprintsResource {
     @GET
     @Path("{idSprint}/userstories/no")
     @Produces("application/json")
-    public List<Userstory> findAllNotSprintUserstories(@PathParam("idSprint") String idSprint) {
+    public List<Userstory> findAllNotSprintUserstories(@PathParam("idSprint") String idSprint)
+    {
         List<Userstory> results = null;
 
-        try {
+        try
+        {
             results = sprintBean.findAllNotSprintUserstories(Integer.parseInt(idSprint));
         }
-        catch (Exception e){
+        catch(Exception e)
+        {
             System.out.println(e.getStackTrace());
         }
         return results;
     }
+    
     
     /**
      * POST method for saving the list of userstories related to a sprint
@@ -190,26 +212,26 @@ public class SprintsResource {
     @POST
     @Path("save/{idSprint}")
     @Consumes("application/json")
-    public void saveListUserstoriesToSprint(@PathParam("idSprint") String idSprint, String userstories) {
-        
-        try {
+    public void saveListUserstoriesToSprint(@PathParam("idSprint") String idSprint, String userstories)
+    {
+        try
+        {
             List<Integer> listUserstories = new ArrayList<Integer>();
             System.out.println(userstories);
             if(!userstories.equals("empty"))
             {
                 String[] listToConvert = userstories.split(",");
-                for (String s : listToConvert) {
+                for(String s : listToConvert)
+                {
                     listUserstories.add(Integer.valueOf(s));
                 }
             }
-            System.out.println(listUserstories);
-            
             sprintBean.addListUserstoriesToSprint(listUserstories, Integer.parseInt(idSprint));
         }
-        catch (Exception e){
+        catch(Exception e)
+        {
             throw new RESTException(e.getMessage());
         }
-        
     }
     
     
@@ -221,18 +243,20 @@ public class SprintsResource {
     @GET
     @Path("{idSprint}/burndown")
     @Produces("application/json")
-    public String findSprintBurndownChartInformations(@PathParam("idSprint") String idSprint) {
+    public String findSprintBurndownChartInformations(@PathParam("idSprint") String idSprint)
+    {
         String results = "";
         try
         {
             results = sprintBean.findSprintBurndownChartInformations(Integer.parseInt(idSprint));
         }
-        catch (Exception e)
+        catch(Exception e)
         {
             throw new RESTException(e.getMessage());
         }
         return results;
     }
+    
     
     /**
      * Retrieves process status of a specified sprint
@@ -242,18 +266,20 @@ public class SprintsResource {
     @GET
     @Path("{idSprint}/status")
     @Produces("application/json")
-    public Processstatus getProcessStatusOfSprint(@PathParam("idSprint") String idSprint) {
+    public Processstatus getProcessStatusOfSprint(@PathParam("idSprint") String idSprint)
+    {
         Processstatus status = null;
         try
         {
             status = sprintBean.getProcessStatusOfSprint(Integer.parseInt(idSprint));
         }
-        catch (Exception e)
+        catch(Exception e)
         {
             throw new RESTException(e.getMessage());
         }
         return status;
     }
+    
     
     /**
      * POST method for updating a processStatus of Sprint object
@@ -265,9 +291,11 @@ public class SprintsResource {
     @Path("{id}/{status}")
     @Consumes("application/json")
     @Produces("application/json")
-    public void updateProcessStatusOfSprint(@PathParam("id") String id, @PathParam("status") String status) {
+    public void updateProcessStatusOfSprint(@PathParam("id") String id, @PathParam("status") String status)
+    {
         sprintBean.updateProcessStatusOfSprint(Integer.parseInt(id), status);
     }
+    
     
     /**
      * Retrieves the number of userstories assigned to a sprint
@@ -277,16 +305,20 @@ public class SprintsResource {
     @GET
     @Path("{idSprint}/userstorynumber")
     @Produces("application/json")
-    public String findUserstoryNumberOfSprint(@PathParam("idSprint") String idSprint) {
+    public String findUserstoryNumberOfSprint(@PathParam("idSprint") String idSprint)
+    {
         int number=0;
-        try {
+        try
+        {
             number=sprintBean.findUserstoryNumberOfSprint(Integer.parseInt(idSprint));
         }
-        catch (Exception e){
+        catch(Exception e)
+        {
             System.out.println(e.getStackTrace());
         }
         return "{\"UserstoryNumber\": "+number+" }";
     }
+    
     
     /**
      * Retrieves the progression of a sprint
@@ -296,12 +328,15 @@ public class SprintsResource {
     @GET
     @Path("{idSprint}/progression")
     @Produces("application/json")
-    public String findProgressionOfSprint(@PathParam("idSprint") String idSprint) {
+    public String findProgressionOfSprint(@PathParam("idSprint") String idSprint)
+    {
         float number=0;
-        try {
+        try
+        {
             number=sprintBean.findProgressionOfSprint(Integer.parseInt(idSprint));
         }
-        catch (Exception e){
+        catch(Exception e)
+        {
             System.out.println(e.getStackTrace());
         }
         return "{\"Progression\": "+number+" }";
@@ -316,9 +351,10 @@ public class SprintsResource {
     @GET
     @Path("{idSprint}/iseditable")
     @Produces("text/plain")
-    public String isSprintEditable(@PathParam("idSprint") String idSprint) {
-        
-        if (sprintBean.isSprintEditable(Integer.parseInt(idSprint))) {
+    public String isSprintEditable(@PathParam("idSprint") String idSprint)
+    {
+        if(sprintBean.isSprintEditable(Integer.parseInt(idSprint)))
+        {
            return "true"; 
         }
         return "false";
@@ -333,7 +369,8 @@ public class SprintsResource {
     @GET
     @Path("{idSprint}/velocity")
     @Produces("text/plain")
-    public String getVelocityOfSprint(@PathParam("idSprint") String idSprint) {
+    public String getVelocityOfSprint(@PathParam("idSprint") String idSprint)
+    {
         Integer velocity = sprintBean.getVelocityOfSprint(Integer.parseInt(idSprint));
         return String.valueOf(velocity);
     }
@@ -347,7 +384,8 @@ public class SprintsResource {
     @GET
     @Path("{idProject}/runningsprint")
     @Produces("application/json")
-    public Sprint getRunningSprint(@PathParam("idProject") String idProject) {
+    public Sprint getRunningSprint(@PathParam("idProject") String idProject)
+    {
         return sprintBean.getRunningSprint(Integer.parseInt(idProject));
     }
 }

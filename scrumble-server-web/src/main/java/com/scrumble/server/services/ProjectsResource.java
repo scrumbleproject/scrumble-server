@@ -29,20 +29,23 @@ import javax.ws.rs.core.Response;
  */
 @Path("projects")
 @Stateless
-public class ProjectsResource {
-
+public class ProjectsResource
+{
     @Context
     private UriInfo context;
 
     @EJB
     private ProjectFacadeLocal projectBean;
     
+    
     /**
      * Creates a new instance of ProjectsResource
      */
-    public ProjectsResource() {
+    public ProjectsResource()
+    {
     }
 
+    
     /**
      * Retrieves representation of list of com.scrumble.server.entities.Project object
      * @return a JSON representation of the list of all userstories.
@@ -50,7 +53,8 @@ public class ProjectsResource {
     @GET
     @Path("all")
     @Produces("application/json")
-    public List<Project> findAll() {
+    public List<Project> findAll()
+    {
         return projectBean.findAll();
     }
     
@@ -63,7 +67,8 @@ public class ProjectsResource {
     @GET
     @Path("search/{pattern}")
     @Produces("application/json")
-    public List<Project> searchProjectsQuick(@PathParam("pattern") String pattern) {
+    public List<Project> searchProjectsQuick(@PathParam("pattern") String pattern)
+    {
         return projectBean.quickSearch(pattern);
     }
     
@@ -76,9 +81,11 @@ public class ProjectsResource {
     @GET
     @Path("{id}")
     @Produces("application/json")
-    public Project getProject(@PathParam("id") String id) {
+    public Project getProject(@PathParam("id") String id)
+    {
         return projectBean.find(Integer.parseInt(id));
     }
+    
     
     /**
      * POST method for creating an instance of Project object
@@ -89,12 +96,13 @@ public class ProjectsResource {
     @Path("add")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response addProject(Project project) {
+    public Response addProject(Project project)
+    {
         projectBean.create(project);
-        
         Response reponse=Response.status(200).build();
         return reponse;
     }
+    
     
     /**
      * POST method for creating an instance of Project object assigned by default to the creator user
@@ -106,9 +114,9 @@ public class ProjectsResource {
     @Path("add/{login}")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response addProjectForUser(Project project, @PathParam("login") String userLogin) {
+    public Response addProjectForUser(Project project, @PathParam("login") String userLogin)
+    {
         projectBean.createForUserLogin(project, userLogin);
-        
         Response reponse=Response.status(200).build();
         return reponse;
     }
@@ -122,7 +130,8 @@ public class ProjectsResource {
     @PUT
     @Consumes("application/json")
     @Produces("application/json")
-    public void updateProject(Project project) {
+    public void updateProject(Project project)
+    {
         projectBean.edit(project);
     }
     
@@ -135,14 +144,16 @@ public class ProjectsResource {
     @DELETE
     @Path("{id}")
     @Produces("application/json")
-    public Response removeProject(@PathParam("id") String id) {
-        if(projectBean.find(Integer.parseInt(id))!=null) {
+    public Response removeProject(@PathParam("id") String id)
+    {
+        if(projectBean.find(Integer.parseInt(id))!=null)
+        {
             projectBean.remove(projectBean.find(Integer.parseInt(id)));
-            
         }
         Response reponse=Response.status(200).build();
         return reponse;
     }
+    
     
     /**
      * Removes a single com.scrumble.server.entities.Project object
@@ -152,16 +163,30 @@ public class ProjectsResource {
     @DELETE
     @Path("{id}/{login}")
     @Produces("application/json")
-    public Response removeProjectForUser(@PathParam("id") String idProject, @PathParam("login") String userLogin) {
-        if(projectBean.find(Integer.parseInt(idProject))!=null) {
+    public Response removeProjectForUser(@PathParam("id") String idProject, @PathParam("login") String userLogin)
+    {
+        if(projectBean.find(Integer.parseInt(idProject))!=null)
+        {
             projectBean.removeForUserLogin(Integer.parseInt(idProject), userLogin);
-            
         }
         Response reponse=Response.status(200).build();
         return reponse;
     }
     
 
+    /**
+     * Retrieves the list of project allowed to a member
+     * @param id the id of the member to retrieve
+     * @return a JSON representation of the project list
+     */
+    @GET
+    @Path("{login}/project")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public List<Project> findProjectByUser(@PathParam("login") String login)
+    {
+        return projectBean.findProjectByUser(login);
+    }
     
     
     /**
@@ -172,9 +197,11 @@ public class ProjectsResource {
     @GET
     @Path("{idProject}/members")
     @Produces("application/json")
-    public List<Member1> findAllProjectMembers(@PathParam("idProject") String idProject) {
+    public List<Member1> findAllProjectMembers(@PathParam("idProject") String idProject)
+    {
         return projectBean.findAllProjectMembers(Integer.parseInt(idProject));
     }
+    
     
     /**
      * Retrieves the list of a com.scrumble.server.entities.Members linked with the Project object
@@ -184,9 +211,11 @@ public class ProjectsResource {
     @GET
     @Path("{idProject}/members/no")
     @Produces("application/json")
-    public List<Member1> findAllNotProjectMembers(@PathParam("idProject") String idProject) {
+    public List<Member1> findAllNotProjectMembers(@PathParam("idProject") String idProject)
+    {
         return projectBean.findAllNotProjectMembers(Integer.parseInt(idProject));
     }
+    
     
     /**
      * Retrieves the list of a com.scrumble.server.entities.Members linked with the Project object
@@ -198,9 +227,11 @@ public class ProjectsResource {
     @Consumes("application/json")
     @Produces("application/json")
     public void addMemberToProject(@PathParam("idProject") String idProject, 
-                                            @PathParam("idMember") String idMember) {
+                                            @PathParam("idMember") String idMember)
+    {
         projectBean.addMemberToProject(Integer.parseInt(idProject), Integer.parseInt(idMember));
     }
+    
     
     /**
      * Retrieves the list of a com.scrumble.server.entities.Members linked with the Project object
@@ -212,21 +243,8 @@ public class ProjectsResource {
     @Consumes("application/json")
     @Produces("application/json")
     public void removeMemberFromProject(@PathParam("idProject") String idProject, 
-                                            @PathParam("idMember") String idMember) {
+                                            @PathParam("idMember") String idMember)
+    {
         projectBean.removeMemberFromProject(Integer.parseInt(idProject), Integer.parseInt(idMember));
     }
-    
-    /**
-     * Retrieves the list of project allowed to a member
-     * @param id the id of the member to retrieve
-     * @return a JSON representation of the project list
-     */
-    @GET
-    @Path("{login}/project")
-    @Consumes("application/json")
-    @Produces("application/json")
-    public List<Project> findProjectByUser (@PathParam("login") String login) {
-        return projectBean.findProjectByUser(login);
-    }
-    
 }
