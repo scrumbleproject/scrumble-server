@@ -135,5 +135,12 @@ public interface SprintFacadeLocal {
      * @return a JSON representation of the related Sprint object.
      */
     public Sprint getRunningSprint(Integer idProject);
+
+    /**
+     * Retrieves remaining sprint velocity value
+     * @param idSprint the id of the sprint
+     * @return an Integer.
+     */
+    public Integer getRemainingVelocityOfSprint(Integer idSprint);
     
 }

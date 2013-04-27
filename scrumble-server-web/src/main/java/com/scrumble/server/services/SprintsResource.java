@@ -375,6 +375,19 @@ public class SprintsResource {
         return String.valueOf(velocity);
     }
     
+    /**
+     * Retrieves remaining sprint velocity value
+     * @param idSprint the id of the sprint
+     * @return an Integer.
+     */
+    @GET
+    @Path("{idSprint}/velocity/remaining")
+    @Produces("text/plain")
+    public String getRemainingVelocityOfSprint(@PathParam("idSprint") String idSprint)
+    {
+        Integer velocity = sprintBean.getRemainingVelocityOfSprint(Integer.parseInt(idSprint));
+        return String.valueOf(velocity);
+    }    
     
     /**
      * Retrieves the running sprint of a project
