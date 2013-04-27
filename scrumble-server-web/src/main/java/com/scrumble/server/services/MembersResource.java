@@ -28,7 +28,8 @@ import javax.ws.rs.core.Response;
  */
 @Path("members")
 @Stateless
-public class MembersResource {
+public class MembersResource
+{
 
     @Context
     private UriInfo context;
@@ -40,7 +41,8 @@ public class MembersResource {
     /**
      * Creates a new instance of MembersResource
      */
-    public MembersResource() {
+    public MembersResource()
+    {
     }
     
     
@@ -51,7 +53,8 @@ public class MembersResource {
     @GET
     @Path("all")
     @Produces("application/json")
-    public List<Member1> findAll() {
+    public List<Member1> findAll()
+    {
         return memberBean.findAll();
     }
     
@@ -64,7 +67,8 @@ public class MembersResource {
     @GET
     @Path("search/{pattern}")
     @Produces("application/json")
-    public List<Member1> searchMembersQuick(@PathParam("pattern") String pattern) {
+    public List<Member1> searchMembersQuick(@PathParam("pattern") String pattern)
+    {
         return memberBean.quickSearch(pattern);
     }
     
@@ -77,7 +81,8 @@ public class MembersResource {
     @GET
     @Path("{id}")
     @Produces("application/json")
-    public Member1 getMember(@PathParam("id") String id) {
+    public Member1 getMember(@PathParam("id") String id)
+    {
         return memberBean.find(Integer.parseInt(id));
     }
     
@@ -90,7 +95,8 @@ public class MembersResource {
     @GET
     @Path("login/{login}")
     @Produces("application/json")
-    public String getIDMemberFromLogin(@PathParam("login") String login) {
+    public String getIDMemberFromLogin(@PathParam("login") String login)
+    {
         return memberBean.getIDMemberFromLogin(login);
     }
     
@@ -105,7 +111,8 @@ public class MembersResource {
     @Path("add/{idRole}")
     @Consumes("application/json")
     @Produces("application/json")
-    public void addMember(Member1 member,@PathParam("idRole") String idRole) {
+    public void addMember(Member1 member,@PathParam("idRole") String idRole)
+    {
         memberBean.addRoleToMember(member, Integer.parseInt(idRole));
     }
     
@@ -120,7 +127,8 @@ public class MembersResource {
     @Path("{idRole}")
     @Consumes("application/json")
     @Produces("application/json")
-    public void updateMember(Member1 member,@PathParam("idRole") String idRole) {
+    public void updateMember(Member1 member,@PathParam("idRole") String idRole)
+    {
         memberBean.updateRoleToMember(member, Integer.parseInt(idRole));
     }
     
@@ -133,7 +141,8 @@ public class MembersResource {
     @DELETE
     @Path("{id}")
     @Produces("application/json")
-    public void removeMember(@PathParam("id") String id) {
+    public void removeMember(@PathParam("id") String id)
+    {
         if(memberBean.find(Integer.parseInt(id))!=null)
             memberBean.remove(memberBean.find(Integer.parseInt(id)));
     }
@@ -147,7 +156,23 @@ public class MembersResource {
     @GET
     @Path("{login}/display-name")
     @Produces("text/plain")
-    public String displayNameForLogin(@PathParam("login") String login) {
+    public String displayNameForLogin(@PathParam("login") String login)
+    {
         return memberBean.getDisplayNameForLogin(login);
+    }
+    
+    
+    /**
+     * Check whether the userstory is editable or not in relation with 
+     * its assignation to a sprint and the status of the sprint
+     * @param idUserstory the id of the userstory to check
+     * @return a boolean.
+     */
+    @GET
+    @Path("{idMember}/{idProject}/isdisplayable")
+    @Produces("text/plain")
+    public String isDisplayable(@PathParam("idMember") String idMember, @PathParam("idProject") String idProject)
+    {
+        return memberBean.isDisplayable(Integer.parseInt(idMember), Integer.parseInt(idProject));
     }
 }

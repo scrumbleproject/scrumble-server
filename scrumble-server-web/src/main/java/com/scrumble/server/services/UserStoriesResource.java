@@ -28,8 +28,8 @@ import javax.ws.rs.core.Response;
  */
 @Path("userstories")
 @Stateless
-public class UserStoriesResource {
-
+public class UserStoriesResource
+{
     @Context
     private UriInfo context;
     
@@ -42,7 +42,8 @@ public class UserStoriesResource {
     /**
      * Creates a new instance of UserStoriesResource
      */
-    public UserStoriesResource() {
+    public UserStoriesResource()
+    {
     }
 
     /**
@@ -52,7 +53,8 @@ public class UserStoriesResource {
     @GET
     @Path("all")
     @Produces("application/json")
-    public List<Userstory> findAll() {
+    public List<Userstory> findAll()
+    {
         return userStoryBean.findAllOrderByImportance();
     }
     
@@ -65,7 +67,8 @@ public class UserStoriesResource {
     @GET
     @Path("search/{pattern}")
     @Produces("application/json")
-    public List<Userstory> searchUserStoriesQuick(@PathParam("pattern") String pattern) {
+    public List<Userstory> searchUserStoriesQuick(@PathParam("pattern") String pattern)
+    {
         return userStoryBean.quickSearch(pattern);
     }
     
@@ -78,7 +81,8 @@ public class UserStoriesResource {
     @GET
     @Path("{id}")
     @Produces("application/json")
-    public Userstory getUserStory(@PathParam("id") String id) {
+    public Userstory getUserStory(@PathParam("id") String id)
+    {
         return userStoryBean.find(Integer.parseInt(id));
     }
     
@@ -93,8 +97,8 @@ public class UserStoriesResource {
     @Path("add/{idProject}")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response addUserStory(Userstory userstory,@PathParam("idProject") String idProject) {
-        System.out.println(userstory.toString());
+    public Response addUserStory(Userstory userstory,@PathParam("idProject") String idProject)
+    {
         userStoryBean.create(userstory);
         userStoryBean.add_updateUserstoryToProject(userstory, Integer.parseInt(idProject));
         
@@ -113,7 +117,8 @@ public class UserStoriesResource {
     @Path("{idProject}")
     @Consumes("application/json")
     @Produces("application/json")
-    public void updateUserStory(Userstory userstory,@PathParam("idProject") String idProject) {
+    public void updateUserStory(Userstory userstory,@PathParam("idProject") String idProject)
+    {
         userStoryBean.edit(userstory);
         userStoryBean.updateUserstoryTaskCollection(userstory);
         userStoryBean.add_updateUserstoryToProject(userstory, Integer.parseInt(idProject));
@@ -128,7 +133,8 @@ public class UserStoriesResource {
     @DELETE
     @Path("{id}")
     @Produces("application/json")
-    public Response removeUserStory(@PathParam("id") String id) {
+    public Response removeUserStory(@PathParam("id") String id)
+    {
         if(userStoryBean.find(Integer.parseInt(id))!=null)
             userStoryBean.remove(userStoryBean.find(Integer.parseInt(id)));
         
@@ -146,11 +152,13 @@ public class UserStoriesResource {
     @Path("{id}/{position}")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response updatePriority(@PathParam("id") String id, @PathParam("position") String position) {
+    public Response updatePriority(@PathParam("id") String id, @PathParam("position") String position)
+    {
         userStoryBean.updateImportance(Integer.parseInt(id), Integer.parseInt(position));
         Response reponse=Response.status(200).build();
         return reponse;
     }
+    
     
     /**
      * Retrieves the list of a com.scrumble.server.entities.Userstory linked with the Project object
@@ -160,25 +168,21 @@ public class UserStoriesResource {
     @GET
     @Path("{idProject}/projects")
     @Produces("application/json")
-    public List<Userstory> findAllProjectUserstories(@PathParam("idProject") String idProject) {
+    public List<Userstory> findAllProjectUserstories(@PathParam("idProject") String idProject)
+    {
         List<Userstory> results = null;
-        try {
+        try
+        {
             results = userStoryBean.findAllProjectUserstories(Integer.parseInt(idProject));
         }
-        catch (Exception e){
+        catch(Exception e)
+        {
             System.out.println(e.getStackTrace());
         }
         return results;
     }
     
-    
-    
-    
-    
 
-    
-    
-    
     /**
      * Retrieves the list of a com.scrumble.server.entities.Tasks linked with the Userstory object
      * @param idUserstory the id of the Userstory object to retrieve
@@ -187,7 +191,8 @@ public class UserStoriesResource {
     @GET
     @Path("{idUserstory}/tasks/all")
     @Produces("application/json")
-    public List<Task> findAllTaskUserstories(@PathParam("idUserstory") String idUserstory) {
+    public List<Task> findAllTaskUserstories(@PathParam("idUserstory") String idUserstory)
+    {
         return taskBean.findAllTaskUserstories(Integer.parseInt(idUserstory));
     }
     
@@ -200,7 +205,8 @@ public class UserStoriesResource {
     @GET
     @Path("{idUserstory}/tasks/{idTask}")
     @Produces("application/json")
-    public Task getTask(@PathParam("idUserstory") String idUserstory, @PathParam("idTask") String idTask) {
+    public Task getTask(@PathParam("idUserstory") String idUserstory, @PathParam("idTask") String idTask)
+    {
         return taskBean.find(Integer.parseInt(idTask));
     }
     
@@ -214,7 +220,8 @@ public class UserStoriesResource {
     @Path("{idUserstory}/tasks/add")
     @Consumes("application/json")
     @Produces("application/json")
-    public void addTask(@PathParam("idUserstory") String idUserstory, Task task) {
+    public void addTask(@PathParam("idUserstory") String idUserstory, Task task)
+    {
         Userstory userstory = userStoryBean.find(Integer.parseInt(idUserstory));
         task.setIdUserstory(userstory);
         taskBean.create(taskBean.useDefaultProcessStatusIfNeededForTask(task));
@@ -240,7 +247,8 @@ public class UserStoriesResource {
     @Path("{idUserstory}/tasks")
     @Consumes("application/json")
     @Produces("application/json")
-    public void updateTask(@PathParam("idUserstory") String idUserstory, Task task) {
+    public void updateTask(@PathParam("idUserstory") String idUserstory, Task task)
+    {
         task.setIdUserstory(userStoryBean.find(Integer.parseInt(idUserstory)));
         taskBean.edit(taskBean.useDefaultProcessStatusIfNeededForTask(task));
         
@@ -263,7 +271,8 @@ public class UserStoriesResource {
     @DELETE
     @Path("{idUserstory}/tasks/{idTask}")
     @Produces("application/json")
-    public void removeTask(@PathParam("idUserstory") String idUserstory, @PathParam("idTask") String idTask) {
+    public void removeTask(@PathParam("idUserstory") String idUserstory, @PathParam("idTask") String idTask)
+    {
         if(taskBean.find(Integer.parseInt(idTask))!=null)
         {
             taskBean.remove(taskBean.find(Integer.parseInt(idTask)));
@@ -293,6 +302,7 @@ public class UserStoriesResource {
         return taskBean.quickSearch(pattern);
     }
     
+    
     /**
      * Check whether the userstory is editable or not in relation with 
      * its assignation to a sprint and the status of the sprint
@@ -302,11 +312,12 @@ public class UserStoriesResource {
     @GET
     @Path("{idUserstory}/iseditable")
     @Produces("text/plain")
-    public String isUserstoryEditable(@PathParam("idUserstory") String idUserstory) {
-        if (userStoryBean.isUserstoryEditable(Integer.parseInt(idUserstory))) {
+    public String isUserstoryEditable(@PathParam("idUserstory") String idUserstory)
+    {
+        if(userStoryBean.isUserstoryEditable(Integer.parseInt(idUserstory)))
+        {
            return "true"; 
         }
         return "false";
     }
-
 }

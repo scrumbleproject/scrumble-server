@@ -30,6 +30,10 @@ public class Member1Facade extends AbstractFacade<Member1> implements Member1Fac
     
     @EJB
     private RoleFacadeLocal roleBean;
+    
+    @EJB
+    private ProjectFacadeLocal projectBean;
+    
 
     @Override
     protected EntityManager getEntityManager() {
@@ -41,7 +45,8 @@ public class Member1Facade extends AbstractFacade<Member1> implements Member1Fac
     }
     
     
-    public List<Member1> quickSearch(String pattern){
+    public List<Member1> quickSearch(String pattern)
+    {
         List<Member1> results;
         
         //run named queries
@@ -60,58 +65,87 @@ public class Member1Facade extends AbstractFacade<Member1> implements Member1Fac
     }
     
     
-    public boolean checkLoginAndPassword(String login, String password) throws Exception{
-        
+    public boolean checkLoginAndPassword(String login, String password) throws Exception
+    {
         TypedQuery<Member1> query = getEntityManager().createNamedQuery("Member1.findByLogin", Member1.class);
         List<Member1> results = query.setParameter("login", login).getResultList();
-        if (results.size()>0){
+        if (results.size()>0)
+        {
             String hashedPassword = results.get(0).getPassword(); //login should be unique
             
-            //encrypte passed password
+            //encrypt passed password
             String hashedPasswordToCheck = ScrumbleUtils.encryptStringWithAlgorithm(password, "SHA1");
             
             //compare passwords
-            if (hashedPassword.equalsIgnoreCase(hashedPasswordToCheck)){
+            if (hashedPassword.equalsIgnoreCase(hashedPasswordToCheck))
+            {
                 return true;
             }
-            
-        }        
+        }
         return false;
     }
     
-    public void addRoleToMember(Member1 member, Integer idRole){
+    
+    public void addRoleToMember(Member1 member, Integer idRole)
+    {
         member.setIdRole(roleBean.getRole(idRole));
         this.create(member);
     }
     
-    public void updateRoleToMember(Member1 member, Integer idRole){
+    
+    public void updateRoleToMember(Member1 member, Integer idRole)
+    {
         member.setIdRole(roleBean.getRole(idRole));
         this.edit(member);
     }
     
-    public Member1 findByLogin(String login){
+    
+    public Member1 findByLogin(String login)
+    {
         TypedQuery<Member1> query = getEntityManager().createNamedQuery("Member1.findByLogin", Member1.class);
         List<Member1> results = query.setParameter("login", login).getResultList();
-        if (results.size()>0){
+        if(results.size()>0)
+        {
             return results.get(0);
         }
         return null;
     }
     
-    public String getDisplayNameForLogin(String login){
+    
+    public String getDisplayNameForLogin(String login)
+    {
         Member1 member = this.findByLogin(login);
-        if (member != null) {
+        if(member != null)
+        {
             return ScrumbleUtils.capitalize(member.getFirstname())+" "+ScrumbleUtils.capitalize(member.getLastname());
         }
         return "Not Found";
     }
     
-    public String getIDMemberFromLogin(String login){
+    
+    public String getIDMemberFromLogin(String login)
+    {
         Member1 member = this.findByLogin(login);
-        if (member != null) {
+        if(member != null)
+        {
                 return member.getIdMember().toString();
         }
         return "Not Found";
     }
     
+    
+    public String isDisplayable(int idMember, int idProject)
+    {
+        List<Member1> l = projectBean.findAllProjectMembers(idProject);
+        int i = 0;
+        
+        while(i<l.size())
+        {
+            if(l.get(i).getIdMember()==idMember)
+                return "true";
+            i++;
+        }
+        
+        return "false";
+    }
 }

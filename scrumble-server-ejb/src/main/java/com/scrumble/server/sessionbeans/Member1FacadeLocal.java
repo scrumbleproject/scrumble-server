@@ -79,4 +79,11 @@ public interface Member1FacadeLocal {
      */
     public String getIDMemberFromLogin(String login);
     
+    /**
+     * Check if the project is displayable for the member
+     * @param idMember the id of the member
+     * @param idProject the id of the project
+     * @return true or false
+     */
+    public String isDisplayable(int idMember, int idProject);
 }
