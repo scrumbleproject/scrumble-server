@@ -369,7 +369,8 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
     {
         //check if userstory is assigned to a sprint
         Sprint sprint = this.find(idSprint);
-        if(sprint.getIdProcessStatus().getCodeStatus().equals("inp"))
+        if(sprint.getIdProcessStatus().getCodeStatus().equals("inp") || 
+            sprint.getIdProcessStatus().getCodeStatus().equals("don"))
         {
             return false;
         }

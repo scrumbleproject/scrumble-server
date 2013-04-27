@@ -257,7 +257,8 @@ public class UserstoryFacade extends AbstractFacade<Userstory> implements Userst
         List<Sprint> sprints = userstorySprintBean.findSprintAssignationForUserstory(idUserstory);
         for(Sprint s : sprints)
         {//if yes check sprint status
-            if(s.getIdProcessStatus().getCodeStatus().equals("inp"))
+            if(s.getIdProcessStatus().getCodeStatus().equals("inp") ||
+                s.getIdProcessStatus().getCodeStatus().equals("don"))
             {
                 return false;
             }
