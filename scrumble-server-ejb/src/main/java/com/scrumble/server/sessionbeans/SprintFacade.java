@@ -18,6 +18,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -382,6 +384,19 @@ public class SprintFacade extends AbstractFacade<Sprint> implements SprintFacade
         return sprint.getVelocity();
     }
     
+    public Integer getRemainingVelocityOfSprint(Integer idSprint) {
+        Sprint sprint = this.find(idSprint);
+        Integer velocity = sprint.getVelocity();
+        try {
+            List<Userstory> userstories = userstorysprintBean.findUserstoriesForSprint(idSprint);
+            for (Userstory us : userstories){
+                velocity -= us.getEstimation(); 
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(SprintFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return velocity;
+    }
     
     public Sprint getRunningSprint(Integer idProject)
     {
