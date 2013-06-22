@@ -61,6 +61,13 @@ public interface ProjectFacadeLocal {
     public void addMemberToProject(Integer idProject, Integer idMember);
     
     /**
+     * Add a new member to a specified Project object
+     * @param project the specified Project object
+     * @param member1 the specified Member object 
+     */
+    public void addMemberToProject(Project project, Member1 member1);
+    
+    /**
      * Remove a member from a specified Project object
      * @param idProject the id of a specified Project object
      * @param idMember the id of a specified Member object 

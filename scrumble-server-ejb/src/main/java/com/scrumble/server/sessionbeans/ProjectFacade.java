@@ -79,6 +79,10 @@ public class ProjectFacade extends AbstractFacade<Project> implements ProjectFac
             project.setMember1Collection(membersList);
         }
     }
+    public void addMemberToProject(Project project, Member1 member1){
+        project.getMember1Collection().add(member1);
+        member1.getProjectCollection().add(project);
+    }
     
     public void removeMemberFromProject(Integer idProject, Integer idMember){
         Project project = em.find(Project.class, idProject); 
@@ -94,9 +98,10 @@ public class ProjectFacade extends AbstractFacade<Project> implements ProjectFac
     }
     
     public void createForUserLogin(Project project, String userLogin){
+        System.out.println("createForUserLogin");
         this.create(project);
         Member1 member = memberLocal.findByLogin(userLogin);
-        this.addMemberToProject(project.getIdProject(), member.getIdMember());
+        this.addMemberToProject(project, member);
     }
     
     public void removeForUserLogin(Integer idProject, String userLogin){
