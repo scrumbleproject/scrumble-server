@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.10.1deb1
+-- version 3.3.7deb7
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Apr 12, 2013 at 02:36 PM
--- Server version: 5.5.29
--- PHP Version: 5.3.10-1ubuntu3.6
+-- Serveur: localhost
+-- Généré le : Lun 10 Juin 2013 à 08:42
+-- Version du serveur: 5.1.66
+-- Version de PHP: 5.3.3-7+squeeze15
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -17,7 +16,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `scrumble_bdd`
+-- Base de données: `scrumble_bdd`
 --
 DROP DATABASE `scrumble_bdd`;
 CREATE DATABASE `scrumble_bdd` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -26,7 +25,7 @@ USE `scrumble_bdd`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `member`
+-- Structure de la table `member`
 --
 
 CREATE TABLE IF NOT EXISTS `member` (
@@ -45,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `member` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
--- Dumping data for table `member`
+-- Contenu de la table `member`
 --
 
 INSERT INTO `member` (`id_member`, `firstname`, `lastname`, `login`, `password`, `email`, `id_role`, `internal_phone`, `mobile_phone`) VALUES
@@ -63,7 +62,7 @@ INSERT INTO `member` (`id_member`, `firstname`, `lastname`, `login`, `password`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `memberproject`
+-- Structure de la table `memberproject`
 --
 
 CREATE TABLE IF NOT EXISTS `memberproject` (
@@ -75,49 +74,36 @@ CREATE TABLE IF NOT EXISTS `memberproject` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `memberproject`
+-- Contenu de la table `memberproject`
 --
 
 INSERT INTO `memberproject` (`id_project`, `id_member`) VALUES
 (1, 1),
-(17, 1),
-(1, 2);
+(1, 2),
+(1, 3),
+(1, 5);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `planningpoker`
+-- Structure de la table `planningpoker`
 --
 
 CREATE TABLE IF NOT EXISTS `planningpoker` (
   `id_planningpoker` int(11) NOT NULL AUTO_INCREMENT,
   `value` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id_planningpoker`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
--- Dumping data for table `planningpoker`
+-- Contenu de la table `planningpoker`
 --
 
-INSERT INTO `planningpoker` (`id_planningpoker`, `value`) VALUES
-(1, '0'),
-(2, '0.5'),
-(3, '1'),
-(4, '2'),
-(5, '3'),
-(6, '5'),
-(7, '8'),
-(8, '13'),
-(9, '20'),
-(10, '40'),
-(11, '100'),
-(12, '?'),
-(13, 'Cup of coffee');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `processstatus`
+-- Structure de la table `processstatus`
 --
 
 CREATE TABLE IF NOT EXISTS `processstatus` (
@@ -129,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `processstatus` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
--- Dumping data for table `processstatus`
+-- Contenu de la table `processstatus`
 --
 
 INSERT INTO `processstatus` (`id_process_status`, `code_status`, `title_status`, `sort_order`) VALUES
@@ -143,7 +129,7 @@ INSERT INTO `processstatus` (`id_process_status`, `code_status`, `title_status`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `project`
+-- Structure de la table `project`
 --
 
 CREATE TABLE IF NOT EXISTS `project` (
@@ -151,21 +137,19 @@ CREATE TABLE IF NOT EXISTS `project` (
   `title` varchar(150) DEFAULT NULL,
   `description` text,
   PRIMARY KEY (`id_project`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
--- Dumping data for table `project`
+-- Contenu de la table `project`
 --
 
 INSERT INTO `project` (`id_project`, `title`, `description`) VALUES
-(1, 'Scrumble Project', 'Projet Scrumble Test'),
-(2, 'Test Barascouda', 'sa rox du poulet !'),
-(17, 'test 2', 'test 2 swdg sdth srth srths ');
+(1, 'Scrumble-project', '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `role`
+-- Structure de la table `role`
 --
 
 CREATE TABLE IF NOT EXISTS `role` (
@@ -176,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `role` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
--- Dumping data for table `role`
+-- Contenu de la table `role`
 --
 
 INSERT INTO `role` (`id_role`, `title`, `description`) VALUES
@@ -189,7 +173,7 @@ INSERT INTO `role` (`id_role`, `title`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sprint`
+-- Structure de la table `sprint`
 --
 
 CREATE TABLE IF NOT EXISTS `sprint` (
@@ -205,20 +189,17 @@ CREATE TABLE IF NOT EXISTS `sprint` (
   PRIMARY KEY (`id_sprint`),
   KEY `fk_sprint_1_idx` (`id_project`),
   KEY `fk_sprint_processstatus` (`id_process_status`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
--- Dumping data for table `sprint`
+-- Contenu de la table `sprint`
 --
 
-INSERT INTO `sprint` (`id_sprint`, `num_sprint`, `title`, `id_project`, `velocity`, `date_start`, `date_end`, `duree`, `id_process_status`) VALUES
-(1, 1, 'sprint 1', 1, 13, '2013-04-01 01:00:00', '2013-04-17 01:00:00', 0, 5),
-(2, 2, 'Sprint 2', 1, NULL, NULL, NULL, NULL, 4);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sprinttaskassignation`
+-- Structure de la table `sprinttaskassignation`
 --
 
 CREATE TABLE IF NOT EXISTS `sprinttaskassignation` (
@@ -234,52 +215,93 @@ CREATE TABLE IF NOT EXISTS `sprinttaskassignation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `sprinttaskassignation`
+-- Contenu de la table `sprinttaskassignation`
 --
 
-INSERT INTO `sprinttaskassignation` (`id_task`, `id_sprint`, `id_member`, `date_start`, `date_end`) VALUES
-(24, 1, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `task`
+-- Structure de la table `task`
 --
 
 CREATE TABLE IF NOT EXISTS `task` (
   `id_task` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(45) DEFAULT NULL,
+  `title` varchar(100) DEFAULT NULL,
   `estimation` int(3) DEFAULT NULL,
   `id_userstory` int(11) DEFAULT NULL,
   `id_process_status` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_task`),
   KEY `fk_id_userstory_idx` (`id_userstory`),
   KEY `fk_task_1_idx` (`id_process_status`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=82 ;
 
 --
--- Dumping data for table `task`
+-- Contenu de la table `task`
 --
 
 INSERT INTO `task` (`id_task`, `title`, `estimation`, `id_userstory`, `id_process_status`) VALUES
-(3, 'YTEST Créer la Home Page de l''application', 2, 2, 4),
-(4, 'Créer le formulaire de création d''un projet', 1, 2, 4),
-(5, 'Créer la Page Members de l''application', 2, 3, 4),
-(6, 'Ajouter des utilisateurs à la base de données', 1, 3, 4),
-(7, 'Faire interagir la Home Page et la Page Membe', 1, 3, 4),
-(8, 'Créer la page du Dashboard', 3, 4, 4),
-(10, 'Créer la UserStory Page', 3, 5, 4),
-(11, 'Afficher la liste des user stories du projet', 1, 5, 4),
-(12, 'Créer le formulaire d''ajout d''une user story', 1, 5, 4),
-(13, 'Lier la UserStory Page aux autres pages de l''', 1, 5, 4),
-(14, 'Créer les fonctions pour modifier, supprimer ', 2, 5, 4),
-(24, 'design d''UI', 1, 1, 6),
-(25, 'TEST', 0, 7, 4);
+(26, 'List task', 0, 8, 4),
+(27, 'Task form', 0, 8, 4),
+(28, 'Webservice connect', 0, 8, 4),
+(29, 'Product backlog', 0, 9, 4),
+(30, 'Form: user story', 0, 9, 4),
+(31, 'User storie priorisation', 0, 9, 4),
+(32, 'Webservices', 0, 9, 4),
+(33, 'Users Table: 5 members team + guest + admin', 0, 10, 4),
+(34, 'Rules Table ', 0, 10, 4),
+(35, 'Plannig poker table', 0, 10, 4),
+(36, 'Projects Table', 0, 10, 4),
+(37, 'Tasks Table', 0, 10, 4),
+(38, 'User stories Table', 0, 10, 4),
+(39, 'Members Table', 0, 11, 4),
+(40, 'Rules Table', 0, 11, 4),
+(41, 'Projects/Products Table', 0, 11, 4),
+(42, 'User stories Table', 0, 11, 4),
+(43, 'Tasks Table', 0, 11, 4),
+(44, 'Planning poker Table', 0, 11, 4),
+(45, 'User stories list', 0, 12, 4),
+(46, 'Add story', 0, 12, 4),
+(47, 'Dell story', 0, 12, 4),
+(48, 'Display story', 0, 12, 4),
+(49, 'Update Story', 0, 12, 4),
+(50, 'dfgsd', 0, 13, 4),
+(51, 'bgsdfgfgh', 0, 13, 4),
+(52, 'sdfg', 0, 13, 4),
+(53, 'List all users', 0, 14, 4),
+(54, 'Search Users', 0, 14, 4),
+(55, 'Add Users', 0, 14, 4),
+(56, 'Delete Users', 0, 14, 4),
+(57, 'Show one user', 0, 14, 4),
+(58, 'Modify user', 0, 14, 4),
+(59, 'List All Project', 0, 15, 4),
+(60, 'Search Project', 0, 15, 4),
+(61, 'Add Project', 0, 15, 4),
+(62, 'Delete Project', 0, 15, 4),
+(63, 'Show Project', 0, 15, 4),
+(64, 'Modify Project', 0, 15, 4),
+(65, 'List member', 0, 16, 4),
+(66, 'Form Member', 0, 16, 4),
+(67, 'Web Services Connection', 0, 16, 4),
+(68, 'List all project members', 0, 17, 4),
+(69, 'List all member which not project member', 0, 17, 4),
+(70, 'Add project member', 0, 17, 4),
+(71, 'Delete project member', 0, 17, 4),
+(72, 'web connection connection', 0, 18, 4),
+(73, 'List member in project', 0, 18, 4),
+(74, 'Delete member in project', 0, 18, 4),
+(75, 'Autocomplete in add form', 0, 18, 4),
+(76, 'List All task', 0, 19, 4),
+(77, 'Search task', 0, 19, 4),
+(78, 'Add task', 0, 19, 4),
+(79, 'Delete task', 0, 19, 4),
+(80, 'Show task', 0, 19, 4),
+(81, 'Modify task', 0, 19, 4);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `userstory`
+-- Structure de la table `userstory`
 --
 
 CREATE TABLE IF NOT EXISTS `userstory` (
@@ -295,24 +317,30 @@ CREATE TABLE IF NOT EXISTS `userstory` (
   PRIMARY KEY (`id_userstory`),
   KEY `fk_id_project_idx` (`id_project`),
   KEY `fk_userstory_status_idx` (`id_process_status`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
 
 --
--- Dumping data for table `userstory`
+-- Contenu de la table `userstory`
 --
 
 INSERT INTO `userstory` (`id_userstory`, `title`, `importance`, `estimation`, `demonstration`, `note`, `id_project`, `category`, `id_process_status`) VALUES
-(1, 'Se connecter à l''application', 38, 1, '-Renseigner son Login\r\n-Renseigner son mot de passe\r\n-Valider\r\n-Accéder à la page d''accueil de l''application\r\n', NULL, 1, 'Base de données', 4),
-(2, 'Créer un nouveau projet', 39, 1, '- Cliquer sur "New project"\r\n- choisir une méthode ou des modules\r\n- Renseigner les données du formulaire de création\r\n- Valider et revenir à la page d''accueil\r\n- Accéder au projet créé', '', 1, NULL, 4),
-(3, 'TEST CYRIL', 34, 2, '- Accéder à un projet donné\r\n- Cliquer sur Members\r\n- Visualiser la liste de tous les membres (avec leurs compétences)\r\n- cocher les membres à ajouter au projet et valider\r\n- Revenir sur le projet et visualiser les membres sélectionnés.', 'fdsg', 1, NULL, 4),
-(4, 'Visualiser le Dashboard d''un projet', 41, 2, '-Accéder à l''application et sélectionner un projet donné\r\n-Cliquer su le menu "Dashbord" et visualiser le tableau de bord du projet', NULL, 1, 'Web', 4),
-(5, 'Gérer les user stories du projet', 40, 1, '-Accéder à l''application et sélectionner un projet\r\n-Cliquer sur le menu "Story"\r\n-Cliquer sur "New Story" pour ajouter une story ou sélectionner une story existante pour la modifier ou la supprimer \r\n- Sauvegarder et visualiser les modifications', NULL, 1, 'Base de données', 4),
-(7, 'Gérer les membres', 42, 3, 'faire ci ou ça', '', 1, NULL, NULL);
+(8, 'HIM: Tasks manager', 0, NULL, '', '', 1, NULL, NULL),
+(9, 'HIM: User stories manager', 0, NULL, '', '', 1, NULL, NULL),
+(10, 'Create tests data for data base', 10, 0, '', '', 1, NULL, NULL),
+(11, 'Design DB', 0, 0, '', '', 1, NULL, NULL),
+(12, 'Implement user stories request', 0, 0, '', '', 1, NULL, NULL),
+(13, 'HIM: Project Management', 0, 0, '', '', 1, NULL, NULL),
+(14, 'Implement MEMBER request', 0, 0, '', '', 1, NULL, NULL),
+(15, 'Implement PROJECT request', 0, 0, '', '', 1, NULL, NULL),
+(16, 'IHM : (ADMIN) Member management', 0, 0, '', '', 1, NULL, NULL),
+(17, 'Implement PROJECT-MEMBER request', 0, 0, '', '', 1, NULL, NULL),
+(18, 'IHM : Member mgmt in project', 0, 0, '', '', 1, NULL, NULL),
+(19, 'Implement task request', 0, 0, '', '', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `userstorysprint`
+-- Structure de la table `userstorysprint`
 --
 
 CREATE TABLE IF NOT EXISTS `userstorysprint` (
@@ -326,41 +354,36 @@ CREATE TABLE IF NOT EXISTS `userstorysprint` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `userstorysprint`
+-- Contenu de la table `userstorysprint`
 --
 
-INSERT INTO `userstorysprint` (`id_sprint`, `id_userstory`, `date_start`, `date_end`) VALUES
-(1, 1, NULL, NULL),
-(1, 2, NULL, NULL),
-(1, 3, NULL, NULL),
-(2, 5, NULL, NULL);
 
 --
--- Constraints for dumped tables
+-- Contraintes pour les tables exportées
 --
 
 --
--- Constraints for table `member`
+-- Contraintes pour la table `member`
 --
 ALTER TABLE `member`
   ADD CONSTRAINT `fk_id_role` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
--- Constraints for table `memberproject`
+-- Contraintes pour la table `memberproject`
 --
 ALTER TABLE `memberproject`
   ADD CONSTRAINT `fk_project_has_member_member1` FOREIGN KEY (`id_member`) REFERENCES `member` (`id_member`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_project_has_member_project1` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
--- Constraints for table `sprint`
+-- Contraintes pour la table `sprint`
 --
 ALTER TABLE `sprint`
   ADD CONSTRAINT `fk_sprint_processstatus` FOREIGN KEY (`id_process_status`) REFERENCES `processstatus` (`id_process_status`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_sprint_project` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
--- Constraints for table `sprinttaskassignation`
+-- Contraintes pour la table `sprinttaskassignation`
 --
 ALTER TABLE `sprinttaskassignation`
   ADD CONSTRAINT `fk_assignation_member` FOREIGN KEY (`id_member`) REFERENCES `member` (`id_member`) ON DELETE CASCADE ON UPDATE NO ACTION,
@@ -368,26 +391,22 @@ ALTER TABLE `sprinttaskassignation`
   ADD CONSTRAINT `fk_assignation_task` FOREIGN KEY (`id_task`) REFERENCES `task` (`id_task`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
--- Constraints for table `task`
+-- Contraintes pour la table `task`
 --
 ALTER TABLE `task`
   ADD CONSTRAINT `fk_id_userstory` FOREIGN KEY (`id_userstory`) REFERENCES `userstory` (`id_userstory`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_task_status` FOREIGN KEY (`id_process_status`) REFERENCES `processstatus` (`id_process_status`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
--- Constraints for table `userstory`
+-- Contraintes pour la table `userstory`
 --
 ALTER TABLE `userstory`
   ADD CONSTRAINT `fk_id_project` FOREIGN KEY (`id_project`) REFERENCES `project` (`id_project`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_userstory_status` FOREIGN KEY (`id_process_status`) REFERENCES `processstatus` (`id_process_status`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
--- Constraints for table `userstorysprint`
+-- Contraintes pour la table `userstorysprint`
 --
 ALTER TABLE `userstorysprint`
   ADD CONSTRAINT `fk_ustorysprint_sprint` FOREIGN KEY (`id_sprint`) REFERENCES `sprint` (`id_sprint`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_ustorysprint_userstory` FOREIGN KEY (`id_userstory`) REFERENCES `userstory` (`id_userstory`) ON DELETE CASCADE ON UPDATE NO ACTION;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
